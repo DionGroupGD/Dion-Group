@@ -4,18 +4,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dion Group - Business Intelligence</title>
+  <title>Dion Group Business Intelligence</title>
   <meta name="description"
-    content="Dion Group is a business intelligence company creating software and solving real-life problems.">
+    content="Dion Group is a business intelligence company creating software and solving real world problems.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#eef1f6">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Dion Group">
+  <meta property="og:title" content="Dion Group Business Intelligence">
+  <meta property="og:description"
+    content="Dion Group creates secure business intelligence software and digital infrastructure.">
+  <meta property="og:url" content="https://dion-group.com/">
+  <meta property="og:image" content="https://dion-group.com/og-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dion Group website preview card">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Dion Group Business Intelligence">
+  <meta name="twitter:description"
+    content="Dion Group creates secure business intelligence software and digital infrastructure.">
+  <meta name="twitter:image" content="https://dion-group.com/og-preview.png">
+
+  <link rel="canonical" href="https://dion-group.com/">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'sha256-OrwZmGTEgSkrXIW9LP0slweE6gXDCGGg8mP9NF9jx1o='; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
+
+  <script type="application/ld+json" id="organization-schema">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Dion Group",
+      "url": "https://dion-group.com/",
+      "logo": "https://dion-group.com/favicon-512x512.png",
+      "description": "Dion Group builds secure business intelligence software and digital ecosystems.",
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "contactType": "business",
+          "email": "georgedion@dion-group.com"
+        }
+      ]
+    }
+  </script>
 </head>
 
 <body>
   <div class="app-container">
-    <div class="ambient-background">
+    <div class="ambient-background" aria-hidden="true">
       <div class="gradient-sphere sphere-1"></div>
       <div class="gradient-sphere sphere-2"></div>
       <div class="gradient-sphere sphere-3"></div>
@@ -26,16 +78,16 @@
         <h1 class="logo-mark">Dion Group</h1>
         <p class="hero-subtitle">Business Intelligence</p>
         <p class="hero-description">
-          We engineer uncompromising software architecture to solve complex, real-world problems.
+          We engineer uncompromising software architecture to solve complex real world problems.
           By unifying secure infrastructure with frictionless design, we create digital ecosystems
           that empower organizations to operate with absolute precision and scale without limits.
         </p>
       </div>
     </header>
 
-    <main class="projects-grid">
-      <!-- Container 1: Aegis Project -->
-      <a href="./aegis/index.html" target="_blank" area-label="Aegis Project" class="glass-panel project-card">
+    <main class="projects-grid" id="main-content">
+      <a href="./aegis/index.html" target="_blank" rel="noopener noreferrer" aria-label="Aegis Project"
+        class="glass-panel project-card">
         <div class="card-content project-pure-text">
           <div class="text-wrapper">
             <h2 class="project-title aegis-gradient">Aegis</h2>
@@ -44,8 +96,7 @@
         </div>
       </a>
 
-      <!-- Container 2: TMS Operations -->
-      <a href="#" class="glass-panel project-card">
+      <a href="#contact" class="glass-panel project-card" aria-label="TMS Operations">
         <div class="card-content project-pure-text">
           <div class="text-wrapper">
             <h2 class="project-title tms-gradient">TMS</h2>
@@ -54,8 +105,7 @@
         </div>
       </a>
 
-      <!-- Container 3: Coming Soon -->
-      <a href="#" class="glass-panel project-card disabled">
+      <div class="glass-panel project-card disabled" aria-hidden="true">
         <div class="card-content project-pure-text">
           <div class="coming-soon-loader loader-spacing">
             <div class="dot"></div>
@@ -67,16 +117,14 @@
             <p>Future Innovations</p>
           </div>
         </div>
-      </a>
+      </div>
     </main>
 
-    <!-- Scroll Indicator -->
-    <div class="scroll-indicator">
+    <div class="scroll-indicator" aria-hidden="true">
       <p>Discover our ecosystem</p>
       <div class="chevron"></div>
     </div>
 
-    <!-- Philosophy Storytelling Section -->
     <section class="philosophy-section reveal">
       <div class="philosophy-content">
         <h2 class="massive-text">
@@ -84,8 +132,8 @@
           <span class="text-line highlight">powerful, yet completely invisible.</span>
         </h2>
         <p class="philosophy-subtext">
-          At Dion Group, we don't just build applications—we architect resilient digital environments.
-          By combining military-grade security protocols with frictionless user interfaces,
+          At Dion Group, we do not just build applications, we architect resilient digital environments.
+          By combining military grade security protocols with frictionless user interfaces,
           we equip modern enterprises to handle tomorrow's logistical and operational challenges
           without ever noticing the complex engineering beneath the surface. Our ecosystem is built
           to scale effortlessly, protecting your data while accelerating your workflow.
@@ -93,23 +141,22 @@
       </div>
     </section>
 
-    <!-- Bento Grid Feature Showcase -->
     <section class="bento-ecosystem reveal">
       <div class="bento-grid">
         <div class="bento-box glass-panel">
           <div class="bento-content">
-            <svg viewBox="0 0 24 24" class="bento-icon">
+            <svg viewBox="0 0 24 24" class="bento-icon" aria-hidden="true">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <h3>Air-Gapped Security</h3>
-            <p>Military-grade protection built into the core. Absolute isolation.</p>
+            <h3>Air Gapped Security</h3>
+            <p>Military grade protection built into the core. Absolute isolation.</p>
           </div>
         </div>
 
         <div class="bento-box glass-panel">
           <div class="bento-content">
-            <svg viewBox="0 0 24 24" class="bento-icon">
+            <svg viewBox="0 0 24 24" class="bento-icon" aria-hidden="true">
               <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
               <path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
             </svg>
@@ -120,18 +167,18 @@
 
         <div class="bento-box glass-panel">
           <div class="bento-content">
-            <svg viewBox="0 0 24 24" class="bento-icon">
+            <svg viewBox="0 0 24 24" class="bento-icon" aria-hidden="true">
               <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <h3>Zero-Latency UI</h3>
+            <h3>Zero Latency UI</h3>
             <p>Instantaneous response times across all interfaces and touchpoints.</p>
           </div>
         </div>
 
         <div class="bento-box glass-panel">
           <div class="bento-content">
-            <svg viewBox="0 0 24 24" class="bento-icon">
+            <svg viewBox="0 0 24 24" class="bento-icon" aria-hidden="true">
               <path d="M21 2v6h-6M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" fill="none" stroke="currentColor"
                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
@@ -141,12 +188,47 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
-    <section class="contact-section reveal">
+    <section class="contact-section reveal" id="contact">
       <div class="glass-panel contact-panel">
-        <h2>Get in Touch</h2>
-        <p>Ready to build the future? Reach out to our team.</p>
-        <a href="mailto:contact@diongroup.com" class="contact-btn">Contact Us</a>
+        <h2>Contact</h2>
+        <p class="contact-lead">Share your project details and we will receive your message directly by email.</p>
+
+        <form class="contact-form" action="https://formsubmit.co/georgedion@dion-group.com" method="POST">
+          <input type="hidden" name="_subject" value="New inquiry from dion-group.com">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://dion-group.com/thanks.html">
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="honeypot" aria-hidden="true">
+
+          <div class="contact-grid">
+            <label class="field" for="first-name">
+              <span>Name</span>
+              <input id="first-name" name="first_name" type="text" required maxlength="80" autocomplete="given-name">
+            </label>
+
+            <label class="field" for="last-name">
+              <span>Surname</span>
+              <input id="last-name" name="last_name" type="text" required maxlength="80" autocomplete="family-name">
+            </label>
+
+            <label class="field" for="company-name">
+              <span>Company</span>
+              <input id="company-name" name="company" type="text" maxlength="140" autocomplete="organization">
+            </label>
+
+            <label class="field" for="contact-email">
+              <span>Email</span>
+              <input id="contact-email" name="email" type="email" required maxlength="140" autocomplete="email">
+            </label>
+          </div>
+
+          <label class="field field-full" for="contact-message">
+            <span>Message</span>
+            <textarea id="contact-message" name="message" rows="6" required maxlength="2500"></textarea>
+          </label>
+
+          <button type="submit" class="contact-btn">Send Message</button>
+        </form>
       </div>
     </section>
 
