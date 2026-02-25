@@ -1,0 +1,23 @@
+{
+  "name": "Dion Group",
+  "short_name": "Dion Group",
+  "description": "Architecture for the next era. Scalable SaaS systems for operations and intelligence.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b101a",
+  "theme_color": "#0b101a",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png?v=3",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512x512.png?v=3",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

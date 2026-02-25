@@ -1,0 +1,15 @@
+# Dion Group
+
+> Official website for Dion Group business intelligence platforms.
+
+## Summary
+Dion Group is a venture foundry building scalable SaaS systems for operations, logistics, and enterprise intelligence.
+
+## Primary Pages
+- https://dion-group.com/
+- https://dion-group.com/privacy.html
+- https://dion-group.com/terms.html
+- https://dion-group.com/cookies.html
+
+## Contact
+- Contact form: https://dion-group.com/#contact
