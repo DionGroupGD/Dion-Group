@@ -808,7 +808,7 @@ body {
   inset: 0;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center; /* keep icon+body horizontally centered on every viewport */
   gap: 40px;
   padding: 0;
   background: transparent;
