@@ -356,19 +356,19 @@ body {
   50% { transform: translateY(-9px); }
 }
 @media (max-width: 1024px) {
-  .aegis-hero { padding-top: 66px; min-height: 860px; }
+  .aegis-hero { padding-top: 66px; min-height: auto; padding-bottom: 60px; }
   .aegis-title { font-size: clamp(56px, 8.2vw, 78px); max-width: 860px; }
   .aegis-subtitle { font-size: 23px; }
-  .aegis-core-wrap { width: min(980px, 112vw); margin-top: -34px; }
+  .aegis-core-wrap { width: min(720px, 100%); margin-top: 14px; }
 }
 @media (max-width: 600px) {
-  .aegis-hero { min-height: 760px; padding: 46px 16px 22px; }
+  .aegis-hero { min-height: auto; padding: 46px 16px 30px; }
   .aegis-eyebrow { font-size: 17px; margin-bottom: 18px; }
   .aegis-title { font-size: clamp(42px, 12vw, 52px); line-height: 1.02; letter-spacing: -0.045em; }
   .aegis-subtitle { font-size: 18px; margin-bottom: 24px; }
   .aegis-link { font-size: 21px; }
   .aegis-link::after { font-size: 25px; }
-  .aegis-core-wrap { width: min(440px, 116vw); margin-top: -4px; }
+  .aegis-core-wrap { width: min(360px, 92%); margin-top: 14px; }
   .atom-ambient .f1,
   .atom-ambient .f5,
   .atom-ambient .f7,
@@ -385,8 +385,10 @@ body {
   width: 100vw;
   margin-left: -50vw;
   margin-right: -50vw;
-  margin-top: 32px;
-  margin-bottom: 48px;
+  /* Equal margins — paired with reduced TMS top padding so the line sits
+     visually centered between the Aegis atom and the Axon kicker */
+  margin-top: 40px;
+  margin-bottom: 40px;
   height: 1px;
   background: rgba(0, 0, 0, 0.14);
   border: 0;
@@ -436,14 +438,16 @@ body {
   font-size: 31px;
 }
 .tms-visual-stack {
+  display: flex;
   flex-direction: column;
   align-items: stretch;
+  justify-content: center;
   gap: 0;
   max-width: 1780px;
   width: 100%;
-  flex: 0 0 auto;
+  flex: 1 1 auto;
   min-height: 326px;
-  margin-top: auto;
+  margin: auto 0; /* center the visual vertically — matches Aegis atom presence */
 }
 
 /* Route visualization */
@@ -468,7 +472,7 @@ body {
     border-radius: 0;
     box-shadow: none;
   }
-  .stage .tile.tms-full { min-height: auto; padding: 46px 22px 56px; }
+  .stage .tile.tms-full { min-height: auto; padding: 30px 22px 56px; }
   .tile.tms-full .tile-kicker { font-size: 16px; margin-bottom: 22px; }
   .tile.tms-full h2 { font-size: clamp(40px, 12vw, 58px); margin-bottom: 18px; line-height: 1.0; }
   .tile.tms-full .tag-sub { font-size: 17px; margin-bottom: 24px; }
@@ -539,8 +543,9 @@ body {
   }
 
   .aegis-core-wrap {
-    width: min(720px, 98%);
-    margin-top: -6px;
+    /* Smaller atom so it doesn't dwarf the truck route on the other side */
+    width: min(560px, 90%);
+    margin-top: 12px;
   }
 
   .stage .tile.tms-full {
@@ -569,15 +574,19 @@ body {
   }
 
   .tms-visual-stack {
-    min-height: 300px;
+    min-height: 280px;
     max-width: none;
+    margin: auto 0;
+    justify-content: center;
   }
 
+  /* Route — slightly wider for better visual presence beside the atom */
   .tms-route {
-    width: min(720px, 98%);
+    width: min(620px, 100%);
     max-width: none;
-    margin-left: 50%;
-    transform: translateX(-50%);
+    margin: 0 auto;
+    transform: none;
+    padding: 16px 0;
   }
 }
 
