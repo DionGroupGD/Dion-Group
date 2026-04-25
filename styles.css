@@ -362,7 +362,14 @@ body {
   .aegis-core-wrap { width: min(720px, 100%); margin-top: 14px; }
 }
 @media (max-width: 600px) {
-  .aegis-hero { min-height: auto; padding: 46px 16px 30px; }
+  /* On mobile .stage has no side padding, so the aegis-hero must NOT
+     add the +22px bleed (it would overflow the viewport). Reset width/margin. */
+  .aegis-hero {
+    width: 100%;
+    margin: 0;
+    min-height: auto;
+    padding: 46px 16px 30px;
+  }
   .aegis-eyebrow { font-size: 17px; margin-bottom: 18px; }
   .aegis-title { font-size: clamp(42px, 12vw, 52px); line-height: 1.02; letter-spacing: -0.045em; }
   .aegis-subtitle { font-size: 18px; margin-bottom: 24px; }
