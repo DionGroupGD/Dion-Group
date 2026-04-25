@@ -13,7 +13,7 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="color-scheme" content="dark light">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#dbe3ef">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f5f7">
 
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
@@ -23,7 +23,7 @@
     <meta id="meta-og-title" property="og:title" content="Dion Group | Venture Foundry &amp; SaaS Engine">
     <meta id="meta-og-description" property="og:description" content="Architecting the digital engines that power global industry through human-centric innovation.">
     <meta property="og:url" content="https://dion-group.com/">
-    <meta property="og:image" content="https://dion-group.com/og-preview.png?v=3">
+    <meta property="og:image" content="https://dion-group.com/og-preview.png?v=6">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Dion Group website preview card">
@@ -31,31 +31,32 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta id="meta-twitter-title" name="twitter:title" content="Dion Group | Architecture for the Next Era">
     <meta id="meta-twitter-description" name="twitter:description" content="Scalable SaaS ecosystems built with military-grade integrity and consumer-grade simplicity.">
-    <meta name="twitter:image" content="https://dion-group.com/og-preview.png?v=3">
+    <meta name="twitter:image" content="https://dion-group.com/og-preview.png?v=6">
 
     <link rel="canonical" href="https://dion-group.com/">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=3">
-    <link rel="shortcut icon" href="favicon.ico?v=3">
-    <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png?v=3">
-    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png?v=3">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=3">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=3">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=6">
+    <link rel="shortcut icon" href="favicon.ico?v=6">
+    <link rel="icon" type="image/png" sizes="512x512" href="favicon-512x512.png?v=6">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192x192.png?v=6">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=6">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=6">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=6">
     <meta name="apple-mobile-web-app-title" content="Dion Group">
-    <link rel="manifest" href="site.webmanifest?v=3">
+    <link rel="manifest" href="site.webmanifest?v=6">
     <link rel="alternate" hreflang="en" href="https://dion-group.com/">
     <link rel="alternate" hreflang="de" href="https://dion-group.com/?lang=de">
     <link rel="alternate" hreflang="el" href="https://dion-group.com/?lang=gr">
     <link rel="alternate" hreflang="x-default" href="https://dion-group.com/">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="styles.css?v=33">
 </head>
 
-<body data-title-en="Dion Group | Architecture for the Next Era"
+<body
+    data-title-en="Dion Group | Architecture for the Next Era"
     data-title-de="Dion Group | Architektur für die nächste Ära"
     data-title-gr="Dion Group | Αρχιτεκτονική για την Επόμενη Εποχή"
     data-meta-description-en="Dion Group is a venture foundry building a scalable ecosystem of high-performance SaaS products, from foundational AI to global logistics infrastructure."
@@ -73,205 +74,530 @@
     data-meta-twitter-description-en="Scalable SaaS ecosystems built with military-grade integrity and consumer-grade simplicity."
     data-meta-twitter-description-de="Skalierbare SaaS-Ökosysteme mit Integrität auf Militärniveau und Einfachheit auf Verbraucherniveau."
     data-meta-twitter-description-gr="Κλιμακούμενα οικοσυστήματα SaaS με ακεραιότητα στρατιωτικού επιπέδου και απλότητα καταναλωτικού επιπέδου.">
-    <div class="app-container">
-        <div class="ambient-background" aria-hidden="true">
-            <div class="gradient-sphere sphere-1"></div>
-            <div class="gradient-sphere sphere-2"></div>
-            <div class="gradient-sphere sphere-3"></div>
+
+    <!-- NAV -->
+    <nav class="nav" aria-label="Primary">
+      <a href="#" class="nav-mark" aria-label="Dion Group home">
+        <img src="favicon-192x192.png?v=6" alt="" width="26" height="26">
+        <span>Dion Group</span>
+      </a>
+      <div class="nav-links">
+        <a href="#work" class="nav-link" data-en="Work" data-de="Arbeit" data-gr="Έργα">Work</a>
+        <a href="#statement" class="nav-link" data-en="Philosophy" data-de="Philosophie" data-gr="Φιλοσοφία">Philosophy</a>
+        <a href="#eco" class="nav-link" data-en="Ecosystem" data-de="Ökosystem" data-gr="Οικοσύστημα">Ecosystem</a>
+        <a href="#contact" class="nav-link" data-en="Contact" data-de="Kontakt" data-gr="Επικοινωνία">Contact</a>
+      </div>
+    </nav>
+
+    <!-- HERO — dark -->
+    <header class="hero">
+      <p class="logo-mark">Dion Group</p>
+      <h1 class="hero-title">
+        <span data-en="Architecture for" data-de="Architektur für" data-gr="Αρχιτεκτονική για">Architecture for</span>
+        <br>
+        <span class="grad grad-blue" data-en="the next era." data-de="die nächste Ära." data-gr="την επόμενη εποχή.">the next era.</span>
+      </h1>
+      <p class="hero-sub" data-en="A venture foundry building the digital engines of global industry — from autonomous AI to frictionless logistics." data-de="Eine Venture-Foundry, die die digitalen Motoren der globalen Industrie baut — von autonomer KI bis zu reibungsloser Logistik." data-gr="Μια venture foundry που χτίζει τις ψηφιακές μηχανές της παγκόσμιας βιομηχανίας — από αυτόνομη AI έως απρόσκοπτη υποδομή logistics.">A venture foundry building the digital engines of global industry — from autonomous AI to frictionless logistics.</p>
+      <div class="hero-ctas">
+        <a href="#work" class="link-cta" data-en="See our work" data-de="Arbeit ansehen" data-gr="Δείτε τα έργα μας">See our work</a>
+        <a href="#contact" class="link-cta" data-en="Get in touch" data-de="Kontakt aufnehmen" data-gr="Επικοινωνήστε">Get in touch</a>
+      </div>
+    </header>
+
+    <!-- STAGE — dark -->
+    <section class="stage" id="work">
+      <!-- AEGIS -->
+      <section class="aegis-hero reveal" id="aegis">
+        <p class="aegis-eyebrow">Aegis</p>
+        <h1 class="aegis-title">
+          <span class="gradient-word" data-en="Foundational" data-de="Grundlegende" data-gr="Θεμελιώδης">Foundational</span>
+          <span data-en="intelligence." data-de="Intelligenz." data-gr="νοημοσύνη.">intelligence.</span>
+        </h1>
+        <p class="aegis-subtitle" data-en="Adaptable AI models for enterprise, logistics, and defense." data-de="Anpassbare KI-Modelle für Unternehmen, Logistik und Verteidigung." data-gr="Προσαρμόσιμα μοντέλα AI για επιχειρήσεις, logistics και άμυνα.">Adaptable AI models for enterprise, logistics, and defense.</p>
+        <a class="aegis-link" href="./aegis/index.html" data-en="Learn more" data-de="Mehr erfahren" data-gr="Μάθετε περισσότερα">Learn more</a>
+
+        <div class="aegis-core-wrap aegis-atom-wrap" aria-hidden="true">
+          <svg class="aegis-core-svg aegis-atom-svg" viewBox="0 0 1200 620" role="img">
+            <defs>
+              <radialGradient id="aegisSphereGradient" cx="35%" cy="22%" r="78%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="16%" stop-color="#eaf3ff"/>
+                <stop offset="38%" stop-color="#5c8cff"/>
+                <stop offset="62%" stop-color="#007aff"/>
+                <stop offset="82%" stop-color="#20c7e8"/>
+                <stop offset="100%" stop-color="#22d39a"/>
+              </radialGradient>
+              <radialGradient id="aegisSphereGlow" cx="50%" cy="50%" r="60%">
+                <stop offset="0%" stop-color="#007aff" stop-opacity="0.2"/>
+                <stop offset="55%" stop-color="#007aff" stop-opacity="0.1"/>
+                <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="aegisAtomBlue" x1="72" y1="350" x2="1128" y2="350" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#007aff" stop-opacity="0"/>
+                <stop offset="34%" stop-color="#007aff" stop-opacity="0.36"/>
+                <stop offset="72%" stop-color="#6aa8ff" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#007aff" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="aegisAtomCyan" x1="72" y1="450" x2="1128" y2="260" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#20c7e8" stop-opacity="0"/>
+                <stop offset="42%" stop-color="#007aff" stop-opacity="0.26"/>
+                <stop offset="100%" stop-color="#22d39a" stop-opacity="0.52"/>
+              </linearGradient>
+              <filter id="aegisAtomBlur" x="-90%" y="-90%" width="280%" height="280%">
+                <feGaussianBlur stdDeviation="18"/>
+              </filter>
+              <filter id="aegisAtomGlow" x="-160%" y="-160%" width="420%" height="420%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur"/>
+                <feMerge>
+                  <feMergeNode in="blur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <filter id="aegisSphereFilter" x="-90%" y="-90%" width="280%" height="280%">
+                <feDropShadow dx="-18" dy="-22" stdDeviation="24" flood-color="#ffffff" flood-opacity="0.9"/>
+                <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#007aff" flood-opacity="0.26"/>
+              </filter>
+            </defs>
+
+            <ellipse class="atom-bg-glow" cx="600" cy="385" rx="430" ry="170"/>
+            <ellipse class="atom-floor-shadow" cx="600" cy="472" rx="142" ry="34"/>
+
+            <g class="atom-ambient">
+              <circle class="particle particle-float f1" cx="70" cy="276" r="2.8" fill="#8dbdff"/>
+              <circle class="particle particle-float f2" cx="188" cy="330" r="3" fill="#72b0ff"/>
+              <circle class="particle particle-float f3" cx="870" cy="246" r="3.4" fill="#72b0ff"/>
+              <circle class="particle particle-float f4" cx="1030" cy="372" r="3.3" fill="#20c7e8"/>
+              <circle class="particle particle-float f5" cx="1110" cy="500" r="3.2" fill="#b6a8ff"/>
+              <circle class="particle particle-float f6" cx="105" cy="425" r="4" fill="#bdb4ff"/>
+              <circle class="particle particle-float f7" cx="1128" cy="248" r="3.5" fill="#22d39a"/>
+            </g>
+
+            <g class="atom-orbit-group orbit-flat">
+              <ellipse class="atom-orbit atom-orbit-blue" cx="600" cy="385" rx="510" ry="94" transform="rotate(-4 600 385)"/>
+              <circle class="orbit-node orbit-node-blue" cx="330" cy="352" r="4.2"/>
+              <circle class="orbit-node orbit-node-blue-soft" cx="978" cy="353" r="7"/>
+            </g>
+            <g class="atom-orbit-group orbit-wide">
+              <ellipse class="atom-orbit atom-orbit-soft" cx="600" cy="392" rx="445" ry="106" transform="rotate(5 600 392)"/>
+              <circle class="orbit-node orbit-node-cyan" cx="245" cy="464" r="8"/>
+            </g>
+            <g class="atom-orbit-group orbit-diagonal">
+              <ellipse class="atom-orbit atom-orbit-cyan" cx="600" cy="385" rx="360" ry="92" transform="rotate(-31 600 385)"/>
+              <circle class="orbit-node orbit-node-green" cx="790" cy="352" r="12"/>
+              <circle class="orbit-node orbit-node-blue-small" cx="868" cy="368" r="5.5"/>
+            </g>
+            <g class="atom-orbit-group orbit-vertical">
+              <ellipse class="atom-orbit atom-orbit-vertical" cx="600" cy="374" rx="104" ry="255" transform="rotate(-5 600 374)"/>
+              <circle class="orbit-node orbit-node-top" cx="594" cy="134" r="4"/>
+              <circle class="orbit-node orbit-node-bottom" cx="447" cy="538" r="12"/>
+            </g>
+            <g class="atom-orbit-group orbit-outer">
+              <ellipse class="atom-orbit atom-orbit-dashed" cx="600" cy="408" rx="560" ry="130" transform="rotate(0 600 408)"/>
+              <circle class="orbit-node orbit-node-green-soft" cx="1030" cy="463" r="7"/>
+            </g>
+
+            <g class="aegis-sphere">
+              <circle class="sphere-aura" cx="600" cy="366" r="118" fill="url(#aegisSphereGlow)" filter="url(#aegisAtomBlur)"/>
+              <circle class="sphere" cx="600" cy="358" r="82" fill="url(#aegisSphereGradient)" filter="url(#aegisSphereFilter)"/>
+              <ellipse class="sphere-highlight" cx="565" cy="310" rx="56" ry="31" fill="#ffffff" opacity="0.34" transform="rotate(-28 565 310)"/>
+              <path class="sphere-cyan-wash" d="M578 392 C612 416 668 390 682 343 C673 395 632 443 584 425 C555 414 535 394 526 365 C540 374 555 381 578 392Z" fill="#20c7e8" opacity="0.35"/>
+            </g>
+          </svg>
+        </div>
+      </section>
+
+      <!-- Thin divider between products -->
+      <div class="section-divider" aria-hidden="true"></div>
+
+      <!-- TMS / Axon — Truck Management System -->
+      <a href="./tms/index.html" class="tile tms tms-full reveal">
+        <p class="tile-kicker">Axon · TMS</p>
+        <h2>
+          <span data-en="Every " data-de="Jeder " data-gr="Κάθε ">Every </span><span class="grad grad-sunset" data-en="truck." data-de="Lkw." data-gr="φορτηγό.">truck.</span>
+          <br>
+          <span data-en="In sync." data-de="Im Takt." data-gr="Σε συγχρονισμό.">In sync.</span>
+        </h2>
+        <p class="tag-sub" data-en="Real-time command of every truck and load, from origin to destination." data-de="Echtzeit-Steuerung jedes Lkw und jeder Ladung, von Anfang bis Ende." data-gr="Έλεγχος σε πραγματικό χρόνο κάθε φορτηγού και φορτίου, από την αφετηρία στον προορισμό.">Real-time command of every truck and load, from origin to destination.</p>
+        <span class="link-cta" data-en="Learn more" data-de="Mehr erfahren" data-gr="Μάθετε περισσότερα">Learn more</span>
+        <div class="tile-visual tms-visual-stack">
+          <!-- Route visualization with realistic semi-truck (static snapshot at "Arrived") -->
+          <div class="tms-route" aria-hidden="true">
+            <svg viewBox="0 0 1600 300" preserveAspectRatio="xMidYMid meet">
+              <defs>
+                <filter id="axonDotShadow" x="-70%" y="-70%" width="240%" height="240%">
+                  <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.16"/>
+                </filter>
+                <filter id="axonTruckShadow" x="-20%" y="-35%" width="145%" height="190%">
+                  <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000000" flood-opacity="0.2"/>
+                </filter>
+              </defs>
+
+              <line x1="105" y1="126" x2="1490" y2="126" stroke="#a6acb3" stroke-width="2.6" stroke-dasharray="9 12" stroke-linecap="round"/>
+              <line x1="105" y1="126" x2="365" y2="126" stroke="#ff7a00" stroke-width="6" stroke-linecap="round"/>
+
+              <g class="tms-origin-node" transform="translate(105 126)">
+                <circle r="58" fill="#ff7a00" opacity="0.08"/>
+                <circle r="42" fill="#ff7a00" opacity="0.1"/>
+                <circle r="24" fill="#ffffff" opacity="0.92"/>
+                <circle r="22" fill="#ff7a00"/>
+              </g>
+
+              <g class="tms-dot" transform="translate(760 126)" filter="url(#axonDotShadow)">
+                <circle r="30" fill="#ffffff"/>
+                <circle r="11" fill="#73777e"/>
+              </g>
+              <g class="tms-dot" transform="translate(1010 126)" filter="url(#axonDotShadow)">
+                <circle r="30" fill="#ffffff"/>
+                <circle r="11" fill="#73777e"/>
+              </g>
+              <g class="tms-dot" transform="translate(1260 126)" filter="url(#axonDotShadow)">
+                <circle r="30" fill="#ffffff"/>
+                <circle r="11" fill="#73777e"/>
+              </g>
+              <g class="tms-dot tms-dot-final" transform="translate(1490 126)">
+                <circle r="40" fill="#edf0f2"/>
+                <circle r="18" fill="#73777e"/>
+              </g>
+
+              <g class="tms-truck" filter="url(#axonTruckShadow)">
+                <ellipse cx="455" cy="150" rx="142" ry="14" fill="#000000" opacity="0.12"/>
+                <image href="assets/axon-truck.webp" x="285" y="50" width="350" height="137" preserveAspectRatio="xMidYMid meet"/>
+              </g>
+
+              <g class="tms-route-labels" font-family="Inter, sans-serif" fill="#4f535b" font-size="18" font-weight="700" letter-spacing="1.4" text-anchor="middle">
+                <text x="105" y="238" data-en="NOT ARRIVED" data-de="NICHT ANGEKOMMEN" data-gr="ΔΕΝ ΕΧΕΙ ΦΘΑΣΕΙ">NOT ARRIVED</text>
+                <text x="455" y="238" data-en="ARRIVED" data-de="ANGEKOMMEN" data-gr="ΑΦΙΧΘΗ">ARRIVED</text>
+                <text x="760" y="238" data-en="READY AT DOCK" data-de="BEREIT AN RAMPE" data-gr="ΕΤΟΙΜΟ ΣΤΗΝ ΑΠΟΒΑΘΡΑ">READY AT DOCK</text>
+                <text x="1010" y="238" data-en="LOADING" data-de="WIRD GELADEN" data-gr="ΦΟΡΤΩΣΗ">LOADING</text>
+                <text x="1260" y="238" data-en="LOADED" data-de="GELADEN" data-gr="ΦΟΡΤΩΘΗΚΕ">LOADED</text>
+                <text x="1490" y="238" data-en="EXITED" data-de="AUSGEFAHREN" data-gr="ΕΞΗΛΘΕ">EXITED</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <!-- FOUNDRY — own section, sticky pin -->
+    <section class="foundry-section">
+      <div class="foundry-pin-wrap">
+        <div class="tile foundry foundry-pinned reveal" id="foundry">
+        <p class="tile-kicker">Foundry</p>
+        <div class="dots-loader" aria-hidden="true"><span></span><span></span><span></span></div>
+        <h2>
+          <span data-en="The next chapter is" data-de="Das nächste Kapitel wird" data-gr="Το επόμενο κεφάλαιο">The next chapter is</span>
+          <br>
+          <span data-en="being " data-de="gerade " data-gr="">being </span>
+          <span class="grad grad-violet" data-en="written." data-de="geschrieben." data-gr="γράφεται.">written.</span>
+        </h2>
+        <p class="tag-sub" data-en="A plug-and-play engine designed to launch and house dozens of industry-leading SaaS products." data-de="Eine Plug-and-Play-Engine, entwickelt zur Einführung und Skalierung dutzender führender SaaS-Produkte." data-gr="Μια plug-and-play μηχανή σχεδιασμένη για την εκκίνηση και υποστήριξη δεκάδων κορυφαίων SaaS προϊόντων.">A plug-and-play engine designed to launch and house dozens of industry-leading SaaS products.</p>
+
+        <div class="journey" aria-hidden="true">
+          <svg viewBox="0 0 1000 130" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="journeyGrad" x1="60" x2="647" y1="80" y2="80" gradientUnits="userSpaceOnUse">
+                <stop offset="0%"   stop-color="#ff9f0a"/>
+                <stop offset="33%"  stop-color="#2997ff"/>
+                <stop offset="66%"  stop-color="#bf5af2"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0.25)"/>
+              </linearGradient>
+            </defs>
+            <path id="journeyPath" class="journey-track" d="M 60 80 L 940 80"/>
+            <path id="journeyProgress" class="journey-progress" d="M 60 80 L 940 80"/>
+            <line class="journey-trail" x1="954" y1="80" x2="998" y2="80"/>
+
+            <!-- AXON — completed -->
+            <g class="journey-stop" data-stop="0" transform="translate(60,80)">
+              <text class="journey-title" x="0" y="-50" text-anchor="middle">AXON</text>
+              <text class="journey-status" style="fill:#ff9f0a" x="0" y="-30" text-anchor="middle">Shipped</text>
+              <circle class="halo" r="22" fill="rgba(255,159,10,0.16)"/>
+              <circle class="dot" r="14" fill="#ff9f0a"/>
+              <path d="M-5 0 l3 3 l6 -7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+
+            <!-- AEGIS — test trial -->
+            <g class="journey-stop" data-stop="1" transform="translate(353,80)">
+              <text class="journey-title" x="0" y="-50" text-anchor="middle">AEGIS</text>
+              <text class="journey-status" style="fill:rgba(245,245,247,0.78)" x="0" y="-30" text-anchor="middle">Shipped</text>
+              <circle class="halo" r="22" fill="rgba(41,151,255,0.16)"/>
+              <circle class="dot" r="14" fill="#2997ff"/>
+              <path d="M-5 0 l3 3 l6 -7" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+
+            <!-- IN BUILD — active ring -->
+            <g class="journey-stop" data-stop="2" transform="translate(647,80)">
+              <text class="journey-title" x="0" y="-50" text-anchor="middle">IN BUILD</text>
+              <text class="journey-status" style="fill:#bf5af2" x="0" y="-30" text-anchor="middle">2026</text>
+              <circle class="halo" r="22" fill="rgba(191,90,242,0.18)"/>
+              <circle class="dot" r="14" fill="none" stroke="#bf5af2" stroke-width="2"/>
+              <circle r="3.5" fill="#bf5af2"/>
+            </g>
+
+            <!-- WHAT'S NEXT — small upcoming -->
+            <g class="journey-stop" data-stop="3" transform="translate(940,80)">
+              <text class="journey-title" x="0" y="-50" text-anchor="middle">WHAT'S NEXT</text>
+              <text class="journey-status" style="fill:rgba(255,255,255,0.4)" x="0" y="-30" text-anchor="middle">...</text>
+              <circle class="halo" r="20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+              <circle class="dot" r="9" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+            </g>
+          </svg>
         </div>
 
-        <header class="hero-section">
-            <div class="hero-content">
-                <h1 class="logo-mark">Dion Group</h1>
-                <p class="hero-subtitle" data-en="Architecture for the Next Era" data-de="Architektur für die nächste Ära" data-gr="Αρχιτεκτονική για την Επόμενη Εποχή">Architecture for the Next Era</p>
-                <p class="hero-description" data-en="We build the digital engines that power global industry. Dion Group is a venture foundry dedicated to creating a scalable ecosystem of high-performance SaaS solutions, from autonomous AI integration to frictionless logistical infrastructure." data-de="Wir entwickeln digitale Motoren, die globale Industrie antreiben. Die Dion Group ist eine Venture-Foundry, die ein skalierbares Ökosystem hochleistungsfähiger SaaS-Lösungen aufbaut, von autonomer KI-Integration bis hin zu reibungsloser Logistikinfrastruktur." data-gr="Σχεδιάζουμε τις ψηφιακές μηχανές που κινούν την παγκόσμια βιομηχανία. Η Dion Group είναι venture foundry που δημιουργεί ένα κλιμακούμενο οικοσύστημα SaaS υψηλών επιδόσεων, από αυτόνομη ενσωμάτωση AI έως απρόσκοπτη υποδομή logistics.">
-                    We build the digital engines that power global industry. Dion Group is a venture foundry
-                    dedicated to creating a scalable ecosystem of high-performance SaaS solutions, from
-                    autonomous AI integration to frictionless logistical infrastructure.
-                </p>
+        <div class="product-stage" aria-live="polite">
+          <!-- AXON panel -->
+          <div class="product-panel" data-stop="0" data-active="1">
+            <div class="pp-icon pp-icon-axon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 8h11v8H3z"/>
+                <path d="M14 11h3.8l2.2 2.5V16h-6"/>
+                <path d="M5.5 8V6.5h6V8"/>
+                <circle cx="7" cy="17" r="2"/>
+                <circle cx="17.5" cy="17" r="2"/>
+              </svg>
             </div>
-        </header>
-
-        <main class="projects-grid" id="main-content">
-            <a href="./aegis/index.html" target="_blank" rel="noopener noreferrer" class="glass-panel project-card" aria-label="Aegis Project" data-aria-en="Aegis Project" data-aria-de="Aegis Projekt" data-aria-gr="Έργο Aegis">
-                <div class="card-content project-pure-text">
-                    <div class="text-wrapper">
-                        <h2 class="project-title aegis-gradient">Aegis</h2>
-                        <p data-en="Foundational Intelligence. Adaptable AI models for enterprise, logistics, and defense." data-de="Grundlegende Intelligenz. Anpassbare KI-Modelle für Unternehmen und Verteidigung." data-gr="Θεμελιώδης Νοημοσύνη. Προσαρμόσιμα μοντέλα AI για επιχειρήσεις και άμυνα.">Foundational Intelligence. Adaptable AI models for enterprise, logistics, and defense.</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="#contact" class="glass-panel project-card" aria-label="TMS Operations" data-aria-en="TMS Operations" data-aria-de="TMS Betrieb" data-aria-gr="Λειτουργίες TMS">
-                <div class="card-content project-pure-text">
-                    <div class="text-wrapper">
-                        <h2 class="project-title tms-gradient">TMS</h2>
-                        <p data-en="Terminal Management. Total facility flow control from entry to exit." data-de="Terminal-Management. Gesamte Anlagensteuerung von Ein- bis Ausgang." data-gr="Διαχείριση Τερματικών Σταθμών. Πλήρης έλεγχος ροής από την είσοδο έως την έξοδο.">Terminal Management. Total facility flow control from entry to exit.</p>
-                    </div>
-                </div>
-            </a>
-
-            <div class="glass-panel project-card disabled" aria-hidden="true">
-                <div class="card-content project-pure-text">
-                    <div class="coming-soon-loader loader-spacing">
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                        <div class="dot"></div>
-                    </div>
-                    <div class="text-wrapper">
-                        <h2 class="project-title" data-en="Foundry" data-de="Foundry" data-gr="Foundry">Foundry</h2>
-                        <p data-en="Expanding the SaaS Ecosystem" data-de="Erweiterung des SaaS-Ökosystems" data-gr="Επέκταση του Οικοσυστήματος SaaS">Expanding the SaaS Ecosystem</p>
-                    </div>
-                </div>
+            <div class="pp-body">
+              <div class="pp-head">
+                <h3 class="pp-title">AXON</h3>
+                <span class="pp-badge pp-badge-axon">Shipped</span>
+              </div>
+              <p class="pp-tag" data-en="Truck management, synchronized from arrival to exit." data-de="Lkw-Management, synchronisiert von Ankunft bis Ausfahrt." data-gr="Διαχείριση φορτηγών, συγχρονισμένη από την άφιξη μέχρι την έξοδο.">Truck management, synchronized from arrival to exit.</p>
+              <div class="pp-features">
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="Real-time visibility" data-de="Echtzeit-Transparenz" data-gr="Ορατότητα σε πραγματικό χρόνο">Real-time visibility</span></div>
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="Dock to exit" data-de="Rampe bis Ausfahrt" data-gr="Από αποβάθρα στην έξοδο">Dock to exit</span></div>
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="Every load in sync" data-de="Jede Ladung im Takt" data-gr="Κάθε φορτίο σε συγχρονισμό">Every load in sync</span></div>
+              </div>
             </div>
-        </main>
+          </div>
 
-        <div class="scroll-indicator" aria-hidden="true">
-            <p data-en="Explore the Foundry" data-de="Entdecken Sie die Foundry" data-gr="Εξερευνήστε το Foundry">Explore the Foundry</p>
-            <div class="chevron"></div>
+          <!-- AEGIS panel -->
+          <div class="product-panel" data-stop="1">
+            <div class="pp-icon pp-icon-aegis" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-3z"/>
+                <path d="m9 12 2.5 2.5L16 10"/>
+              </svg>
+            </div>
+            <div class="pp-body">
+              <div class="pp-head">
+                <h3 class="pp-title">AEGIS</h3>
+                <span class="pp-badge pp-badge-aegis">Test trial</span>
+              </div>
+              <p class="pp-tag" data-en="Foundational intelligence for enterprise, logistics, and defense." data-de="Grundlegende Intelligenz für Unternehmen, Logistik und Verteidigung." data-gr="Θεμελιώδης νοημοσύνη για επιχειρήσεις, logistics και άμυνα.">Foundational intelligence for enterprise, logistics, and defense.</p>
+              <div class="pp-features">
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="Adaptive models" data-de="Adaptive Modelle" data-gr="Προσαρμόσιμα μοντέλα">Adaptive models</span></div>
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="Defense-grade trust" data-de="Sicherheit auf Verteidigungsniveau" data-gr="Εμπιστοσύνη επιπέδου άμυνας">Defense-grade trust</span></div>
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="Real-time inference" data-de="Echtzeit-Inferenz" data-gr="Συμπεράσματα σε πραγματικό χρόνο">Real-time inference</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- IN BUILD panel -->
+          <div class="product-panel" data-stop="2">
+            <div class="pp-icon pp-icon-build" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 7 4 12 9 17"/>
+                <polyline points="15 7 20 12 15 17"/>
+              </svg>
+            </div>
+            <div class="pp-body">
+              <div class="pp-head">
+                <h3 class="pp-title" data-en="IN BUILD" data-de="IN ENTWICKLUNG" data-gr="ΣΕ ΑΝΑΠΤΥΞΗ">IN BUILD</h3>
+                <span class="pp-badge pp-badge-build">2026</span>
+              </div>
+              <p class="pp-tag" data-en="The next product is being forged inside the foundry." data-de="Das nächste Produkt entsteht gerade im Foundry." data-gr="Το επόμενο προϊόν σφυρηλατείται μέσα στο foundry.">The next product is being forged inside the foundry.</p>
+              <div class="pp-features">
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="Foundry-native" data-de="Foundry-nativ" data-gr="Εγγενές στο foundry">Foundry-native</span></div>
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="Cross-product" data-de="Produktübergreifend" data-gr="Διαπροϊοντικό">Cross-product</span></div>
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="Built for scale" data-de="Skalierbar von Tag eins" data-gr="Σχεδιασμένο για κλίμακα">Built for scale</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- WHAT'S NEXT panel -->
+          <div class="product-panel" data-stop="3">
+            <div class="pp-icon pp-icon-next" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3z"/>
+                <path d="M19 17v4M17 19h4M5 5v3M3.5 6.5h3"/>
+              </svg>
+            </div>
+            <div class="pp-body">
+              <div class="pp-head">
+                <h3 class="pp-title" data-en="WHAT'S NEXT" data-de="WAS KOMMT" data-gr="ΤΙ ΑΚΟΛΟΥΘΕΙ">WHAT'S NEXT</h3>
+                <span class="pp-badge pp-badge-next">···</span>
+              </div>
+              <p class="pp-tag" data-en="A plug-and-play engine to launch dozens more SaaS products." data-de="Eine Plug-and-Play-Engine für Dutzende weiterer SaaS-Produkte." data-gr="Μια plug-and-play μηχανή για δεκάδες ακόμη SaaS προϊόντα.">A plug-and-play engine to launch dozens more SaaS products.</p>
+              <div class="pp-features">
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="More modules" data-de="Mehr Module" data-gr="Περισσότερα modules">More modules</span></div>
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="More markets" data-de="Mehr Märkte" data-gr="Περισσότερες αγορές">More markets</span></div>
+                <div class="pp-feature"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.5"/><path d="m5 8 2 2 4-5"/></svg><span data-en="More possibilities" data-de="Mehr Möglichkeiten" data-gr="Περισσότερες δυνατότητες">More possibilities</span></div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <section class="philosophy-section reveal">
-            <div class="philosophy-content">
-                <h2 class="massive-text">
-                    <span class="text-line" data-en="We believe technology should" data-de="Wir glauben, Technologie sollte" data-gr="Πιστεύουμε ότι η τεχνολογία πρέπει">We believe technology should</span>
-                    <span class="text-line highlight" data-en="empower humanity, not complicate it." data-de="die Menschheit stärken, nicht komplizieren." data-gr="να ενδυναμώνει την ανθρωπότητα, όχι να την περιπλέκει.">empower humanity, not complicate it.</span>
-                </h2>
-                <p class="philosophy-subtext"
-                    data-en="At Dion Group, we solve the world's most complex problems by hiding the complexity. By bridging the gap between military-grade integrity and consumer-grade simplicity, we eliminate the friction of legacy systems. We don't just build applications; we architect resilient digital environments where human intuition and machine precision work as one."
-                    data-de="Bei Dion Group lösen wir die komplexesten Probleme der Welt, indem wir Komplexität verbergen. Durch die Verbindung von Integrität auf Militärniveau und Einfachheit auf Verbraucherniveau beseitigen wir die Reibung alter Systeme. Wir bauen nicht nur Anwendungen; wir entwerfen widerstandsfähige digitale Umgebungen, in denen menschliche Intuition und maschinelle Präzision zusammenarbeiten."
-                    data-gr="Στη Dion Group λύνουμε τα πιο σύνθετα προβλήματα, κρύβοντας την πολυπλοκότητα. Γεφυρώνουμε την ακεραιότητα στρατιωτικού επιπέδου με την απλότητα καταναλωτικού επιπέδου και μειώνουμε τη τριβή των παλαιών συστημάτων. Δεν δημιουργούμε μόνο εφαρμογές· σχεδιάζουμε ανθεκτικά ψηφιακά περιβάλλοντα όπου η ανθρώπινη διαίσθηση και η μηχανική ακρίβεια λειτουργούν μαζί.">
-                    At Dion Group, we solve the world's most complex problems by hiding the complexity.
-                    By bridging the gap between military-grade integrity and consumer-grade simplicity,
-                    we eliminate the friction of legacy systems. We don't just build applications;
-                    we architect resilient digital environments where human intuition and machine
-                    precision work as one.
-                </p>
-            </div>
-        </section>
+      </div>
+    </section>
 
-        <section class="bento-ecosystem reveal">
-            <div class="bento-grid">
-                <div class="bento-box glass-panel">
-                    <div class="bento-content">
-                        <svg viewBox="0 0 24 24" class="bento-icon" aria-hidden="true">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <h3 data-en="Aegis AI Core" data-de="Aegis KI-Kern" data-gr="Πυρήνας AI Aegis">Aegis AI Core</h3>
-                        <p data-en="Foundational intelligence designed to be implemented across global shipping, defense, and enterprise accounts."
-                            data-de="Grundlegende Intelligenz für den Einsatz in globaler Schifffahrt, Verteidigung und Unternehmensumgebungen."
-                            data-gr="Θεμελιώδης νοημοσύνη σχεδιασμένη για εφαρμογή σε παγκόσμια ναυτιλία, άμυνα και εταιρικά περιβάλλοντα.">Foundational intelligence designed to be implemented across global shipping, defense, and enterprise accounts.</p>
-                    </div>
-                </div>
-                <div class="bento-box glass-panel">
-                    <div class="bento-content">
-                        <svg viewBox="0 0 24 24" class="bento-icon" aria-hidden="true">
-                            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" />
-                            <path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                        </svg>
-                        <h3 data-en="Operational Flow" data-de="Operativer Fluss" data-gr="Λειτουργική Ροή">Operational Flow</h3>
-                        <p data-en="Turning chaotic physical facilities into synchronized digital environments through seamless terminal management."
-                            data-de="Wir verwandeln komplexe physische Anlagen durch nahtloses Terminal-Management in synchronisierte digitale Umgebungen."
-                            data-gr="Μετατρέπουμε σύνθετες φυσικές εγκαταστάσεις σε συγχρονισμένα ψηφιακά περιβάλλοντα μέσω ομαλής διαχείρισης τερματικών.">Turning chaotic physical facilities into synchronized digital environments through seamless terminal management.</p>
-                    </div>
-                </div>
-                <div class="bento-box glass-panel">
-                    <div class="bento-content">
-                        <svg viewBox="0 0 24 24" class="bento-icon" aria-hidden="true">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <h3 data-en="Absolute Integrity" data-de="Absolute Integrität" data-gr="Απόλυτη Ακεραιότητα">Absolute Integrity</h3>
-                        <p data-en="Military-grade security protocols built into the core. Absolute data sovereignty in high-stakes environments."
-                            data-de="Sicherheitsprotokolle auf Militärniveau direkt im Kern. Volle Datensouveränität in kritischen Umgebungen."
-                            data-gr="Πρωτόκολλα ασφάλειας στρατιωτικού επιπέδου ενσωματωμένα στον πυρήνα. Απόλυτη κυριαρχία δεδομένων σε κρίσιμα περιβάλλοντα.">Military-grade security protocols built into the core. Absolute data sovereignty in high-stakes environments.</p>
-                    </div>
-                </div>
-                <div class="bento-box glass-panel">
-                    <div class="bento-content">
-                        <svg viewBox="0 0 24 24" class="bento-icon" aria-hidden="true">
-                            <path d="M21 2v6h-6M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <h3 data-en="Scalable Foundry" data-de="Skalierbare Foundry" data-gr="Κλιμακούμενο Foundry">Scalable Foundry</h3>
-                        <p data-en="A plug-and-play engine designed to launch and house dozens of industry-leading SaaS products."
-                            data-de="Eine Plug-and-Play-Engine, entwickelt zur Einführung und Skalierung von dutzenden führenden SaaS-Produkten."
-                            data-gr="Μια plug-and-play μηχανή σχεδιασμένη για την εκκίνηση και υποστήριξη δεκάδων κορυφαίων SaaS προϊόντων.">A plug-and-play engine designed to launch and house dozens of industry-leading SaaS products.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- STATEMENT — LIGHT -->
+    <section class="statement reveal" id="statement">
+      <h2>
+        <span class="dim" data-en="We believe technology should" data-de="Wir glauben, Technologie sollte" data-gr="Πιστεύουμε ότι η τεχνολογία πρέπει">We believe technology should</span>
+        <span class="grad grad-mono-l" data-en="empower humanity," data-de="die Menschheit stärken," data-gr="να ενδυναμώνει την ανθρωπότητα,">empower humanity,</span>
+        <span data-en=" not complicate it." data-de=" nicht komplizieren." data-gr=" όχι να την περιπλέκει."> not complicate it.</span>
+      </h2>
+      <p data-en="We hide complexity. By bridging military-grade integrity with consumer-grade simplicity, we build resilient digital environments where human intuition and machine precision work as one." data-de="Wir verbergen Komplexität. Durch die Verbindung von Integrität auf Militärniveau und Einfachheit auf Verbraucherniveau bauen wir widerstandsfähige digitale Umgebungen, in denen menschliche Intuition und maschinelle Präzision als eins arbeiten." data-gr="Κρύβουμε την πολυπλοκότητα. Γεφυρώνουμε την ακεραιότητα στρατιωτικού επιπέδου με την απλότητα καταναλωτικού επιπέδου, χτίζοντας ανθεκτικά ψηφιακά περιβάλλοντα όπου η ανθρώπινη διαίσθηση και η μηχανική ακρίβεια λειτουργούν ως ένα.">We hide complexity. By bridging military-grade integrity with consumer-grade simplicity, we build resilient digital environments where human intuition and machine precision work as one.</p>
+    </section>
 
-        <section class="contact-section reveal" id="contact">
-            <div class="glass-panel contact-panel">
-                <h2 data-en="Initiate Inquiry" data-de="Anfrage Einleiten" data-gr="Έναρξη Επικοινωνίας">Initiate Inquiry</h2>
-                <p class="contact-lead" data-en="Connect with our foundry to discuss integration or partnership." data-de="Kontaktieren Sie unsere Foundry, um Integration oder Partnerschaft zu besprechen." data-gr="Συνδεθείτε με το foundry μας για να συζητήσουμε ενοποίηση ή συνεργασία.">Connect with our foundry to discuss integration or partnership.</p>
-                <form class="contact-form" action="https://formsubmit.co/georgedion@dion-group.com" method="POST">
-                    <input type="hidden" id="contact-subject" name="_subject" value="New inquiry from dion-group.com" data-en="New inquiry from dion-group.com" data-de="Neue Anfrage von dion-group.com" data-gr="Νέο μήνυμα από το dion-group.com">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_next" value="https://dion-group.com/thanks.html">
-                    <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <!-- ECOSYSTEM — DARK with illustrated cells -->
+    <section class="sec sec-dark eco" id="eco">
+      <div class="sec-inner">
+        <div class="eco-head reveal">
+          <h3>
+            <span data-en="One standard" data-de="Ein Standard" data-gr="Ένα πρότυπο">One standard</span>
+            <span class="grad grad-aqua" data-en="beneath every product." data-de="unter jedem Produkt." data-gr="κάτω από κάθε προϊόν.">beneath every product.</span>
+          </h3>
+          <p data-en="Clarity, integrity, and scale — engineered into every layer." data-de="Klarheit, Integrität und Skalierbarkeit — in jede Schicht eingebaut." data-gr="Σαφήνεια, ακεραιότητα και κλίμακα — σε κάθε επίπεδο.">Clarity, integrity, and scale — engineered into every layer.</p>
+        </div>
 
-                    <div class="contact-grid">
-                        <label class="field" for="first-name"><span data-en="Name" data-de="Name" data-gr="Όνομα">Name</span><input id="first-name" name="first_name" type="text" required maxlength="80" autocomplete="given-name"></label>
-                        <label class="field" for="last-name"><span data-en="Surname" data-de="Nachname" data-gr="Επώνυμο">Surname</span><input id="last-name" name="last_name" type="text" required maxlength="80" autocomplete="family-name"></label>
-                        <label class="field" for="company"><span data-en="Company" data-de="Unternehmen" data-gr="Εταιρεία">Company</span><input id="company" name="company" type="text" maxlength="140" autocomplete="organization"></label>
-                        <label class="field" for="email"><span data-en="Email" data-de="E-Mail" data-gr="Email">Email</span><input id="email" name="email" type="email" required maxlength="140" autocomplete="email"></label>
-                    </div>
-                    <label class="field field-full" for="message"><span data-en="Message" data-de="Nachricht" data-gr="Μήνυμα">Message</span><textarea id="message" name="message" rows="6" required maxlength="2500"></textarea></label>
-                    <label class="consent-field" for="consent">
-                        <input id="consent" name="consent" type="checkbox" required>
-                        <span class="lang-block" data-lang-block="en">
-                            I agree to the <a href="privacy.html">Privacy Notice</a>, <a href="terms.html">Terms of Use</a> and <a href="cookies.html">Cookie Policy</a>.
-                        </span>
-                        <span class="lang-block" data-lang-block="de" hidden>
-                            Ich stimme der <a href="privacy.html">Datenschutzerklärung</a>, den <a href="terms.html">Nutzungsbedingungen</a> und der <a href="cookies.html">Cookie-Richtlinie</a> zu.
-                        </span>
-                        <span class="lang-block" data-lang-block="gr" hidden>
-                            Συμφωνώ με την <a href="privacy.html">Πολιτική Απορρήτου</a>, τους <a href="terms.html">Όρους Χρήσης</a> και την <a href="cookies.html">Πολιτική Cookies</a>.
-                        </span>
-                    </label>
-                    <button type="submit" class="contact-btn" data-en="Initiate Integration" data-de="Integration Starten" data-gr="Έναρξη Ενοποίησης">Initiate Integration</button>
-                </form>
+        <div class="eco-grid">
+          <div class="eco-cell c1 reveal">
+            <span class="num">01</span>
+            <div class="icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 3 4 9l12 6 12-6-12-6Z"/>
+                <path d="M4 23l12 6 12-6"/>
+                <path d="M4 16l12 6 12-6"/>
+              </svg>
             </div>
-        </section>
+            <h4>
+              <span class="grad grad-blue" data-en="Foundational" data-de="Grundlegende" data-gr="Θεμελιώδης">Foundational</span>
+              <span data-en="intelligence" data-de="Intelligenz" data-gr="νοημοσύνη">intelligence</span>
+            </h4>
+            <p data-en="Intelligence designed to be implemented across global shipping, defense, and enterprise accounts." data-de="Intelligenz für den Einsatz in globaler Schifffahrt, Verteidigung und Unternehmensumgebungen." data-gr="Νοημοσύνη σχεδιασμένη για εφαρμογή σε παγκόσμια ναυτιλία, άμυνα και εταιρικά περιβάλλοντα.">Intelligence designed to be implemented across global shipping, defense, and enterprise accounts.</p>
+          </div>
 
-        <footer>
-            <div class="lang-switcher" aria-label="Language switcher" data-aria-en="Language switcher" data-aria-de="Sprachauswahl" data-aria-gr="Εναλλαγή γλώσσας">
-                <button type="button" class="lang-btn is-active" data-lang="en" aria-pressed="true">EN</button>
-                <button type="button" class="lang-btn" data-lang="de" aria-pressed="false">DE</button>
-                <button type="button" class="lang-btn" data-lang="gr" aria-pressed="false">GR</button>
+          <div class="eco-cell c2 reveal delay-1">
+            <span class="num">02</span>
+            <div class="icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 22h6l3-6 4 10 3-7h8"/>
+                <circle cx="4" cy="22" r="1.5" fill="currentColor"/>
+                <circle cx="28" cy="19" r="1.5" fill="currentColor"/>
+              </svg>
             </div>
-            <nav class="footer-links" aria-label="Legal links" data-aria-en="Legal links" data-aria-de="Rechtliche Links" data-aria-gr="Νομικοί σύνδεσμοι">
-                <a href="privacy.html" data-en="Privacy" data-de="Datenschutz" data-gr="Απόρρητο">Privacy</a>
-                <a href="terms.html" data-en="Terms" data-de="Nutzungsbedingungen" data-gr="Όροι">Terms</a>
-                <a href="cookies.html" data-en="Cookies" data-de="Cookies" data-gr="Cookies">Cookies</a>
-            </nav>
-            <div class="social-links" aria-label="Social links" data-aria-en="Social links" data-aria-de="Soziale Links" data-aria-gr="Κοινωνικά δίκτυα">
-                <a class="social-bubble" href="https://www.instagram.com/dion_group/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect>
-                        <circle cx="12" cy="12" r="4"></circle>
-                        <circle cx="17.5" cy="6.5" r="1"></circle>
-                    </svg>
-                </a>
-                <a class="social-bubble" href="https://www.linkedin.com/company/diongroup/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                        <rect x="2" y="9" width="4" height="12"></rect>
-                        <circle cx="4" cy="4" r="2"></circle>
-                    </svg>
-                </a>
+            <h4>
+              <span class="grad grad-sunset" data-en="Operational" data-de="Operativer" data-gr="Λειτουργική">Operational</span>
+              <span data-en="flow" data-de="Fluss" data-gr="ροή">flow</span>
+            </h4>
+            <p data-en="Chaotic physical facilities become synchronized digital environments through seamless terminal management." data-de="Komplexe physische Anlagen werden durch nahtloses Terminal-Management zu synchronisierten digitalen Umgebungen." data-gr="Σύνθετες φυσικές εγκαταστάσεις γίνονται συγχρονισμένα ψηφιακά περιβάλλοντα μέσω ομαλής διαχείρισης τερματικών.">Chaotic physical facilities become synchronized digital environments through seamless terminal management.</p>
+          </div>
+
+          <div class="eco-cell c3 reveal delay-2">
+            <span class="num">03</span>
+            <div class="icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 29s10-5 10-13V6l-10-3-10 3v10c0 8 10 13 10 13z"/>
+                <path d="m12 16 3 3 5-6"/>
+              </svg>
             </div>
-            <p class="footer-note"
-        data-en="Digital Foundry Showcase. No commercial transactions are processed on this domain."
-        data-de="Digitale Foundry-Präsentation. Über diese Domain werden keine kommerziellen Transaktionen abgewickelt."
-        data-gr="Ψηφιακή παρουσίαση Foundry. Στον παρόντα τομέα δεν διεκπεραιώνονται εμπορικές συναλλαγές.">Digital Foundry Showcase. No commercial transactions are processed on this domain.</p>
-      <p data-en="© 2026 Dion Group. All rights reserved."
-                data-de="© 2026 Dion Group. Alle Rechte vorbehalten."
-                data-gr="© 2026 Dion Group. Με επιφύλαξη παντός δικαιώματος.">&copy; 2026 Dion Group. All rights reserved.</p>
-        </footer>
-    </div>
+            <h4>
+              <span class="grad grad-aqua" data-en="Absolute" data-de="Absolute" data-gr="Απόλυτη">Absolute</span>
+              <span data-en="integrity" data-de="Integrität" data-gr="ακεραιότητα">integrity</span>
+            </h4>
+            <p data-en="Military-grade security protocols built into the core. Absolute data sovereignty in high-stakes environments." data-de="Sicherheitsprotokolle auf Militärniveau direkt im Kern. Volle Datensouveränität in kritischen Umgebungen." data-gr="Πρωτόκολλα ασφάλειας στρατιωτικού επιπέδου ενσωματωμένα στον πυρήνα. Απόλυτη κυριαρχία δεδομένων σε κρίσιμα περιβάλλοντα.">Military-grade security protocols built into the core. Absolute data sovereignty in high-stakes environments.</p>
+          </div>
+
+          <div class="eco-cell c4 reveal delay-3">
+            <span class="num">04</span>
+            <div class="icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="4" width="10" height="10" rx="1.5"/>
+                <rect x="18" y="4" width="10" height="10" rx="1.5"/>
+                <rect x="4" y="18" width="10" height="10" rx="1.5"/>
+                <rect x="18" y="18" width="10" height="10" rx="1.5"/>
+                <path d="M14 9h4M14 23h4M9 14v4M23 14v4"/>
+              </svg>
+            </div>
+            <h4>
+              <span class="grad grad-violet" data-en="Scalable" data-de="Skalierbare" data-gr="Κλιμακούμενο">Scalable</span>
+              <span data-en="foundry" data-de="Foundry" data-gr="Foundry">foundry</span>
+            </h4>
+            <p data-en="A plug-and-play engine designed to launch and house dozens of industry-leading SaaS products." data-de="Eine Plug-and-Play-Engine, entwickelt zur Einführung und Skalierung dutzender führender SaaS-Produkte." data-gr="Μια plug-and-play μηχανή σχεδιασμένη για την εκκίνηση και υποστήριξη δεκάδων κορυφαίων SaaS προϊόντων.">A plug-and-play engine designed to launch and house dozens of industry-leading SaaS products.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT — LIGHT -->
+    <section class="contact reveal" id="contact">
+      <div class="contact-inner">
+        <h2>
+          <span data-en="Let's build" data-de="Lassen Sie uns" data-gr="Ας χτίσουμε">Let's build</span>
+          <span class="grad grad-blue" data-en="what's next." data-de="das Nächste bauen." data-gr="το επόμενο.">what's next.</span>
+        </h2>
+        <p class="contact-lead" data-en="Integration, partnership, or exploration. We'd love to hear from you." data-de="Integration, Partnerschaft oder Erkundung. Wir freuen uns, von Ihnen zu hören." data-gr="Ενοποίηση, συνεργασία ή εξερεύνηση. Θα χαρούμε να ακούσουμε από εσάς.">Integration, partnership, or exploration. We'd love to hear from you.</p>
+
+        <form class="contact-form" action="https://formsubmit.co/georgedion@dion-group.com" method="POST">
+          <input type="hidden" id="contact-subject" name="_subject" value="New inquiry from dion-group.com" data-en="New inquiry from dion-group.com" data-de="Neue Anfrage von dion-group.com" data-gr="Νέο μήνυμα από το dion-group.com">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://dion-group.com/thanks.html">
+          <input type="text" name="_honey" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <div class="contact-grid">
+            <label class="field" for="first-name"><span data-en="Name" data-de="Name" data-gr="Όνομα">Name</span><input id="first-name" name="first_name" type="text" required maxlength="80" autocomplete="given-name"></label>
+            <label class="field" for="last-name"><span data-en="Surname" data-de="Nachname" data-gr="Επώνυμο">Surname</span><input id="last-name" name="last_name" type="text" required maxlength="80" autocomplete="family-name"></label>
+            <label class="field" for="company"><span data-en="Company" data-de="Unternehmen" data-gr="Εταιρεία">Company</span><input id="company" name="company" type="text" maxlength="140" autocomplete="organization"></label>
+            <label class="field" for="email"><span data-en="Email" data-de="E-Mail" data-gr="Email">Email</span><input id="email" name="email" type="email" required maxlength="140" autocomplete="email"></label>
+          </div>
+          <label class="field field-full" for="message"><span data-en="Message" data-de="Nachricht" data-gr="Μήνυμα">Message</span><textarea id="message" name="message" rows="5" required maxlength="2500"></textarea></label>
+          <label class="consent-field" for="consent">
+            <input id="consent" name="consent" type="checkbox" required>
+            <span class="lang-block" data-lang-block="en">I agree to the <a href="privacy.html">Privacy Notice</a>, <a href="terms.html">Terms of Use</a> and <a href="cookies.html">Cookie Policy</a>.</span>
+            <span class="lang-block" data-lang-block="de" hidden>Ich stimme der <a href="privacy.html">Datenschutzerklärung</a>, den <a href="terms.html">Nutzungsbedingungen</a> und der <a href="cookies.html">Cookie-Richtlinie</a> zu.</span>
+            <span class="lang-block" data-lang-block="gr" hidden>Συμφωνώ με την <a href="privacy.html">Πολιτική Απορρήτου</a>, τους <a href="terms.html">Όρους Χρήσης</a> και την <a href="cookies.html">Πολιτική Cookies</a>.</span>
+          </label>
+          <button type="submit" class="contact-btn" data-en="Initiate Integration" data-de="Integration starten" data-gr="Έναρξη ενοποίησης">Initiate Integration</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <a href="index.html" class="footer-brand" aria-label="Dion Group home">
+          <img src="favicon-192x192.png?v=6" alt="" width="28" height="28">
+          <span>Dion Group</span>
+        </a>
+        <div class="lang-switcher" aria-label="Language switcher" data-aria-en="Language switcher" data-aria-de="Sprachauswahl" data-aria-gr="Εναλλαγή γλώσσας">
+          <button type="button" class="lang-btn is-active" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="lang-btn" data-lang="de" aria-pressed="false">DE</button>
+          <button type="button" class="lang-btn" data-lang="gr" aria-pressed="false">GR</button>
+        </div>
+        <nav class="footer-links" aria-label="Legal links" data-aria-en="Legal links" data-aria-de="Rechtliche Links" data-aria-gr="Νομικοί σύνδεσμοι">
+          <a href="privacy.html" data-en="Privacy" data-de="Datenschutz" data-gr="Απόρρητο">Privacy</a>
+          <a href="terms.html" data-en="Terms" data-de="Nutzungsbedingungen" data-gr="Όροι">Terms</a>
+          <a href="cookies.html" data-en="Cookies" data-de="Cookies" data-gr="Cookies">Cookies</a>
+        </nav>
+        <div class="social-links" aria-label="Social links" data-aria-en="Social links" data-aria-de="Soziale Links" data-aria-gr="Κοινωνικά δίκτυα">
+          <a class="social-bubble" href="https://www.instagram.com/dion_group/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>
+          </a>
+          <a class="social-bubble" href="https://www.linkedin.com/company/diongroup/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+        </div>
+        <div class="footer-fine">
+          <p data-en="Digital Foundry Showcase. No commercial transactions are processed on this domain." data-de="Digitale Foundry-Präsentation. Über diese Domain werden keine kommerziellen Transaktionen abgewickelt." data-gr="Ψηφιακή παρουσίαση Foundry. Στον παρόντα τομέα δεν διεκπεραιώνονται εμπορικές συναλλαγές.">Digital Foundry Showcase. No commercial transactions are processed on this domain.</p>
+          <p data-en="Copyright © 2026 Dion Group. All rights reserved." data-de="Copyright © 2026 Dion Group. Alle Rechte vorbehalten." data-gr="Copyright © 2026 Dion Group. Με επιφύλαξη παντός δικαιώματος.">Copyright © 2026 Dion Group. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div id="tweaks-root"></div>
+
     <script src="app.js"></script>
+    <script src="home.js?v=1"></script>
 </body>
-
 </html>
