@@ -154,9 +154,7 @@ body {
   align-items: center;
   text-align: center;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 74%, rgba(0,122,255,0.055), rgba(255,255,255,0) 34%),
-    #ffffff;
+  background: #ffffff;
   color: #111111;
 }
 .aegis-eyebrow {
@@ -227,13 +225,12 @@ body {
   filter: drop-shadow(0 28px 60px rgba(0,122,255,0.06));
 }
 .atom-bg-glow {
-  fill: rgba(0,122,255,0.035);
-  filter: blur(22px);
+  fill: transparent;
 }
 .atom-floor-shadow {
-  fill: rgba(0,122,255,0.18);
+  fill: rgba(0,0,0,0.08);
   filter: blur(18px);
-  opacity: 0.8;
+  opacity: 0.6;
 }
 .atom-orbit-group {
   transform-origin: 600px 385px;
@@ -509,9 +506,7 @@ body {
     border-radius: 0;
     padding: 72px 30px 42px;
     overflow: visible;
-    background:
-      radial-gradient(circle at 50% 72%, rgba(0,122,255,0.055), rgba(255,255,255,0) 40%),
-      #ffffff;
+    background: #ffffff;
   }
 
   .tile.tms {
