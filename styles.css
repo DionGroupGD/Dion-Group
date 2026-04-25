@@ -362,20 +362,21 @@ body {
   .aegis-core-wrap { width: min(720px, 100%); margin-top: 14px; }
 }
 @media (max-width: 600px) {
-  /* On mobile .stage has no side padding, so the aegis-hero must NOT
-     add the +22px bleed (it would overflow the viewport). Reset width/margin. */
+  /* Flat mobile section — let the atom render fully without clipping */
   .aegis-hero {
     width: 100%;
     margin: 0;
     min-height: auto;
     padding: 46px 16px 30px;
+    overflow: visible; /* don't clip the atom's glow / outer orbits */
   }
   .aegis-eyebrow { font-size: 17px; margin-bottom: 18px; }
   .aegis-title { font-size: clamp(42px, 12vw, 52px); line-height: 1.02; letter-spacing: -0.045em; }
   .aegis-subtitle { font-size: 18px; margin-bottom: 24px; }
   .aegis-link { font-size: 21px; }
   .aegis-link::after { font-size: 25px; }
-  .aegis-core-wrap { width: min(360px, 92%); margin-top: 14px; }
+  /* Atom comfortably sized — its glow halos can extend without being clipped now */
+  .aegis-core-wrap { width: min(380px, 92%); margin-top: 18px; }
   .atom-ambient .f1,
   .atom-ambient .f5,
   .atom-ambient .f7,
@@ -472,7 +473,7 @@ body {
   .tile.tms-full .tag-sub { font-size: 22px; max-width: 650px; }
 }
 @media (max-width: 600px) {
-  /* Mobile: flat full-bleed section, not a card */
+  /* Mobile: flat full-bleed sections (no cards), divider line returns */
   .stage { padding: 0; }
   .tile.tms,
   .tile.tms-full {
@@ -485,7 +486,6 @@ body {
   .tile.tms-full .tag-sub { font-size: 17px; margin-bottom: 24px; }
   .tile.tms-full .link-cta { font-size: 19px; }
   .tms-visual-stack { min-height: auto; margin-top: 32px; }
-  /* Route scales to fit the viewport — labels remain readable thanks to viewBox scaling */
   .tms-route { width: 100%; max-width: 100%; margin: 0; transform: none; }
   .tms-route svg { width: 100%; height: auto; }
 }
