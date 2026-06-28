@@ -158,7 +158,7 @@ body {
   color: #111111;
 }
 .aegis-eyebrow {
-  color: #007aff;
+  color: #006edb;
   font-size: 22px;
   line-height: 1.2;
   font-weight: 500;
@@ -191,7 +191,7 @@ body {
   text-wrap: normal;
 }
 .aegis-link {
-  color: #007aff;
+  color: #006edb;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -405,7 +405,7 @@ body {
 
 /* TMS / Axon tile — white, minimal */
 .tile.tms { background: #ffffff; color: var(--l-text); border-radius: 22px; box-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 22px 50px -12px rgba(0,0,0,0.10); }
-.tile.tms .tile-kicker { color: #ff7a00; }
+.tile.tms .tile-kicker { color: #bd5b00; }
 .tile.tms .tag-sub { color: var(--l-dim); }
 /* Axon TMS — reference-style full-width route scene */
 .tile.tms-full {
@@ -437,7 +437,7 @@ body {
 }
 .tile.tms-full .link-cta {
   font-size: 27px;
-  color: #0077ed;
+  color: #006edb;
 }
 .tile.tms-full .link-cta::after {
   font-size: 31px;
@@ -1159,15 +1159,15 @@ body {
 }
 
 /* FOOTER */
-footer.site-footer { background:#000; color: rgba(245,245,247,0.42); padding: 58px 22px 44px; font-size: 13px; line-height: 1.5; border-top: 0; text-align: center; }
+footer.site-footer { background:#000; color: #a1a1a6; padding: 58px 22px 44px; font-size: 13px; line-height: 1.5; border-top: 0; text-align: center; }
 .footer-inner { max-width: 760px; margin:0 auto; display:flex; flex-direction: column; align-items:center; gap: 18px; }
 .footer-brand { display:none; }
 .footer-links { display:flex; gap: 20px; justify-content:center; flex-wrap:wrap; }
-.footer-links a { color: rgba(245,245,247,0.52); text-decoration:none; transition: color 0.2s; }
+.footer-links a { color: #a1a1a6; text-decoration:none; transition: color 0.2s; }
 .footer-links a:hover { color: #f5f5f7; }
 .footer-actions { display: contents; }
 .lang-switcher { display:flex; gap: 18px; }
-.lang-btn { background:none; border:0; cursor:pointer; font: inherit; font-size:12px; font-weight: 700; letter-spacing: 0.12em; padding: 0; color: rgba(245,245,247,0.24); transition: color 0.2s; }
+.lang-btn { background:none; border:0; cursor:pointer; font: inherit; font-size:12px; font-weight: 700; letter-spacing: 0.12em; padding: 0; color: #a1a1a6; transition: color 0.2s; }
 .lang-btn:hover, .lang-btn.is-active { color: #f5f5f7; }
 .social-links { display:flex; gap: 12px; }
 .social-bubble {
@@ -1184,7 +1184,7 @@ footer.site-footer { background:#000; color: rgba(245,245,247,0.42); padding: 58
 }
 .social-bubble svg { width: 17px; height: 17px; stroke: currentColor; fill:none; stroke-width: 1.6; stroke-linecap:round; stroke-linejoin:round; }
 .social-bubble:hover { color: #f5f5f7; }
-.footer-fine { color: rgba(245,245,247,0.38); font-size: 12px; }
+.footer-fine { color: #a1a1a6; font-size: 12px; }
 .footer-fine p + p { margin-top: 8px; }
 
 /* Reveal animations */

@@ -1,0 +1,46 @@
+/* ════════════════════════════════════════════════════════════════
+   Axon TMS — Dion Group product page
+   v20 — light/pastel redesign (migrated from the new design)
+   The page keeps the design's inline styles for layout; this sheet
+   holds the global reset, keyframes, scroll-reveal and the shared
+   language-switcher styling. CSP-safe: no @import, served from 'self'.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Reset + base (verbatim from the design) ── */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#16181f;background:#f4eef4;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+::selection{background:rgba(102,112,248,0.22);}
+
+@keyframes axonMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes axonPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.78)}}
+@keyframes axonFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+/* ── Scroll reveal (axon.js toggles .in). The rvSafety animation is a
+   fail-open net: if axon.js never runs (blocked/errored), every element
+   still becomes visible after 3s instead of being stuck at opacity:0. ── */
+@keyframes rvSafety{to{opacity:1;transform:none;}}
+[data-rv]{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);animation:rvSafety .4s linear 3s forwards;}
+[data-rv].in{opacity:1;transform:none;animation:none;}
+@media (prefers-reduced-motion: reduce){
+  [data-rv]{opacity:1!important;transform:none!important;transition:none!important;}
+  [data-hero-shot]{transform:none!important;}
+}
+
+/* ── Language switcher (shared across the site, driven by app.js) ── */
+.lang-switcher{display:inline-flex;gap:3px;background:rgba(255,255,255,0.6);border:1px solid rgba(28,30,45,0.12);border-radius:999px;padding:3px;}
+.lang-btn{font-size:0.78rem;font-weight:600;color:#7c828f;padding:5px 12px;border-radius:999px;transition:all .2s;line-height:1;}
+.lang-btn.is-active{background:#1b1d27;color:#fff;}
+
+/* ── Mobile nav: drop the secondary "| Dion Group" brand link so the
+   logo + language switcher + CTA fit without overflowing (it stays in
+   the footer). ── */
+@media (max-width:560px){
+  .nav-sec{ display:none !important; }
+}
+
+/* ── Focus visibility for keyboard users ── */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #0a74f0;outline-offset:2px;}

@@ -15,11 +15,12 @@
   <meta id="meta-twitter-description" name="twitter:description" content="Cookie and storage policy for the Dion Group website.">
   <link rel="canonical" href="https://dion-group.com/cookies.html">
   <link rel="icon" type="image/x-icon" href="favicon.ico?v=3">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="cookie-consent.css?v=1">
 </head>
 
 <body class="legal-page"
@@ -61,7 +62,8 @@
         <section class="legal-section">
           <h2>2. Functional Storage in Use</h2>
           <ul>
-            <li><code>dion_lang</code> in localStorage: remembers your selected language (EN/DE/GR).</li>
+            <li><code>dion_cookie_consent</code> in localStorage: records your cookie and storage choices.</li>
+            <li><code>dion_lang</code> in localStorage: remembers your selected language (EN/DE/GR) only if you allow preference storage.</li>
           </ul>
         </section>
         <section class="legal-section">
@@ -78,7 +80,7 @@
         </section>
         <section class="legal-section">
           <h2>5. Managing Preferences</h2>
-          <p>You can clear browser storage at any time in your browser settings. Deleting local storage removes your saved language preference.</p>
+          <p>You can change choices using the Cookie settings button or clear browser storage at any time in your browser settings. Deleting local storage removes your saved consent and language preference.</p>
         </section>
         <section class="legal-section">
           <h2>6. Updates</h2>
@@ -94,7 +96,8 @@
         <section class="legal-section">
           <h2>2. Eingesetzte Funktionsspeicherung</h2>
           <ul>
-            <li><code>dion_lang</code> in localStorage: speichert Ihre gewählte Sprache (EN/DE/GR).</li>
+            <li><code>dion_cookie_consent</code> in localStorage: speichert Ihre Cookie- und Speicher-Auswahl.</li>
+            <li><code>dion_lang</code> in localStorage: speichert Ihre gewählte Sprache (EN/DE/GR) nur, wenn Sie Präferenzspeicherung erlauben.</li>
           </ul>
         </section>
         <section class="legal-section">
@@ -111,7 +114,7 @@
         </section>
         <section class="legal-section">
           <h2>5. Verwaltung Ihrer Einstellungen</h2>
-          <p>Sie können Browser-Speicher jederzeit in den Browsereinstellungen löschen. Beim Löschen von localStorage wird Ihre Sprachpräferenz entfernt.</p>
+          <p>Sie können Ihre Auswahl über die Schaltfläche Cookie-Einstellungen ändern oder Browser-Speicher jederzeit in den Browsereinstellungen löschen. Beim Löschen von localStorage werden Ihre gespeicherte Einwilligung und Sprachpräferenz entfernt.</p>
         </section>
         <section class="legal-section">
           <h2>6. Aktualisierungen</h2>
@@ -127,7 +130,8 @@
         <section class="legal-section">
           <h2>2. Λειτουργική Αποθήκευση που Χρησιμοποιείται</h2>
           <ul>
-            <li><code>dion_lang</code> στο localStorage: αποθηκεύει την επιλεγμένη γλώσσα σας (EN/DE/GR).</li>
+            <li><code>dion_cookie_consent</code> στο localStorage: καταγράφει τις επιλογές σας για cookies και αποθήκευση.</li>
+            <li><code>dion_lang</code> στο localStorage: αποθηκεύει την επιλεγμένη γλώσσα σας (EN/DE/GR) μόνο αν επιτρέψετε την αποθήκευση προτιμήσεων.</li>
           </ul>
         </section>
         <section class="legal-section">
@@ -144,7 +148,7 @@
         </section>
         <section class="legal-section">
           <h2>5. Διαχείριση Προτιμήσεων</h2>
-          <p>Μπορείτε να διαγράψετε την αποθήκευση browser οποτεδήποτε από τις ρυθμίσεις σας. Η διαγραφή localStorage αφαιρεί την αποθηκευμένη προτίμηση γλώσσας.</p>
+          <p>Μπορείτε να αλλάξετε επιλογές από το κουμπί ρυθμίσεων cookies ή να διαγράψετε την αποθήκευση browser οποτεδήποτε από τις ρυθμίσεις σας. Η διαγραφή localStorage αφαιρεί τη συγκατάθεση και την αποθηκευμένη προτίμηση γλώσσας.</p>
         </section>
         <section class="legal-section">
           <h2>6. Ενημερώσεις</h2>
@@ -189,7 +193,9 @@
         data-gr="© 2026 Dion Group. Με επιφύλαξη παντός δικαιώματος.">&copy; 2026 Dion Group. All rights reserved.</p>
     </footer>
   </div>
+  <script src="cookie-consent.js?v=1"></script>
   <script src="app.js"></script>
+  <script src="analytics.js?v=3"></script>
 </body>
 
 </html>

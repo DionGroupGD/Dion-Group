@@ -47,12 +47,13 @@
     <link rel="alternate" hreflang="de" href="https://dion-group.com/?lang=de">
     <link rel="alternate" hreflang="el" href="https://dion-group.com/?lang=gr">
     <link rel="alternate" hreflang="x-default" href="https://dion-group.com/">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=46">
+    <link rel="stylesheet" href="styles.css?v=47">
+    <link rel="stylesheet" href="cookie-consent.css?v=1">
 </head>
 
 <body
@@ -104,6 +105,7 @@
       </div>
     </header>
 
+    <main id="main-content">
     <!-- STAGE — dark -->
     <section class="stage" id="work">
       <!-- AEGIS -->
@@ -210,7 +212,7 @@
       <div class="section-divider" aria-hidden="true"></div>
 
       <!-- TMS / Axon — Truck Management System -->
-      <a href="coming-soon.html?product=axon" class="tile tms tms-full reveal">
+      <a href="tms/axon.html" class="tile tms tms-full reveal">
         <p class="tile-kicker">Axon · TMS</p>
         <h2>
           <span data-en="Every " data-de="Jeder " data-gr="Κάθε ">Every </span><span class="grad grad-sunset" data-en="truck." data-de="Lkw." data-gr="φορτηγό.">truck.</span>
@@ -563,6 +565,8 @@
       </div>
     </section>
 
+    </main>
+
     <!-- FOOTER -->
     <footer class="site-footer">
       <div class="footer-inner">
@@ -597,7 +601,9 @@
 
     <div id="tweaks-root"></div>
 
+    <script src="cookie-consent.js?v=1"></script>
     <script src="app.js"></script>
+    <script src="analytics.js?v=3"></script>
     <script src="home.js?v=1"></script>
 </body>
 </html>

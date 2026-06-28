@@ -15,11 +15,12 @@
   <meta id="meta-twitter-description" name="twitter:description" content="Privacy Notice for Dion Group website visitors and contact form submissions.">
   <link rel="canonical" href="https://dion-group.com/privacy.html">
   <link rel="icon" type="image/x-icon" href="favicon.ico?v=3">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="cookie-consent.css?v=1">
 </head>
 
 <body class="legal-page"
@@ -63,7 +64,8 @@
           <ul>
             <li>Contact form data: name, surname, company, email address, and message content.</li>
             <li>Technical request data handled by infrastructure providers (for example IP address, timestamp, user agent).</li>
-            <li>Preference data stored in your browser: language preference key <code>dion_lang</code>.</li>
+            <li>Preference data stored in your browser if allowed: language preference key <code>dion_lang</code>.</li>
+            <li>Consent record stored in your browser: cookie preference key <code>dion_cookie_consent</code>.</li>
           </ul>
         </section>
         <section class="legal-section">
@@ -71,7 +73,7 @@
           <ul>
             <li>To respond to inquiries and business requests.</li>
             <li>To maintain website security, reliability, and abuse prevention.</li>
-            <li>To remember your selected language preference.</li>
+            <li>To remember your selected language preference when you allow preference storage.</li>
           </ul>
         </section>
         <section class="legal-section">
@@ -110,7 +112,8 @@
           <ul>
             <li>Kontaktformulardaten: Name, Nachname, Unternehmen, E-Mail-Adresse und Nachrichteninhalt.</li>
             <li>Technische Anfragedaten, die von Infrastrukturanbietern verarbeitet werden (z. B. IP-Adresse, Zeitstempel, User-Agent).</li>
-            <li>Präferenzdaten im Browser: Spracheinstellung unter dem Schlüssel <code>dion_lang</code>.</li>
+            <li>Präferenzdaten im Browser, sofern erlaubt: Spracheinstellung unter dem Schlüssel <code>dion_lang</code>.</li>
+            <li>Einwilligungsnachweis im Browser: Cookie-Auswahl unter dem Schlüssel <code>dion_cookie_consent</code>.</li>
           </ul>
         </section>
         <section class="legal-section">
@@ -118,7 +121,7 @@
           <ul>
             <li>Um auf Anfragen und geschäftliche Anforderungen zu antworten.</li>
             <li>Zur Aufrechterhaltung von Sicherheit, Stabilität und Missbrauchsschutz der Website.</li>
-            <li>Um Ihre gewählte Spracheinstellung zu speichern.</li>
+            <li>Um Ihre gewählte Spracheinstellung zu speichern, wenn Sie Präferenzspeicherung erlauben.</li>
           </ul>
         </section>
         <section class="legal-section">
@@ -157,7 +160,8 @@
           <ul>
             <li>Δεδομένα φόρμας επικοινωνίας: όνομα, επώνυμο, εταιρεία, email και περιεχόμενο μηνύματος.</li>
             <li>Τεχνικά δεδομένα αιτήματος που διαχειρίζονται οι πάροχοι υποδομής (π.χ. IP, χρονική σήμανση, user agent).</li>
-            <li>Δεδομένα προτιμήσεων στον browser: ρύθμιση γλώσσας με κλειδί <code>dion_lang</code>.</li>
+            <li>Δεδομένα προτιμήσεων στον browser, αν επιτραπεί: ρύθμιση γλώσσας με κλειδί <code>dion_lang</code>.</li>
+            <li>Καταγραφή συγκατάθεσης στον browser: επιλογές cookies με κλειδί <code>dion_cookie_consent</code>.</li>
           </ul>
         </section>
         <section class="legal-section">
@@ -165,7 +169,7 @@
           <ul>
             <li>Για να απαντάμε σε αιτήματα επικοινωνίας και συνεργασίας.</li>
             <li>Για την ασφάλεια, αξιοπιστία και προστασία από κατάχρηση του ιστότοπου.</li>
-            <li>Για να θυμόμαστε την επιλεγμένη γλώσσα σας.</li>
+            <li>Για να θυμόμαστε την επιλεγμένη γλώσσα σας όταν επιτρέπετε αποθήκευση προτιμήσεων.</li>
           </ul>
         </section>
         <section class="legal-section">
@@ -231,7 +235,9 @@
         data-gr="© 2026 Dion Group. Με επιφύλαξη παντός δικαιώματος.">&copy; 2026 Dion Group. All rights reserved.</p>
     </footer>
   </div>
+  <script src="cookie-consent.js?v=1"></script>
   <script src="app.js"></script>
+  <script src="analytics.js?v=3"></script>
 </body>
 
 </html>

@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Node / build artifacts (if ever added)
+node_modules/
+dist/
+build/
+
+# Workspace / tooling caches
+archive/
+.cache/
+
+# Local env
+.env
+.env.local
+
+# Internal — not for the live deploy (backups, snapshots, agent + checklist files)
+.claude/
+**/.claude/
+versions/
+tms/old/
+GO-LIVE.md
+**/GO-LIVE.md
+*.bak
+*.bak-*
+
+# Aegis is pre-launch (homepage points to coming-soon) — not for live deploy yet
+aegis/

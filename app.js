@@ -104,7 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     try {
-      localStorage.setItem('dion_lang', safeLang);
+      if (window.DionConsent?.allows('preferences')) {
+        localStorage.setItem('dion_lang', safeLang);
+      } else {
+        localStorage.removeItem('dion_lang');
+      }
     } catch (error) {
       // Ignore storage errors in private/incognito contexts.
     }
@@ -130,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
       initialLang = langParam;
     } else {
       try {
-        const storedLang = localStorage.getItem('dion_lang');
+        const storedLang = window.DionConsent?.allows('preferences') ? localStorage.getItem('dion_lang') : null;
         if (storedLang && supportedLanguages.includes(storedLang)) {
           initialLang = storedLang;
         }
@@ -145,6 +149,19 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => {
         applyLanguage(btn.dataset.lang || 'en');
       });
+    });
+
+    window.addEventListener('dionConsentChange', (event) => {
+      if (!event.detail?.preferences) return;
+      const activeButton = document.querySelector('.lang-btn.is-active');
+      const activeLang = activeButton?.dataset.lang || initialLang;
+      if (supportedLanguages.includes(activeLang)) {
+        try {
+          localStorage.setItem('dion_lang', activeLang);
+        } catch (error) {
+          // Ignore storage errors in private/incognito contexts.
+        }
+      }
     });
   }
 
