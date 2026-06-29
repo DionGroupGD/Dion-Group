@@ -18,7 +18,8 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self' https://formsubmit.co; upgrade-insecure-requests">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link id="gfont" rel="stylesheet" media="print" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"></noscript>
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="cookie-consent.css?v=1">
 </head>
@@ -232,9 +233,9 @@
         data-gr="© 2026 Dion Group. Με επιφύλαξη παντός δικαιώματος.">&copy; 2026 Dion Group. All rights reserved.</p>
     </footer>
   </div>
-  <script src="cookie-consent.js?v=1"></script>
-  <script src="app.js"></script>
-  <script src="analytics.js?v=3"></script>
+  <script defer src="cookie-consent.js?v=1"></script>
+  <script defer src="app.js?v=2"></script>
+  <script defer src="analytics.js?v=3"></script>
 </body>
 
 </html>
