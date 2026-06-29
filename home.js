@@ -32,10 +32,6 @@
   const wrap = tile.closest('.foundry-pin-wrap');
   if (!wrap) return;
 
-  const len = path.getTotalLength();
-  progress.style.setProperty('--jlen', len);
-  progress.style.strokeDasharray = len;
-
   const stopPositions = [0, 1 / 3, 2 / 3, 1];
 
   let raf = null;
@@ -71,5 +67,13 @@
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
-  update();
+
+  // Defer layout-reading work (getTotalLength / getBoundingClientRect) off the
+  // critical render path. Runs after first paint to avoid a forced reflow at init.
+  requestAnimationFrame(() => {
+    const len = path.getTotalLength();
+    progress.style.setProperty('--jlen', len);
+    progress.style.strokeDasharray = len;
+    update();
+  });
 })();

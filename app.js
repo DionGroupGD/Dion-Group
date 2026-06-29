@@ -1,5 +1,12 @@
 // JavaScript logic for Dion Group Homepage
 
+// Activate the web-font stylesheet (loaded non-render-blocking via media="print").
+// Runs as soon as this deferred script executes, once the DOM is parsed.
+(function () {
+  var gf = document.getElementById('gfont');
+  if (gf) gf.media = 'all';
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const supportsHoverTilt = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
