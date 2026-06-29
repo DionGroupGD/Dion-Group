@@ -2,27 +2,23 @@
 
 > Dion Group is a venture foundry and software studio that builds operational SaaS products and custom software for companies. Based in Greece, working internationally (English, German, Greek).
 
-## What Dion Group does
-- Builds and operates its own SaaS products (see Products below).
-- Designs and builds **custom software** for companies: web applications, operational platforms, dashboards, internal tools, and end-to-end digital systems — from concept to deployment.
-- Areas of expertise: logistics and transport operations, terminal/yard management, workflow and document automation, and AI-assisted tooling.
+Dion Group builds and operates its own SaaS products, and designs and builds custom software for client companies: web applications, operational platforms, dashboards, internal tools, and end-to-end digital systems, from concept to deployment. Areas of expertise: logistics and transport operations, terminal and yard management, workflow and document automation, and AI-assisted tooling. Aegis, an AI product, is currently in development.
 
 ## Products
-- **Axon TMS** — https://dion-group.com/tms/axon.html — a Terminal / Transport Management System: the single operational record for a truck yard. It governs gate check-in, warehouse loading, documents (CMR), and release across one record per truck, in real time. Use cases: truck management, yard management, dock/gate scheduling, fleet and logistics operations, freight document automation. Pricing from €500/month per yard.
-- **Aegis** — an AI product, currently in development.
+- [Axon TMS](https://dion-group.com/tms/axon.html): Terminal and Transport Management System. The single operational record for a truck yard, governing gate check-in, warehouse loading, documents (CMR), and release across one record per truck, in real time. Use cases: truck management, yard management, dock and gate scheduling, fleet and logistics operations, freight document automation. Pricing from 500 euro per month per yard.
 
-## Services (for companies looking to build custom programs/software)
-Dion Group partners with businesses that want a custom program, app, internal system, or website built. Typical engagements: custom web apps, logistics/operations software, automation tools, and tailored SaaS. Contact via the form below to discuss a build.
+## Services
+- [Custom software development](https://dion-group.com/#contact): Dion Group partners with businesses that want a custom program, app, internal system, or website built. Typical engagements: custom web apps, logistics and operations software, automation tools, and tailored SaaS.
 
 ## Primary pages
-- Home: https://dion-group.com/
-- Axon TMS: https://dion-group.com/tms/axon.html
-- Privacy: https://dion-group.com/privacy.html
-- Terms: https://dion-group.com/terms.html
-- Cookies: https://dion-group.com/cookies.html
+- [Home](https://dion-group.com/): Company overview, products, and contact.
+- [Axon TMS](https://dion-group.com/tms/axon.html): Terminal and yard management software for trucks.
+- [Privacy Policy](https://dion-group.com/privacy.html): How Dion Group handles data.
+- [Terms](https://dion-group.com/terms.html): Terms of use.
+- [Cookies](https://dion-group.com/cookies.html): Cookie policy.
 
 ## Contact
-- Email: georgedion@dion-group.com
-- Contact form: https://dion-group.com/#contact
-- LinkedIn: https://www.linkedin.com/company/diongroup/
-- Instagram: https://www.instagram.com/dion_group/
+- [Contact form](https://dion-group.com/#contact): Discuss a custom build or Axon TMS.
+- [Email](mailto:georgedion@dion-group.com): Reach Dion Group directly.
+- [LinkedIn](https://www.linkedin.com/company/diongroup/): Company page.
+- [Instagram](https://www.instagram.com/dion_group/): Company profile.
