@@ -1,15 +1,28 @@
 # Dion Group
 
-> Official website for Dion Group business intelligence platforms.
+> Dion Group is a venture foundry and software studio that builds operational SaaS products and custom software for companies. Based in Greece, working internationally (English, German, Greek).
 
-## Summary
-Dion Group is a venture foundry building scalable SaaS systems for operations, logistics, and enterprise intelligence.
+## What Dion Group does
+- Builds and operates its own SaaS products (see Products below).
+- Designs and builds **custom software** for companies: web applications, operational platforms, dashboards, internal tools, and end-to-end digital systems — from concept to deployment.
+- Areas of expertise: logistics and transport operations, terminal/yard management, workflow and document automation, and AI-assisted tooling.
 
-## Primary Pages
-- https://dion-group.com/
-- https://dion-group.com/privacy.html
-- https://dion-group.com/terms.html
-- https://dion-group.com/cookies.html
+## Products
+- **Axon TMS** — https://dion-group.com/tms/axon.html — a Terminal / Transport Management System: the single operational record for a truck yard. It governs gate check-in, warehouse loading, documents (CMR), and release across one record per truck, in real time. Use cases: truck management, yard management, dock/gate scheduling, fleet and logistics operations, freight document automation. Pricing from €500/month per yard.
+- **Aegis** — an AI product, currently in development.
+
+## Services (for companies looking to build custom programs/software)
+Dion Group partners with businesses that want a custom program, app, internal system, or website built. Typical engagements: custom web apps, logistics/operations software, automation tools, and tailored SaaS. Contact via the form below to discuss a build.
+
+## Primary pages
+- Home: https://dion-group.com/
+- Axon TMS: https://dion-group.com/tms/axon.html
+- Privacy: https://dion-group.com/privacy.html
+- Terms: https://dion-group.com/terms.html
+- Cookies: https://dion-group.com/cookies.html
 
 ## Contact
+- Email: georgedion@dion-group.com
 - Contact form: https://dion-group.com/#contact
+- LinkedIn: https://www.linkedin.com/company/diongroup/
+- Instagram: https://www.instagram.com/dion_group/
