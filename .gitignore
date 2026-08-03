@@ -34,3 +34,13 @@ GO-LIVE.md
 # Aegis is pre-launch (homepage points to coming-soon) — not for live deploy yet
 aegis/
 .indexnow-key
+
+# offer-lock — this repo is public and deploys to dion-group.com, so the
+# Offer Builder's plaintext sources, the locked builds and above all the
+# passphrase must never be committed. Only the tooling is versioned.
+tools/offer-lock/src/
+tools/offer-lock/dist/
+tools/offer-lock/node_modules
+passphrase.txt
+*.passphrase
+.passphrase*

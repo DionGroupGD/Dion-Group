@@ -1,0 +1,21 @@
+{
+  "name": "offer-lock",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Packages the Intercomm Foods Offer Builder into a single passphrase-encrypted HTML file for distribution to colleagues.",
+  "bin": { "offer-lock": "./build.mjs" },
+  "scripts": {
+    "build": "node build.mjs",
+    "passphrase": "node build.mjs --gen-passphrase",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "javascript-obfuscator": "^4.1.1",
+    "terser": "^5.49.0"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.56.1"
+  },
+  "engines": { "node": ">=18" }
+}

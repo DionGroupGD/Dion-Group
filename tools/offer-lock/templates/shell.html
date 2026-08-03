@@ -1,0 +1,303 @@
+<!doctype html>
+<!--
+  ===========================================================================
+  __TITLE__
+  __COPYRIGHT__
+
+  This file is a LICENSED, ENCRYPTED distribution.
+
+  The application inside it is stored as AES-256-GCM ciphertext and cannot be
+  read, extracted, modified or re-used without the passphrase held by the
+  owner named above. Attempting to alter any byte of the encrypted block makes
+  it permanently undecryptable — the authentication tag will reject it.
+
+  Redistribution, decompilation, re-branding or removal of authorship notices
+  is not permitted. Issued to licensed users of Intercomm Foods only.
+
+  Build: __BUILD_ID__
+  ===========================================================================
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="__OWNER__" />
+    <meta name="copyright" content="__COPYRIGHT__" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta name="theme-color" content="#174b3f" />
+    <title>__TITLE__</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%23174b3f%22/><path d=%22M18 34c14-18 26-12 28-20 3 19-6 32-25 34 8-5 15-12 20-21-7 7-14 12-23 15z%22 fill=%22%23dcece6%22/></svg>" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      :root {
+        --green: #174b3f; --green-700: #10382f; --mint: #dcece6; --mint-50: #f2f8f6;
+        --ink: #14201c; --muted: #5d726b; --line: #d9e5e0; --red: #b3261e; --red-bg: #fdeceb;
+      }
+      html, body { height: 100%; }
+      body {
+        margin: 0; background: linear-gradient(160deg, #f4f8f7 0%, #e7f0ed 100%);
+        color: var(--ink); display: grid; place-items: center; padding: 24px;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .lock-card {
+        width: 100%; max-width: 430px; background: #fff; border: 1px solid var(--line);
+        border-radius: 18px; padding: 34px 32px 26px; box-shadow: 0 22px 60px rgba(16, 56, 47, .13);
+      }
+      .lock-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+      .lock-mark {
+        width: 42px; height: 42px; border-radius: 12px; background: var(--green);
+        display: grid; place-items: center; flex: none;
+      }
+      .lock-mark svg { width: 21px; height: 21px; fill: none; stroke: var(--mint); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .lock-brand-text strong { display: block; font-size: 14px; letter-spacing: .16em; line-height: 1.1; }
+      .lock-brand-text small { display: block; font-size: 10.5px; letter-spacing: .3em; color: var(--muted); }
+      h1 { font-size: 19px; margin: 0 0 6px; letter-spacing: -.01em; }
+      .lock-sub { margin: 0 0 22px; font-size: 13px; line-height: 1.55; color: var(--muted); }
+      label { display: block; font-size: 11px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+      .pw-wrap { position: relative; display: flex; }
+      input[type="password"], input[type="text"] {
+        width: 100%; height: 46px; padding: 0 46px 0 14px; font-size: 15px; font-family: inherit;
+        color: var(--ink); border: 1px solid var(--line); border-radius: 11px; background: var(--mint-50);
+        outline: none; transition: border-color .15s, box-shadow .15s;
+      }
+      input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(23, 75, 63, .13); background: #fff; }
+      .pw-reveal {
+        position: absolute; right: 5px; top: 5px; width: 36px; height: 36px; border: 0; border-radius: 9px;
+        background: transparent; cursor: pointer; color: var(--muted); display: grid; place-items: center;
+      }
+      .pw-reveal:hover { background: var(--mint); color: var(--green); }
+      .pw-reveal svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      button.unlock {
+        margin-top: 16px; width: 100%; height: 46px; border: 0; border-radius: 11px; cursor: pointer;
+        background: var(--green); color: #fff; font-family: inherit; font-size: 14px; font-weight: 650;
+        display: inline-flex; align-items: center; justify-content: center; gap: 9px; transition: background .15s;
+      }
+      button.unlock:hover:not(:disabled) { background: var(--green-700); }
+      button.unlock:disabled { opacity: .62; cursor: default; }
+      .spinner {
+        width: 15px; height: 15px; border: 2px solid rgba(255, 255, 255, .35);
+        border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; display: none;
+      }
+      body.busy .spinner { display: block; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2.4s; } }
+      .msg { margin-top: 14px; font-size: 12.5px; line-height: 1.55; border-radius: 10px; padding: 11px 13px; display: none; }
+      .msg.show { display: block; }
+      .msg.error { background: var(--red-bg); color: var(--red); border: 1px solid #f4cfcc; }
+      .msg.info { background: var(--mint-50); color: var(--green); border: 1px solid var(--line); }
+      .lock-foot {
+        margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line);
+        font-size: 11px; line-height: 1.65; color: var(--muted);
+      }
+      .lock-foot strong { color: var(--ink); font-weight: 650; }
+      .lock-foot .build { display: block; margin-top: 7px; font-size: 10px; letter-spacing: .04em; opacity: .75; word-break: break-all; }
+      noscript { display: block; font-size: 13px; color: var(--red); }
+    </style>
+  </head>
+  <body>
+    <main class="lock-card" role="main">
+      <div class="lock-brand">
+        <div class="lock-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        </div>
+        <div class="lock-brand-text"><strong>__BRAND_TOP__</strong><small>__BRAND_SUB__</small></div>
+      </div>
+
+      <h1>__TITLE__</h1>
+      <p class="lock-sub">This copy is encrypted. Enter the passphrase you were given to open the Offer Builder.</p>
+
+      <form id="lock-form" autocomplete="off">
+        <label for="pw">Passphrase</label>
+        <div class="pw-wrap">
+          <input id="pw" type="password" autocomplete="off" autocapitalize="off" autocorrect="off"
+                 spellcheck="false" placeholder="••••-••••-••••-••••" aria-describedby="msg" />
+          <button type="button" class="pw-reveal" id="reveal" aria-label="Show passphrase" title="Show passphrase">
+            <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <button type="submit" class="unlock" id="go"><span class="spinner" aria-hidden="true"></span><span id="go-label">Unlock</span></button>
+      </form>
+
+      <div class="msg" id="msg" role="alert" aria-live="assertive"></div>
+      <noscript>JavaScript must be enabled to open this file.</noscript>
+
+      <div class="lock-foot">
+        <strong>__COPYRIGHT__</strong><br />
+        Licensed copy — for use by authorised colleagues only. Not to be
+        redistributed, modified, decompiled or published, and not to be
+        presented as anyone else's work.
+        <span class="build">Build __BUILD_ID__</span>
+      </div>
+    </main>
+
+    <script id="lock-cfg" type="application/json">__CONFIG_JSON__</script>
+    <script id="lock-data" type="text/plain">__PAYLOAD_B64__</script>
+    <script>
+      (function () {
+        "use strict";
+
+        var cfgEl = document.getElementById("lock-cfg");
+        var dataEl = document.getElementById("lock-data");
+        var CFG = JSON.parse(cfgEl.textContent);
+        var DATA = dataEl.textContent.replace(/\s+/g, "");
+
+        var form = document.getElementById("lock-form");
+        var pw = document.getElementById("pw");
+        var go = document.getElementById("go");
+        var goLabel = document.getElementById("go-label");
+        var msgEl = document.getElementById("msg");
+        var reveal = document.getElementById("reveal");
+        var attempts = 0;
+        var busy = false;
+
+        function say(text, kind) {
+          msgEl.textContent = text;
+          msgEl.className = "msg show " + (kind || "error");
+        }
+        function clearMsg() { msgEl.className = "msg"; msgEl.textContent = ""; }
+
+        function setBusy(on, label) {
+          busy = on;
+          document.body.classList.toggle("busy", on);
+          go.disabled = on;
+          pw.disabled = on;
+          goLabel.textContent = label || (on ? "Unlocking…" : "Unlock");
+        }
+
+        function b64ToBytes(b64) {
+          var bin = atob(b64), n = bin.length, out = new Uint8Array(n);
+          for (var i = 0; i < n; i++) out[i] = bin.charCodeAt(i);
+          return out;
+        }
+        function toHex(buf) {
+          var v = new Uint8Array(buf), s = "";
+          for (var i = 0; i < v.length; i++) s += v[i].toString(16).padStart(2, "0");
+          return s;
+        }
+
+        function gunzip(buf) {
+          if (typeof DecompressionStream === "undefined") {
+            return Promise.reject(new Error("NOGZIP"));
+          }
+          var stream = new Blob([buf]).stream().pipeThrough(new DecompressionStream("gzip"));
+          return new Response(stream).arrayBuffer();
+        }
+
+        // Environment check — crypto.subtle needs a secure context. file:// counts
+        // as one in Chrome, Edge, Firefox and Safari; http:// on a LAN does not.
+        if (!window.crypto || !window.crypto.subtle) {
+          setBusy(true, "Unavailable");
+          say(
+            "This browser will not allow decryption here. Open the file directly from your " +
+            "computer (double-click it) using Chrome, Edge or Safari — and make sure you have " +
+            "unzipped it first rather than opening it from inside the .zip.",
+            "error"
+          );
+        }
+
+        reveal.addEventListener("click", function () {
+          var showing = pw.type === "text";
+          pw.type = showing ? "password" : "text";
+          reveal.setAttribute("aria-label", showing ? "Show passphrase" : "Hide passphrase");
+          pw.focus();
+        });
+
+        async function decrypt(passphrase) {
+          var enc = new TextEncoder();
+          var baseKey = await crypto.subtle.importKey(
+            "raw", enc.encode(passphrase), { name: "PBKDF2" }, false, ["deriveKey"]
+          );
+          var key = await crypto.subtle.deriveKey(
+            { name: "PBKDF2", salt: b64ToBytes(CFG.salt), iterations: CFG.iterations, hash: "SHA-256" },
+            baseKey,
+            { name: "AES-GCM", length: 256 },
+            false,
+            ["decrypt"]
+          );
+          // AES-GCM is authenticated: a wrong passphrase AND any tampering with
+          // the ciphertext both land here as an OperationError.
+          var plain = await crypto.subtle.decrypt(
+            { name: "AES-GCM", iv: b64ToBytes(CFG.iv), tagLength: 128 },
+            key,
+            b64ToBytes(DATA)
+          );
+          if (CFG.compressed) plain = await gunzip(plain);
+          var digest = await crypto.subtle.digest("SHA-256", plain);
+          if (toHex(digest) !== CFG.sha256) throw new Error("TAMPER");
+          return JSON.parse(new TextDecoder().decode(plain));
+        }
+
+        function boot(payload) {
+          // Drop the ciphertext and config from the DOM before handing over.
+          if (dataEl.parentNode) dataEl.parentNode.removeChild(dataEl);
+          if (cfgEl.parentNode) cfgEl.parentNode.removeChild(cfgEl);
+          DATA = "";
+
+          // Replace the whole document with the app shell, then attach the
+          // stylesheet and the bundle as real nodes. Assigning textContent (as
+          // opposed to writing markup) means the payload never passes through
+          // the HTML parser, so no escaping games are needed.
+          document.open();
+          document.write(payload.html);
+          document.close();
+
+          var style = document.createElement("style");
+          style.textContent = payload.css;
+          document.head.appendChild(style);
+
+          var script = document.createElement("script");
+          script.textContent = payload.js;
+          document.head.appendChild(script);
+
+          document.title = payload.title || document.title;
+        }
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (busy) return;
+          var value = pw.value;
+          if (!value) { say("Enter the passphrase to continue."); pw.focus(); return; }
+
+          clearMsg();
+          setBusy(true);
+
+          // Let the browser paint the busy state before PBKDF2 blocks the thread.
+          setTimeout(function () {
+            decrypt(value).then(
+              function (payload) { setBusy(true, "Opening…"); boot(payload); },
+              function (err) {
+                attempts++;
+                if (err && err.message === "TAMPER") {
+                  say("This file has been altered since it was issued and can no longer be trusted. Ask for a fresh copy.");
+                  setBusy(true, "Blocked");
+                  return;
+                }
+                if (err && err.message === "NOGZIP") {
+                  say("This browser is too old to open the file. Please use an up-to-date Chrome, Edge or Safari.");
+                  setBusy(true, "Unsupported");
+                  return;
+                }
+                // Slow repeated guessing down. This is a courtesy speed bump for
+                // the on-screen prompt; the real defence is the key strength.
+                var wait = Math.min(1000 * Math.pow(2, Math.max(0, attempts - 2)), 20000);
+                if (attempts >= 3) {
+                  say("Incorrect passphrase (" + attempts + " attempts). Waiting " + Math.round(wait / 1000) + "s before you can try again.");
+                  setTimeout(function () { setBusy(false); clearMsg(); pw.focus(); }, wait);
+                } else {
+                  say("Incorrect passphrase. Check for typos — it is case-sensitive.");
+                  setBusy(false);
+                  pw.select();
+                }
+              }
+            );
+          }, 40);
+        });
+
+        pw.focus();
+      })();
+    </script>
+  </body>
+</html>
