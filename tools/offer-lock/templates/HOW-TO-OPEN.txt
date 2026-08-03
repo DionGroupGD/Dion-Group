@@ -1,0 +1,102 @@
+OFFER BUILDER - INTERCOMM FOODS
+How to open it
+===============================================================================
+
+You have been sent one file:
+
+    Offer Sheet INT (Locked).html
+
+That single file is the whole application. There is nothing to install, no
+login, and no internet connection needed.
+
+
+-------------------------------------------------------------------------------
+1. OPENING IT
+-------------------------------------------------------------------------------
+
+  1. If it arrived in a .zip, UNZIP IT FIRST. Do not open it from inside the
+     zip window - it will not work from there.
+
+     Windows : right-click the .zip -> "Extract All..."
+     Mac     : double-click the .zip
+
+  2. Put the file somewhere sensible - your Documents folder, or the desktop.
+
+  3. Double-click "Offer Sheet INT (Locked).html".
+     It opens in your browser. Chrome, Edge and Safari all work.
+
+  4. Type the passphrase you were sent separately, and press Unlock.
+
+  5. That's it. The app opens exactly as before.
+
+You will be asked for the passphrase each time you open the file. That is
+deliberate.
+
+
+-------------------------------------------------------------------------------
+2. YOUR DATA - PLEASE READ THIS PART
+-------------------------------------------------------------------------------
+
+Everything you create - offers, saved articles, freight rates, your logo - is
+stored INSIDE YOUR OWN BROWSER, on your own computer. It is not on a server
+and it is not shared automatically with anyone.
+
+That means:
+
+  * You and a colleague each have your own separate data.
+  * Clearing your browser data will DELETE YOUR OFFERS.
+  * Opening the app in a different browser starts you off empty.
+
+  >>> BACK UP REGULARLY. <<<
+
+  On the Offers screen:
+
+     Backup    downloads a .json file with everything in it.
+               Keep it on OneDrive, Google Drive, or a USB stick.
+
+     Restore   loads that file back in - on this computer or someone
+               else's. This is also how you send offers to a colleague.
+
+  The app will remind you if you have not backed up for a while. Please do
+  not ignore it. A backup is the only thing between you and starting over.
+
+
+-------------------------------------------------------------------------------
+3. IF SOMETHING GOES WRONG
+-------------------------------------------------------------------------------
+
+"Incorrect passphrase"
+    Check for typos. It is case-sensitive. The dashes are part of it.
+    After a few wrong tries it makes you wait a moment before retrying.
+
+"This browser will not allow decryption here"
+    You are probably opening it from inside the .zip, or over a network
+    drive. Copy the file onto your own computer first and try again.
+
+"This file has been altered since it was issued"
+    The file was damaged in transit or edited. Ask for a fresh copy - do
+    not try to repair it.
+
+The page opens but stays blank
+    Your browser is out of date. Update Chrome, Edge or Safari.
+
+Anything else
+    Take a Backup first if you can, then ask.
+
+
+-------------------------------------------------------------------------------
+4. TERMS OF USE
+-------------------------------------------------------------------------------
+
+This is a licensed copy, issued to you personally for your work.
+
+Please do not:
+  - forward the file or the passphrase to anyone outside the team
+  - publish it, upload it anywhere, or put it on a public drive
+  - attempt to extract, modify, re-brand or re-use the code inside it
+  - present the tool, or anything built from it, as your own work
+
+The copyright notice on the unlock screen and in the sidebar is part of the
+software and must stay where it is.
+
+Each copy carries a build number, shown on the unlock screen.
