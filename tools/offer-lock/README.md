@@ -76,7 +76,7 @@ node build.mjs \
   --out  "./dist/Offer Sheet INT (Locked).html" \
   --owner "George Dionysiou · Dion Group"
 
-# prove the build is both sealed and still the same app (42 checks, real browser)
+# prove the build is both sealed and still the same app (48 checks, real browser)
 OFFER_LOCK_PASSPHRASE='...' node verify.mjs
 ```
 
@@ -130,6 +130,10 @@ opens the file — and asserts in both directions:
   unprotected original across a 12-screen scripted tour (all four sections plus
   the six builder steps, with the clock and RNG frozen so the comparison is
   exact), writes to `localStorage`, and still exports and re-imports a backup
+- **guarded** — `stripLocalAssets` is exercised directly: it rejects an
+  `index.html` that gained or lost a file, and no `<script src>` survives even
+  when one tag's text spans another (removal repeats to a fixed point, since a
+  single regex sweep over markup can leave a live tag behind)
 
 Run it after every rebuild. A green run is what lets you send the file out.
 

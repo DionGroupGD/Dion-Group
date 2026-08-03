@@ -82,10 +82,10 @@ function parseArgs(argv) {
   return out;
 }
 
-function fail(message) {
-  console.error(`\n  ✗ ${message}\n`);
-  process.exit(1);
-}
+// Thrown rather than exiting, so the guards below stay testable — verify.mjs
+// imports them and asserts that bad input is actually rejected.
+export class BuildError extends Error {}
+function fail(message) { throw new BuildError(message); }
 
 const HELP = `
   offer-lock — package the Offer Builder as one encrypted HTML file
@@ -253,15 +253,38 @@ async function buildBundle(files, { obfuscate, banner }) {
 // Strip the <link> and the two <script src> tags: the shell injects the CSS
 // and the bundle as DOM nodes after unlocking, so the payload HTML must not
 // try to fetch anything from disk.
-function stripLocalAssets(html) {
-  const before = html;
-  const out = html
-    .replace(/[ \t]*<link\s+rel=["']stylesheet["'][^>]*>\s*\n?/gi, "")
-    .replace(/[ \t]*<script\s+src=["']\.\/(?:calc|app)\.js["']\s*>\s*<\/script>\s*\n?/gi, "");
-  if (out === before) fail("Could not find the stylesheet/script tags in index.html — has it changed?");
-  if (/<script\s+src=/i.test(out) || /<link\s+rel=["']stylesheet["']/i.test(out)) {
-    fail("index.html still references an external asset after stripping. Check for new files.");
+const STYLESHEET_TAG = /[ \t]*<link\b[^>]*\brel\s*=\s*["']stylesheet["'][^>]*>[ \t]*\r?\n?/gi;
+const LOCAL_SCRIPT_TAG = /[ \t]*<script\b[^>]*\bsrc\s*=\s*["']\.\/(?:calc|app)\.js["'][^>]*>\s*<\/script\s*>[ \t]*\r?\n?/gi;
+
+// Removing markup with one regex sweep is not safe in general: a single pass
+// can leave a live tag behind when one match spans the text of another. Repeat
+// until the string stops changing, so nothing matching the pattern can survive
+// however the input is shaped.
+function removeToFixedPoint(text, pattern, label) {
+  let out = text;
+  for (let pass = 0; pass < 16; pass++) {
+    const next = out.replace(pattern, "");
+    if (next === out) return out;
+    out = next;
   }
+  fail(`Runaway while removing the ${label} from index.html.`);
+}
+
+export function stripLocalAssets(html) {
+  // index.html is ours, so the tag count is known exactly. Anything else means
+  // the app gained or lost a file and the build should stop rather than guess.
+  const found = (html.match(STYLESHEET_TAG) || []).length + (html.match(LOCAL_SCRIPT_TAG) || []).length;
+  if (found !== 3) {
+    fail(`Expected 3 local asset tags in index.html (1 stylesheet + 2 scripts), found ${found}. Has it changed?`);
+  }
+
+  let out = removeToFixedPoint(html, STYLESHEET_TAG, "stylesheet link");
+  out = removeToFixedPoint(out, LOCAL_SCRIPT_TAG, "local script tags");
+
+  // Post-condition, independent of what the patterns above did: nothing that
+  // reaches out to the filesystem may survive into the encrypted payload.
+  if (/<script\b[^>]*\bsrc\s*=/i.test(out)) fail("index.html still has a <script src=…> after stripping — a new source file?");
+  if (/<link\b[^>]*\brel\s*=\s*["']stylesheet["']/i.test(out)) fail("index.html still links a stylesheet after stripping.");
   return out;
 }
 
@@ -409,7 +432,12 @@ async function main() {
 
 const kb = (n) => `${(n / 1024).toFixed(1)} KB`;
 
-main().catch((err) => {
-  console.error(`\n  ✗ Build failed: ${err && err.stack ? err.stack : err}\n`);
-  process.exit(1);
-});
+// Only run the build when invoked directly — importing this module (verify.mjs
+// does, to test the guards) must not kick off a build.
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((err) => {
+    const detail = err instanceof BuildError ? err.message : `Build failed: ${err && err.stack ? err.stack : err}`;
+    console.error(`\n  ✗ ${detail}\n`);
+    process.exit(1);
+  });
+}

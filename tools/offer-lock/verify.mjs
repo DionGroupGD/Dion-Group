@@ -22,6 +22,7 @@ import { resolve, join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { tmpdir } from "node:os";
 import { chromium } from "playwright-core";
+import { stripLocalAssets, BuildError } from "./build.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
@@ -208,6 +209,48 @@ check("declares AES-256-GCM + PBKDF2 params", /"cipher":"AES-256-GCM"/.test(lock
 const iterMatch = lockedHtml.match(/"iterations":(\d+)/);
 check(`PBKDF2 iterations >= 600,000 (found ${iterMatch ? Number(iterMatch[1]).toLocaleString("en-GB") : "none"})`,
   !!iterMatch && Number(iterMatch[1]) >= 600_000);
+
+/* ---- 1b. build-time guards ------------------------------------------------ */
+// Nothing that reaches out to the filesystem may survive into the payload: the
+// locked file has to work offline and must not be able to fetch anything. These
+// exercise stripLocalAssets directly, including the case where one tag's text
+// spans another — a single regex sweep leaves a live tag behind there, which is
+// why removal repeats to a fixed point.
+section("Build-time asset stripping");
+{
+  const head = (body) => `<!doctype html><html><head>${body}</head><body><div class="build-tag">Build 44</div></body></html>`;
+  const REAL = readFileSync(join(resolve(opts.src), "index.html"), "utf8");
+
+  const stripped = stripLocalAssets(REAL);
+  check("strips the stylesheet and both script tags from the real index.html",
+    !/<script\b[^>]*\bsrc\s*=/i.test(stripped) && !/<link\b[^>]*rel=["']stylesheet["']/i.test(stripped));
+  check("leaves the rest of the document alone", stripped.includes('data-nav="offers"'));
+
+  const rejects = (label, html, why) => {
+    let threw = null;
+    try { stripLocalAssets(html); } catch (e) { threw = e; }
+    check(label, threw instanceof BuildError, threw ? `threw ${threw.constructor.name}` : `accepted ${why}`);
+  };
+  rejects("rejects an index.html that gained a script file",
+    REAL.replace('<script src="./calc.js"></script>', '<script src="./calc.js"></script><script src="./extra.js"></script>'),
+    "an unknown <script src>");
+  rejects("rejects an index.html with a tag removed",
+    REAL.replace('<script src="./app.js"></script>', ""), "a missing tag");
+
+  // The CodeQL case: a crafted tag whose text contains another tag.
+  const nested = REAL.replace(
+    '<script src="./calc.js"></script>',
+    '<script <script src="./calc.js"></script> src="./calc.js"></script>'
+  );
+  let nestedOut = null;
+  try { nestedOut = stripLocalAssets(nested); } catch { /* rejecting is also acceptable */ }
+  check("a tag spanning another tag never survives stripping",
+    nestedOut === null || !/<script\b[^>]*\bsrc\s*=/i.test(nestedOut),
+    nestedOut ? "a <script src> survived a single sweep" : "");
+
+  check("a plain document with no local assets is rejected, not silently passed",
+    (() => { try { stripLocalAssets(head("<title>x</title>")); return false; } catch (e) { return e instanceof BuildError; } })());
+}
 
 /* ---- 2. browser behaviour ------------------------------------------------- */
 function findChromium() {
