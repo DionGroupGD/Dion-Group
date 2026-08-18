@@ -183,17 +183,22 @@ export function serialToDate(serial) {
   return new Date(ms);
 }
 
-/* A relationship Target is authored inside the file, so it is untrusted input
-   that chooses which part we go on to parse. OOXML only ever points a sheet
-   relationship at a worksheet part, so require exactly that shape and fall
-   back to the conventional name otherwise. The pattern admits no "/", which
-   rules out traversal, and the result is rebuilt from the captured basename
-   rather than passing the raw attribute through. */
-const WORKSHEET_TARGET = /^(?:\/?xl\/)?worksheets\/([A-Za-z0-9_][A-Za-z0-9_ .-]*\.xml)$/;
+/* Resolve a sheet relationship to a part that actually exists in the archive.
 
-function worksheetPath(target, index) {
-  const match = WORKSHEET_TARGET.exec(String(target ?? '').trim());
-  return match ? `xl/worksheets/${match[1]}` : `xl/worksheets/sheet${index + 1}.xml`;
+   The Target attribute is authored inside the file, so it is untrusted. It is
+   used here only to *select* among the entry names the central directory
+   already lists — it never becomes a path itself. That means an arbitrary
+   string can at worst fail to match (and fall back), never point the reader
+   somewhere of its choosing. Restricted to xl/worksheets/ because that is the
+   only thing an OOXML sheet relationship may target. */
+function worksheetPath(zip, target, index) {
+  const wanted = String(target ?? '').trim().replace(/^\/?(?:xl\/)?/, '');
+  if (wanted) {
+    for (const name of zip.entries.keys()) {
+      if (name.startsWith('xl/worksheets/') && name.slice(3) === wanted) return name;
+    }
+  }
+  return `xl/worksheets/sheet${index + 1}.xml`;
 }
 
 async function sheetNames(zip) {
@@ -211,7 +216,7 @@ async function sheetNames(zip) {
     const rid = s.getAttribute('r:id') || s.getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'id');
     out.push({
       name: s.getAttribute('name') || `Sheet${i + 1}`,
-      path: worksheetPath(relMap.get(rid), i),
+      path: worksheetPath(zip, relMap.get(rid), i),
       hidden: s.getAttribute('state') === 'hidden' || s.getAttribute('state') === 'veryHidden',
     });
   });
