@@ -56,12 +56,35 @@ function readCentralDirectory(buf) {
   return { bytes, view, entries };
 }
 
+/* A small zip entry can inflate to gigabytes. Cap what one part may expand to
+   so a malformed or hostile workbook fails fast instead of exhausting memory. */
+const MAX_PART_BYTES = 256 * 1024 * 1024;
+
 async function inflate(raw) {
   if (typeof DecompressionStream !== 'function') {
     throw new Error('This browser cannot unzip .xlsx files. Save the sheet as CSV and try again.');
   }
-  const stream = new Blob([raw]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
-  return new Uint8Array(await new Response(stream).arrayBuffer());
+  const reader = new Blob([raw]).stream()
+    .pipeThrough(new DecompressionStream('deflate-raw'))
+    .getReader();
+
+  const chunks = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.length;
+    if (total > MAX_PART_BYTES) {
+      await reader.cancel();
+      throw new Error('That .xlsx expands to an unreasonable size and was not opened.');
+    }
+    chunks.push(value);
+  }
+
+  const out = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) { out.set(chunk, offset); offset += chunk.length; }
+  return out;
 }
 
 async function readPart(zip, name) {
@@ -82,6 +105,14 @@ async function readPart(zip, name) {
 /* ---------- XML ---------- */
 
 let parser = null;
+
+/* Parse a workbook part as XML.
+   The MIME type is deliberately 'application/xml', never 'text/html': an XML
+   document is inert — no scripts run, no event handlers fire — and the result
+   is only ever read (textContent and attributes), never attached to the live
+   document. Values pulled out of it reach the page through textContent alone;
+   this app has no innerHTML anywhere. Browser DOMParser also does not resolve
+   external entities, so there is no XXE surface. */
 function xml(text) {
   // Created on first use, not at import time, so importing the module has no
   // DOM requirement of its own.
@@ -152,6 +183,19 @@ export function serialToDate(serial) {
   return new Date(ms);
 }
 
+/* A relationship Target is authored inside the file, so it is untrusted input
+   that chooses which part we go on to parse. OOXML only ever points a sheet
+   relationship at a worksheet part, so require exactly that shape and fall
+   back to the conventional name otherwise. The pattern admits no "/", which
+   rules out traversal, and the result is rebuilt from the captured basename
+   rather than passing the raw attribute through. */
+const WORKSHEET_TARGET = /^(?:\/?xl\/)?worksheets\/([A-Za-z0-9_][A-Za-z0-9_ .-]*\.xml)$/;
+
+function worksheetPath(target, index) {
+  const match = WORKSHEET_TARGET.exec(String(target ?? '').trim());
+  return match ? `xl/worksheets/${match[1]}` : `xl/worksheets/sheet${index + 1}.xml`;
+}
+
 async function sheetNames(zip) {
   const wb = await readPart(zip, 'xl/workbook.xml');
   if (!wb) return [];
@@ -159,20 +203,15 @@ async function sheetNames(zip) {
   const relMap = new Map();
   if (rels) {
     xml(rels).querySelectorAll('Relationship').forEach((r) => {
-      let t = r.getAttribute('Target') || '';
-      if (t.startsWith('/xl/')) t = t.slice(4);
-      else if (t.startsWith('/')) t = t.slice(1);
-      else if (t.startsWith('xl/')) t = t.slice(3);
-      relMap.set(r.getAttribute('Id'), t);
+      relMap.set(r.getAttribute('Id'), r.getAttribute('Target') || '');
     });
   }
   const out = [];
   xml(wb).querySelectorAll('sheets > sheet').forEach((s, i) => {
     const rid = s.getAttribute('r:id') || s.getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships', 'id');
-    const target = relMap.get(rid) || `worksheets/sheet${i + 1}.xml`;
     out.push({
       name: s.getAttribute('name') || `Sheet${i + 1}`,
-      path: `xl/${target}`,
+      path: worksheetPath(relMap.get(rid), i),
       hidden: s.getAttribute('state') === 'hidden' || s.getAttribute('state') === 'veryHidden',
     });
   });
