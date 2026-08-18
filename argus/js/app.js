@@ -881,6 +881,12 @@ function boot() {
   const gfont = document.getElementById('gfont');
   if (gfont) gfont.media = 'all';
 
+  // Open in whichever theme the viewer is already in. A saved workspace
+  // carries its own choice and is applied after this, so it still wins.
+  const stamped = document.documentElement.dataset.theme;
+  if (stamped === 'light' || stamped === 'dark') state.theme = stamped;
+  else if (window.matchMedia?.('(prefers-color-scheme: light)').matches) state.theme = 'light';
+
   wire();
   const restored = loadAutosave();
   if (restored && state.table) {
