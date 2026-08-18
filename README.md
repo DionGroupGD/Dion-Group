@@ -19,6 +19,7 @@ DION GROUP WEBSITE/
 │
 ├── aegis/                  ← Aegis sub-product page (own HTML/CSS/JS)
 ├── tms/                    ← Axon TMS sub-product page (own HTML/CSS/JS)
+├── argus/                  ← Argus data-board app (own HTML/CSS/JS — see argus/README.md)
 ├── axon-truck.webp         ← Homepage truck illustration (used by Axon TMS section)
 │
 ├── favicon*.png/.ico       ← Favicons (browsers expect at root)
@@ -46,7 +47,10 @@ DION GROUP WEBSITE/
 
 - **Homepage** (`index.html`) → `styles.css` + `app.js` + `home.js` + `axon-truck.webp`
 - **Legal pages** (`privacy.html`, `terms.html`, `cookies.html`, `thanks.html`) → `index.css` + `app.js`
-- **Sub-products** (`/aegis`, `/tms`) → self-contained, own assets
+- **Sub-products** (`/aegis`, `/tms`, `/argus`) → self-contained, own assets
+
+> `/argus` is an application, not a marketing page — it is `noindex` and stays
+> out of `sitemap.xml`. Its own README covers the architecture.
 
 > ⚠️  **Do not delete `index.css`** — it is still loaded by the four legal pages even though the new homepage uses `styles.css`.
 
