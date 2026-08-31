@@ -1,0 +1,1386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Olive Configurator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" />
+<style>
+/* ===========================================================================
+   Olive Configurator — customer-facing product builder
+   Visual system extends the Offer Builder's "warm workshop" tokens
+   (canvas #f5f4ef, pine greens, ivory surfaces) with true product colours.
+   =========================================================================== */
+
+:root {
+  --canvas:        #f2f1ea;
+  --surface:       #ffffff;
+  --surface-2:     #fbfaf5;
+  --line:          #e3e1d5;
+  --line-strong:   #cfccbc;
+  --ink:           #1d2421;
+  --ink-2:         #4a544e;
+  --muted:         #6d766f;
+  --muted-2:       #99a099;
+
+  --green-950:     #0e2b1c;
+  --green-900:     #14532d;
+  --green-800:     #166534;
+  --green-700:     #15803d;
+  --green-100:     #dcebe0;
+  --green-50:      #eef5f0;
+
+  --brine:         #b07d1e;
+  --brine-soft:    #fbf1dc;
+  --red:           #a83c38;
+  --red-soft:      #fbeeed;
+
+  --stage:         #ebe9df;
+  --stage-2:       #f6f4ec;
+  --glass:         rgba(255,255,255,.5);
+  --glass-edge:    rgba(29,36,33,.16);
+
+  --radius:   14px;
+  --radius-s: 9px;
+  --shadow-s: 0 1px 2px rgba(20,33,27,.06);
+  --shadow-m: 0 10px 30px rgba(20,33,27,.09);
+
+  --sans: "Archivo", ui-sans-serif, -apple-system, "Segoe UI", sans-serif;
+  --serif: "Newsreader", ui-serif, Georgia, "Times New Roman", serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas:      #141815;
+    --surface:     #1c211d;
+    --surface-2:   #222824;
+    --line:        #2f3733;
+    --line-strong: #414a45;
+    --ink:         #eef1ec;
+    --ink-2:       #c3cbc4;
+    --muted:       #949d95;
+    --muted-2:     #6f7a72;
+
+    --green-950:   #cfe6d6;
+    --green-900:   #a9d6b8;
+    --green-800:   #7cc496;
+    --green-700:   #63b783;
+    --green-100:   #1e3a29;
+    --green-50:    #1a2a20;
+
+    --brine:       #d8a950;
+    --brine-soft:  #2d2717;
+    --red:         #e08b86;
+    --red-soft:    #2e1e1d;
+
+    --stage:       #191e1b;
+    --stage-2:     #232925;
+    --glass:       rgba(255,255,255,.06);
+    --glass-edge:  rgba(238,241,236,.22);
+
+    --shadow-s: 0 1px 2px rgba(0,0,0,.4);
+    --shadow-m: 0 10px 30px rgba(0,0,0,.45);
+  }
+}
+
+:root[data-theme="dark"] {
+  --canvas:      #141815;
+  --surface:     #1c211d;
+  --surface-2:   #222824;
+  --line:        #2f3733;
+  --line-strong: #414a45;
+  --ink:         #eef1ec;
+  --ink-2:       #c3cbc4;
+  --muted:       #949d95;
+  --muted-2:     #6f7a72;
+
+  --green-950:   #cfe6d6;
+  --green-900:   #a9d6b8;
+  --green-800:   #7cc496;
+  --green-700:   #63b783;
+  --green-100:   #1e3a29;
+  --green-50:    #1a2a20;
+
+  --brine:       #d8a950;
+  --brine-soft:  #2d2717;
+  --red:         #e08b86;
+  --red-soft:    #2e1e1d;
+
+  --stage:       #191e1b;
+  --stage-2:     #232925;
+  --glass:       rgba(255,255,255,.06);
+  --glass-edge:  rgba(238,241,236,.22);
+
+  --shadow-s: 0 1px 2px rgba(0,0,0,.4);
+  --shadow-m: 0 10px 30px rgba(0,0,0,.45);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2.5px solid var(--green-700); outline-offset: 2px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* ------------------------------------------------------------------ header */
+.masthead {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; gap: 18px;
+  padding: 0 22px; min-height: 62px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 11px; }
+.brand-mark {
+  width: 32px; height: 32px; border-radius: 9px;
+  background: var(--green-900); position: relative; flex: none;
+}
+:root[data-theme="dark"] .brand-mark,
+:root:not([data-theme="light"]) .brand-mark { background: var(--green-100); }
+.brand-mark span {
+  position: absolute; width: 12px; height: 7.5px;
+  border: 1.6px solid var(--surface); border-radius: 12px 2px 12px 2px;
+  transform: rotate(-35deg);
+}
+:root[data-theme="dark"] .brand-mark span { border-color: var(--green-800); }
+.brand-mark span:first-child { left: 6px; top: 8px; }
+.brand-mark span:last-child { right: 5px; bottom: 7px; transform: rotate(145deg); }
+.brand strong { display: block; font-size: 12px; font-weight: 700; letter-spacing: .11em; line-height: 1; }
+.brand small { display: block; margin-top: 4px; font-size: 8px; font-weight: 700; letter-spacing: .3em; color: var(--green-700); }
+.masthead h1 {
+  margin: 0; font-family: var(--serif); font-size: 17px; font-weight: 500;
+  letter-spacing: -.01em; padding-left: 18px; border-left: 1px solid var(--line);
+}
+.masthead-spacer { flex: 1; }
+.ghost-btn {
+  border: 1px solid var(--line-strong); background: var(--surface);
+  border-radius: 999px; padding: 7px 15px; font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: .15s ease;
+}
+.ghost-btn:hover { border-color: var(--green-700); color: var(--green-800); }
+.proto-tag {
+  font-size: 9.5px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--brine); background: var(--brine-soft);
+  border: 1px solid color-mix(in srgb, var(--brine) 30%, transparent);
+  padding: 4px 9px; border-radius: 999px;
+}
+
+/* ------------------------------------------------------------------- shell */
+.workbench {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  align-items: start; gap: 0; max-width: 1440px; margin: 0 auto;
+}
+@media (max-width: 940px) { .workbench { grid-template-columns: minmax(0,1fr); } }
+
+/* ------------------------------------------------------------------- stage */
+.stage-col {
+  position: sticky; top: 62px; height: calc(100vh - 62px);
+  display: flex; flex-direction: column;
+  background: var(--stage); border-right: 1px solid var(--line);
+}
+@media (max-width: 940px) { .stage-col { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--line); } }
+
+.stage-tabs { display: flex; gap: 2px; padding: 14px 18px 0; }
+.stage-tab {
+  border: none; background: transparent; cursor: pointer;
+  padding: 7px 13px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .02em; color: var(--muted);
+  transition: .15s ease;
+}
+.stage-tab:hover { color: var(--ink); }
+.stage-tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-s); }
+
+.stage-canvas {
+  flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center;
+  padding: 10px 24px 4px;
+}
+.stage-canvas svg { width: 100%; height: auto; max-width: 430px; max-height: 100%; }
+
+.stage-caption {
+  padding: 0 24px 12px; text-align: center;
+  font-family: var(--serif); font-size: 19px; font-weight: 500; letter-spacing: -.01em;
+  text-wrap: balance; min-height: 28px;
+}
+.stage-caption em { font-style: italic; color: var(--muted); font-size: 15px; display: block; margin-top: 3px; font-family: var(--sans); font-weight: 400; letter-spacing: 0; }
+
+/* live spec strip */
+.spec-strip {
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+  display: grid; grid-template-columns: repeat(4, minmax(0,1fr));
+}
+.spec-cell {
+  padding: 11px 8px 13px; text-align: center;
+  border-right: 1px solid var(--line);
+}
+.spec-cell:last-child { border-right: none; }
+.spec-cell .k {
+  display: block; font-size: 8.5px; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--muted-2); margin-bottom: 4px;
+}
+.spec-cell .v {
+  display: block; font-size: 17px; font-weight: 600; letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums; transition: color .2s ease;
+}
+.spec-cell .v small { font-size: 10px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+.spec-cell .v.pending { color: var(--muted-2); font-weight: 400; }
+
+/* ------------------------------------------------------------------- steps */
+.steps-col { padding: 26px 30px 90px; }
+@media (max-width: 620px) { .steps-col { padding: 22px 18px 70px; } }
+
+.intro { margin: 0 0 26px; max-width: 60ch; }
+.intro h2 {
+  margin: 0 0 8px; font-family: var(--serif); font-size: 27px; font-weight: 500;
+  letter-spacing: -.02em; text-wrap: balance; line-height: 1.2;
+}
+.intro p { margin: 0; color: var(--muted); font-size: 13.5px; }
+
+.step { border-top: 1px solid var(--line); padding: 20px 0 4px; }
+.step:first-of-type { border-top: none; padding-top: 0; }
+.step[hidden] { display: none; }
+
+.step-head { display: flex; align-items: baseline; gap: 11px; margin-bottom: 4px; }
+.step-num {
+  font-size: 9.5px; font-weight: 700; letter-spacing: .12em; color: var(--muted-2);
+  font-variant-numeric: tabular-nums; flex: none; padding-top: 2px;
+}
+.step-head h3 {
+  margin: 0; font-family: var(--serif); font-size: 20px; font-weight: 500; letter-spacing: -.015em;
+}
+.step-note { margin: 0 0 14px 30px; color: var(--muted); font-size: 12.5px; max-width: 58ch; }
+
+/* resolved (collapsed) step */
+.resolved {
+  display: flex; align-items: center; gap: 11px; width: 100%;
+  border: none; background: transparent; cursor: pointer; text-align: left;
+  padding: 13px 0; border-top: 1px solid var(--line);
+}
+.step:first-of-type .resolved { border-top: none; }
+.resolved:hover .resolved-val { color: var(--green-800); }
+.resolved-num { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; color: var(--muted-2); flex: none; }
+.resolved-key { font-size: 12px; color: var(--muted); flex: none; }
+.resolved-val { font-size: 13.5px; font-weight: 600; margin-left: auto; text-align: right; transition: color .15s; }
+.resolved-edit { font-size: 11px; color: var(--green-700); font-weight: 600; flex: none; }
+
+/* option cards */
+.opts { display: grid; gap: 10px; margin-left: 30px; }
+.opts.cols-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.opts.cols-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+@media (max-width: 620px) { .opts.cols-2, .opts.cols-3 { grid-template-columns: minmax(0,1fr); } }
+
+.opt {
+  position: relative; display: flex; gap: 13px; align-items: flex-start;
+  text-align: left; width: 100%;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface); padding: 13px 14px; cursor: pointer;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+.opt:hover:not(:disabled) { border-color: var(--green-700); transform: translateY(-1px); box-shadow: var(--shadow-m); }
+.opt[aria-pressed="true"] { border-color: var(--green-800); box-shadow: 0 0 0 1.5px var(--green-800); }
+.opt:disabled { cursor: not-allowed; opacity: .5; background: var(--surface-2); }
+.opt:disabled .opt-title { text-decoration: line-through; text-decoration-thickness: 1px; }
+
+.opt-art { flex: none; width: 54px; height: 54px; display: grid; place-items: center; }
+.opt-art svg { display: block; overflow: visible; }
+.opt-body { min-width: 0; flex: 1; display: block; }
+.opt-title, .opt-sub, .opt-meta, .opt-why { display: block; }
+.opt-title { font-size: 13.5px; font-weight: 600; letter-spacing: -.005em; }
+.opt-sub { font-size: 11.5px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+.opt-why {
+  margin-top: 6px; font-size: 11px; color: var(--red);
+  background: var(--red-soft); border-radius: 6px; padding: 5px 8px; line-height: 1.4;
+}
+.opt-meta {
+  margin-top: 6px; font-size: 10.5px; color: var(--muted-2);
+  font-variant-numeric: tabular-nums; letter-spacing: .01em;
+}
+
+/* calibre row layout */
+.opts.calibres { gap: 6px; }
+.opt.calibre { align-items: center; padding: 9px 14px; }
+.opt.calibre .opt-art { width: 46px; height: 40px; }
+.opt.calibre .opt-title { font-size: 13px; }
+.cal-dims {
+  margin-left: auto; flex: none; text-align: right;
+  font-size: 10.5px; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.35;
+}
+.cal-dims b { display: block; font-size: 12px; font-weight: 600; color: var(--ink-2); }
+
+/* fill slider */
+.fill-wrap { margin-left: 30px; }
+.fill-readout {
+  display: flex; align-items: baseline; gap: 8px; margin-bottom: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.fill-readout .big { font-size: 30px; font-weight: 600; letter-spacing: -.03em; font-family: var(--serif); }
+.fill-readout .unit { font-size: 14px; color: var(--muted); }
+.fill-readout .net { margin-left: auto; font-size: 12px; color: var(--muted); text-align: right; }
+.fill-readout .net b { display: block; font-size: 15px; color: var(--ink); font-weight: 600; }
+
+.slider-track { position: relative; padding: 4px 0 2px; }
+input[type=range] {
+  -webkit-appearance: none; appearance: none; width: 100%; background: transparent; margin: 0;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: 8px; border-radius: 999px;
+  background: linear-gradient(90deg, var(--green-800) var(--pct,50%), var(--line) var(--pct,50%));
+}
+input[type=range]::-moz-range-track { height: 8px; border-radius: 999px; background: var(--line); }
+input[type=range]::-moz-range-progress { height: 8px; border-radius: 999px; background: var(--green-800); }
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 22px; height: 22px; margin-top: -7px; border-radius: 50%;
+  background: var(--surface); border: 2.5px solid var(--green-800);
+  box-shadow: var(--shadow-s); cursor: grab;
+}
+input[type=range]::-moz-range-thumb {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--surface); border: 2.5px solid var(--green-800); cursor: grab;
+}
+.slider-bounds {
+  display: flex; justify-content: space-between; margin-top: 7px;
+  font-size: 10.5px; color: var(--muted-2); font-variant-numeric: tabular-nums;
+}
+.bound-note {
+  margin-top: 12px; display: flex; gap: 9px; align-items: flex-start;
+  font-size: 11.5px; color: var(--ink-2); line-height: 1.45;
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: var(--radius-s); padding: 10px 12px;
+}
+.bound-note b { color: var(--ink); font-weight: 600; }
+.bound-note .mk { flex: none; color: var(--brine); font-weight: 700; }
+
+/* explainer callout */
+.explain {
+  margin: 0 0 14px 30px; display: flex; gap: 10px;
+  background: var(--green-50); border: 1px solid color-mix(in srgb, var(--green-700) 22%, transparent);
+  border-radius: var(--radius-s); padding: 11px 13px;
+  font-size: 12px; line-height: 1.5; color: var(--ink-2); max-width: 62ch;
+}
+.explain b { color: var(--green-800); font-weight: 600; }
+.explain .mk { flex: none; font-weight: 700; color: var(--green-700); font-size: 13px; line-height: 1.35; }
+
+/* summary */
+.summary { margin-top: 30px; border-top: 2px solid var(--ink); padding-top: 20px; }
+.summary h3 {
+  margin: 0 0 3px; font-family: var(--serif); font-size: 22px; font-weight: 500; letter-spacing: -.02em;
+}
+.summary > p { margin: 0 0 18px; color: var(--muted); font-size: 12.5px; max-width: 60ch; }
+
+.spec-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.spec-table caption {
+  text-align: left; font-size: 9.5px; font-weight: 700; letter-spacing: .13em;
+  text-transform: uppercase; color: var(--muted-2); padding: 16px 0 7px;
+}
+.spec-table td { padding: 6px 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+.spec-table td:first-child { color: var(--muted); width: 47%; }
+.spec-table td:last-child { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.derived-flag {
+  display: inline-block; margin-left: 6px; font-size: 8.5px; font-weight: 700;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--green-700);
+  background: var(--green-50); border-radius: 4px; padding: 2px 5px; vertical-align: 1px;
+}
+
+.handoff {
+  margin-top: 22px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 16px 17px;
+}
+.handoff h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; }
+.handoff p { margin: 0 0 13px; font-size: 12px; color: var(--muted); line-height: 1.55; }
+.handoff-actions { display: flex; gap: 9px; flex-wrap: wrap; }
+.btn-primary {
+  border: none; background: var(--green-800); color: #fff;
+  border-radius: 999px; padding: 10px 19px; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  transition: .15s ease;
+}
+:root[data-theme="dark"] .btn-primary,
+:root:not([data-theme="light"]) .btn-primary { color: var(--green-950); }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .btn-primary { color: #fff; } }
+.btn-primary:hover { background: var(--green-700); }
+
+.json-out {
+  margin-top: 13px; background: var(--stage); border: 1px solid var(--line);
+  border-radius: var(--radius-s); padding: 12px 13px; overflow-x: auto;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11px; line-height: 1.6; white-space: pre; color: var(--ink-2);
+}
+.json-out[hidden] { display: none; }
+.json-out .jk { color: var(--green-800); }
+.json-out .jn { color: var(--brine); }
+
+.footnote {
+  margin-top: 26px; padding-top: 15px; border-top: 1px solid var(--line);
+  font-size: 11.5px; color: var(--muted-2); line-height: 1.6; max-width: 64ch;
+}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true"><span></span><span></span></div>
+    <div><strong>INTERCOMM</strong><small>FOODS</small></div>
+  </div>
+  <h1>Product Configurator</h1>
+  <div class="masthead-spacer"></div>
+  <span class="proto-tag">Prototype · placeholder data</span>
+  <button class="ghost-btn" id="restart">Start over</button>
+</header>
+
+<div class="workbench">
+
+  <!-- ============================ VISUAL STAGE ============================ -->
+  <section class="stage-col" aria-label="Product preview">
+    <div class="stage-tabs" role="tablist">
+      <button class="stage-tab" role="tab" data-view="jar" aria-selected="true">Jar</button>
+      <button class="stage-tab" role="tab" data-view="calibre" aria-selected="false">Calibre</button>
+      <button class="stage-tab" role="tab" data-view="pallet" aria-selected="false">Pallet</button>
+      <button class="stage-tab" role="tab" data-view="container" aria-selected="false">Container</button>
+    </div>
+    <div class="stage-canvas" id="stage"></div>
+    <p class="stage-caption" id="stage-caption"></p>
+    <div class="spec-strip" id="spec-strip"></div>
+  </section>
+
+  <!-- ============================== STEPS ================================ -->
+  <section class="steps-col">
+    <div class="intro">
+      <h2>Build your olive specification</h2>
+      <p>Every choice narrows what follows, so you can only reach combinations we can actually produce. Weights, case counts and palletising are calculated as you go — never typed.</p>
+    </div>
+    <div id="steps"></div>
+    <div id="summary"></div>
+    <p class="footnote">
+      Prototype for demonstration. Varieties, calibres, jar geometry and fill limits shown here are
+      realistic placeholders — the production version reads Intercomm's own specification matrix.
+      Calibre dimensions are computed from count-per-kilo, not illustrated.
+    </p>
+  </section>
+</div>
+
+<script>
+/* ===========================================================================
+   DATA — placeholder specification matrix.
+   Replace wholesale with Intercomm's real matrix; the engine below is generic.
+   =========================================================================== */
+
+/* Calibre ladder — the trade grades already used in the Offer Builder. */
+const CALIBRES = [
+  { id: "atlas",     name: "Atlas",         range: "71/90",   lo: 71,  hi: 90  },
+  { id: "smammouth", name: "Super Mammouth", range: "91/100", lo: 91,  hi: 100 },
+  { id: "mammouth",  name: "Mammouth",      range: "101/110", lo: 101, hi: 110 },
+  { id: "scolossal", name: "Super Colossal", range: "111/120", lo: 111, hi: 120 },
+  { id: "colossal",  name: "Colossal",      range: "121/140", lo: 121, hi: 140 },
+  { id: "giants",    name: "Giants",        range: "141/160", lo: 141, hi: 160 },
+  { id: "exjumbo",   name: "Extra Jumbo",   range: "161/180", lo: 161, hi: 180 },
+  { id: "jumbo",     name: "Jumbo",         range: "181/200", lo: 181, hi: 200 },
+  { id: "exlarge",   name: "Extra Large",   range: "201/230", lo: 201, hi: 230 },
+  { id: "large",     name: "Large",         range: "231/260", lo: 231, hi: 260 },
+  { id: "superior",  name: "Superior",      range: "261/290", lo: 261, hi: 290 },
+  { id: "brilliant", name: "Brilliant",     range: "291/320", lo: 291, hi: 320 },
+  { id: "fine",      name: "Fine",          range: "321/350", lo: 321, hi: 350 },
+  { id: "bullets",   name: "Bullets",       range: "351/380", lo: 351, hi: 380 },
+];
+const calibreIndex = (id) => CALIBRES.findIndex((c) => c.id === id);
+
+const VARIETIES = [
+  {
+    id: "kalamata", name: "Kalamata", latin: "Natural black, brine & vinegar",
+    blurb: "Almond-shaped, deep aubergine, naturally fermented. Greece's signature table olive and the one most buyers ask for by name.",
+    skin: "#4a1f2b", skin2: "#6d3346", flesh: "#7a3a48", brine: "#8d6a3a",
+    calibres: ["jumbo", "exlarge", "large", "superior", "brilliant", "fine"],
+    styles: ["whole", "pitted", "sliced"],
+    hs: "2005.70.00",
+  },
+  {
+    id: "halkidiki", name: "Halkidiki Green", latin: "Green, brine, large-fruited",
+    blurb: "The large green olive of northern Greece. Firm, mild and the only variety big enough to stuff reliably.",
+    skin: "#8a9440", skin2: "#a3ad55", flesh: "#b6bd6e", brine: "#c9bb72",
+    calibres: ["atlas", "smammouth", "mammouth", "scolossal", "colossal", "giants", "exjumbo", "jumbo", "exlarge"],
+    styles: ["whole", "pitted", "stuffed", "sliced"],
+    hs: "2005.70.00",
+  },
+  {
+    id: "konservolia", name: "Konservolia Green", latin: "Green, brine, round-fruited",
+    blurb: "Round, dense and versatile — the workhorse green olive for food service and everyday retail lines.",
+    skin: "#94a04a", skin2: "#aab35f", flesh: "#bcc178", brine: "#c9bb72",
+    calibres: ["colossal", "giants", "exjumbo", "jumbo", "exlarge", "large", "superior"],
+    styles: ["whole", "pitted", "sliced"],
+    hs: "2005.70.00",
+  },
+  {
+    id: "oxidized", name: "Black Oxidized", latin: "Ripe olives, darkened by oxidation",
+    blurb: "Uniform jet black, mild and consistent year to year. The pizza and food-service standard, usually sliced or pitted.",
+    skin: "#241f1d", skin2: "#3c3531", flesh: "#4a4340", brine: "#5c5346",
+    calibres: ["giants", "exjumbo", "jumbo", "exlarge", "large", "superior", "brilliant"],
+    styles: ["whole", "pitted", "sliced"],
+    hs: "2005.70.00",
+  },
+];
+
+const STYLES = [
+  { id: "whole",   name: "Whole",   sub: "Stone in",                 packing: .62, yield: 1.00, minCal: null,       note: "Best drained-weight stability and the lowest processing cost." },
+  { id: "pitted",  name: "Pitted",  sub: "Stone removed",            packing: .60, yield: .82, minCal: null,       note: "Loses roughly 18% of fruit weight to the stone — reflected in the fill below." },
+  { id: "stuffed", name: "Stuffed", sub: "Pimiento, almond, garlic", packing: .64, yield: .94, minCal: "colossal", note: "Needs a large fruit to hold the filling — Colossal 121/140 and above only." },
+  { id: "sliced",  name: "Sliced",  sub: "Rings",                    packing: .70, yield: .80, minCal: null,       note: "Packs denser than whole fruit, so the same jar carries more drained weight." },
+];
+
+/* Glass jars — nominal capacity, real body geometry (mm) and glass tare (g). */
+const JARS = [
+  { id: "j212",  ml: 212,  h: 100, d: 62,  lug: 63, tare: 175, name: "212 ml",  sub: "Twist-off 63 · tapas / single portion" },
+  { id: "j370",  ml: 370,  h: 108, d: 74,  lug: 63, tare: 255, name: "370 ml",  sub: "Twist-off 63 · the retail standard" },
+  { id: "j580",  ml: 580,  h: 140, d: 78,  lug: 70, tare: 345, name: "580 ml",  sub: "Twist-off 70 · family retail" },
+  { id: "j720",  ml: 720,  h: 155, d: 84,  lug: 70, tare: 395, name: "720 ml",  sub: "Twist-off 70 · deli & food service" },
+  { id: "j1700", ml: 1700, h: 200, d: 110, lug: 82, tare: 715, name: "1700 ml", sub: "Twist-off 82 · catering" },
+  { id: "j2000", ml: 2000, h: 220, d: 115, lug: 82, tare: 820, name: "2000 ml", sub: "Twist-off 82 · catering" },
+];
+
+const CASE_GRID = {
+  j212:  [[12, 4, 3], [24, 6, 4]],
+  j370:  [[12, 4, 3], [6, 3, 2]],
+  j580:  [[12, 4, 3], [6, 3, 2]],
+  j720:  [[12, 4, 3], [6, 3, 2]],
+  j1700: [[6, 3, 2], [4, 2, 2]],
+  j2000: [[6, 3, 2], [4, 2, 2]],
+};
+
+const PALLETS = [
+  { id: "eur",  name: "Europallet 80×120", w: 800,  l: 1200, per20: 11, per40: 24, base: 144 },
+  { id: "ind",  name: "Industrial 100×120", w: 1000, l: 1200, per20: 10, per40: 21, base: 144 },
+];
+
+const HEIGHT_LIMITS = [
+  { id: "ccg1", name: "CCG1 — under 105 cm", max: 1050, note: "Displays under a shelf; common for discounters." },
+  { id: "ccg2", name: "CCG2 — under 195 cm", max: 1950, note: "Standard export height." },
+  { id: "full", name: "Over 195 cm",         max: 2200, note: "Maximum cube; check destination warehouse limits." },
+];
+
+const CONTAINERS = [
+  { id: "c20", name: "20 ft dry", maxKg: 24000, key: "per20" },
+  { id: "c40", name: "40 ft dry", maxKg: 26000, key: "per40" },
+];
+
+/* Commercial and physical floors a public configurator must respect. */
+const MIN_OLIVES_PER_JAR = 12;    // below this, drained weight cannot be held within e-mark tolerance
+const MIN_DW_NW_RATIO    = 0.45;  // below this the pack reads under-filled on shelf
+const MAX_PALLET_KG      = 900;   // handling limit for a stacked export pallet
+const MAX_LAYERS_GLASS   = 10;    // corrugate compression limit under glass
+
+/* ===========================================================================
+   GEOMETRY & RULES — pure functions
+   =========================================================================== */
+
+/* A calibre is a count per kilo. Convert to a real fruit: mass -> volume ->
+   prolate spheroid (length/width 1.30) -> millimetres. Nothing illustrated. */
+function oliveDims(cal) {
+  const count = (cal.lo + cal.hi) / 2;
+  const mass = 1000 / count;              // g per fruit
+  const vol = mass / 1.03;                // cm3, olive flesh ~1.03 g/cm3
+  const ratio = 1.30;
+  const b = Math.cbrt((3 * vol) / (4 * Math.PI * ratio)); // cm, semi-minor
+  return { count, mass, width: b * 20, length: b * ratio * 20 };
+}
+
+const usableMl = (jar) => jar.ml * 1.06 * 0.94;  // brimful less headspace
+
+/* Random packing loses efficiency against the container wall, and the loss
+   grows as the fruit approaches the jar's own diameter — which is why a giant
+   calibre in a small jar cannot reach the drained weight the volume suggests. */
+function wallFactor(jar, cal) {
+  if (!cal) return 1;
+  const R = jar.d / oliveDims(cal).width;   // jar diameters per fruit width
+  return Math.max(0.55, 1 - 0.40 / R);
+}
+
+function fillWindow(jar, style, cal) {
+  const V = usableMl(jar);
+  const nw = V * 1.02;                       // olives + brine
+  const dwMax = V * style.packing * wallFactor(jar, cal) * 1.03;
+  const dwMin = Math.max(nw * MIN_DW_NW_RATIO, dwMax * 0.80);
+  const round5 = (x) => Math.round(x / 5) * 5;
+  return {
+    nw: round5(nw),
+    dwMin: round5(Math.min(dwMin, dwMax)),
+    dwMax: round5(dwMax),
+    dwDefault: round5(Math.max(Math.min(dwMin, dwMax), dwMax * 0.96)),
+    ratioFeasible: dwMin <= dwMax,
+  };
+}
+
+function oliveCount(dwGrams, cal, style) {
+  const per = oliveDims(cal).mass * style.yield;
+  return per > 0 ? dwGrams / per : 0;
+}
+
+/* Why a jar may be unavailable for the chosen fruit. */
+function jarBlock(jar, cal, style) {
+  const w = oliveDims(cal).width;
+  if (style.id !== "sliced" && w > jar.lug - 6) {
+    return `A ${w.toFixed(0)} mm fruit will not pass the ${jar.lug} mm twist-off opening.`;
+  }
+  const win = fillWindow(jar, style, cal);
+  if (!win.ratioFeasible) {
+    return `${cal.name} ${cal.range} packs too loosely in a ${jar.ml} ml jar to reach a ${(MIN_DW_NW_RATIO * 100).toFixed(0)}% drained-to-net ratio.`;
+  }
+  if (style.id === "sliced") return null;         // slices have no fruit-count floor
+  const n = oliveCount(win.dwMax, cal, style);
+  if (n < MIN_OLIVES_PER_JAR) {
+    return `Only ${n.toFixed(0)} fruit would fit — ${cal.name} ${cal.range} is too large for this jar to hold a stable drained weight (minimum ${MIN_OLIVES_PER_JAR}).`;
+  }
+  return null;
+}
+
+function styleBlock(style, cal) {
+  if (!style.minCal || !cal) return null;
+  if (calibreIndex(cal.id) > calibreIndex(style.minCal)) {
+    const min = CALIBRES[calibreIndex(style.minCal)];
+    return `Stuffing needs a larger fruit — ${min.name} ${min.range} or above.`;
+  }
+  return null;
+}
+
+/* Case: jars in a grid, plus 4 mm board all round. */
+function caseSpec(jar, perCase) {
+  const grid = (CASE_GRID[jar.id] || []).find((g) => g[0] === perCase);
+  if (!grid) return null;
+  const [, cols, rows] = grid;
+  return {
+    perCase, cols, rows,
+    l: cols * jar.d + 8,
+    w: rows * jar.d + 8,
+    h: jar.h + 10,
+  };
+}
+
+/* Cases per layer: best of the two orientations on the pallet footprint. */
+function casesPerLayer(cs, pallet) {
+  const fit = (a, b) => Math.floor(pallet.l / a) * Math.floor(pallet.w / b);
+  return Math.max(fit(cs.l, cs.w), fit(cs.w, cs.l));
+}
+
+/* Layers are the smallest of three real limits — stack height, pallet handling
+   weight, and what the corrugate under the glass will carry. The binding one is
+   reported so the customer can see which constraint to relax. */
+function palletSpec(jar, cs, pallet, limit, grossPerJar) {
+  const perLayer = casesPerLayer(cs, pallet);
+  const caseKg = (cs.perCase * grossPerJar) / 1000 + 0.16;
+  const byHeight = Math.floor((limit.max - pallet.base) / cs.h);
+  const byWeight = Math.floor((MAX_PALLET_KG - 25) / (perLayer * caseKg));
+  const byStack = MAX_LAYERS_GLASS;
+  const layers = Math.max(1, Math.min(byHeight, byWeight, byStack));
+  const boundBy = layers === byHeight ? "stack height"
+                : layers === byWeight ? "pallet weight" : "case compression";
+  const casesTotal = perLayer * layers;
+  const jarsTotal = casesTotal * cs.perCase;
+  const height = pallet.base + layers * cs.h;
+  const gross = 25 + casesTotal * caseKg;        // pallet + cases
+  return { perLayer, layers, casesTotal, jarsTotal, height, gross, boundBy, byHeight, byWeight, byStack };
+}
+
+function containerSpec(container, pallet, palletGross) {
+  const byFloor = pallet[container.key];
+  const byWeight = Math.floor(container.maxKg / palletGross);
+  const pallets = Math.max(1, Math.min(byFloor, byWeight));
+  return { pallets, byFloor, byWeight, limitedBy: byWeight < byFloor ? "weight" : "floor" };
+}
+
+/* ===========================================================================
+   STATE
+   =========================================================================== */
+const S = { variety: null, style: null, calibre: null, jar: null, dw: null,
+            perCase: null, pallet: "eur", limit: "ccg2", container: "c20", view: "jar" };
+
+const V = () => VARIETIES.find((v) => v.id === S.variety) || null;
+const ST = () => STYLES.find((s) => s.id === S.style) || null;
+const C = () => CALIBRES.find((c) => c.id === S.calibre) || null;
+const J = () => JARS.find((j) => j.id === S.jar) || null;
+const P = () => PALLETS.find((p) => p.id === S.pallet);
+const L = () => HEIGHT_LIMITS.find((h) => h.id === S.limit);
+const K = () => CONTAINERS.find((c) => c.id === S.container);
+
+/* Everything downstream, recomputed on every change. */
+function derive() {
+  const v = V(), st = ST(), cal = C(), jar = J();
+  const d = { v, st, cal, jar };
+  if (cal) d.dims = oliveDims(cal);
+  if (jar && st) {
+    d.win = fillWindow(jar, st, cal);
+    d.dw = S.dw == null ? d.win.dwDefault : Math.min(d.win.dwMax, Math.max(d.win.dwMin, S.dw));
+    d.nw = d.win.nw;
+    d.grossJar = d.nw + jar.tare;
+    if (cal) d.count = oliveCount(d.dw, cal, st);
+  }
+  if (jar && S.perCase) {
+    d.cs = caseSpec(jar, S.perCase);
+    if (d.cs && d.grossJar) {
+      d.pal = palletSpec(jar, d.cs, P(), L(), d.grossJar);
+      d.con = containerSpec(K(), P(), d.pal.gross);
+      d.jarsPerContainer = d.con.pallets * d.pal.jarsTotal;
+    }
+  }
+  return d;
+}
+
+/* ===========================================================================
+   SVG DRAWING
+   =========================================================================== */
+const svgEl = (w, h, inner) =>
+  `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">${inner}</svg>`;
+
+/* deterministic jitter so the jar doesn't reshuffle on every keystroke */
+function rng(seed) {
+  let s = seed >>> 0 || 1;
+  return () => { s ^= s << 13; s ^= s >>> 17; s ^= s << 5; return ((s >>> 0) % 10000) / 10000; };
+}
+
+/* --- one olive, drawn as a tilted spheroid with a specular highlight ------ */
+function oliveShape(cx, cy, w, h, v, rot, key) {
+  const gid = `g${key}`;
+  return `
+    <g transform="translate(${cx} ${cy}) rotate(${rot})">
+      <ellipse rx="${w / 2}" ry="${h / 2}" fill="url(#${gid})" />
+      <ellipse cx="${-w * .17}" cy="${-h * .19}" rx="${w * .17}" ry="${h * .13}"
+               fill="#fff" opacity=".26" transform="rotate(-18)" />
+    </g>`;
+}
+function oliveGradient(id, v) {
+  return `<radialGradient id="${id}" cx="35%" cy="28%" r="78%">
+      <stop offset="0%" stop-color="${v.skin2}" />
+      <stop offset="62%" stop-color="${v.skin}" />
+      <stop offset="100%" stop-color="${v.skin}" stop-opacity=".82" />
+    </radialGradient>`;
+}
+
+/* --- the jar, filled with correctly sized fruit --------------------------- */
+function drawJar(d) {
+  const H = 360, W = 300;
+  if (!d.jar) {
+    return svgEl(W, H, `<text x="${W / 2}" y="${H / 2}" text-anchor="middle" fill="var(--muted-2)"
+      font-family="var(--sans)" font-size="13">Choose a jar to see it fill</text>`);
+  }
+  const v = d.v, jar = d.jar;
+  const scale = Math.min(250 / jar.h, 190 / jar.d);
+  const bw = jar.d * scale, bh = jar.h * scale;
+  const x0 = (W - bw) / 2, y1 = H - 42, y0 = y1 - bh;
+  const neck = jar.lug * scale * .82, shoulder = bh * .16, lidH = 15;
+  const r = Math.min(10, bw * .12);
+
+  const body = `M ${x0} ${y0 + shoulder}
+    Q ${x0} ${y0 + shoulder * .25} ${x0 + (bw - neck) / 2} ${y0}
+    L ${x0 + (bw + neck) / 2} ${y0}
+    Q ${x0 + bw} ${y0 + shoulder * .25} ${x0 + bw} ${y0 + shoulder}
+    L ${x0 + bw} ${y1 - r} Q ${x0 + bw} ${y1} ${x0 + bw - r} ${y1}
+    L ${x0 + r} ${y1} Q ${x0} ${y1} ${x0} ${y1 - r} Z`;
+
+  /* brine level and fruit */
+  let fruit = "", defs = oliveGradient("gOl", v);
+  /* The jar is drawn as a cross-section: fruit SIZE is true to scale against
+     the glass, which is what changes visibly with calibre. Fruit COUNT is a
+     3D quantity and is reported in the numbers, not counted in the drawing —
+     through real glass you see a packed face, not 38 separate olives. */
+  if (d.dims) {
+    const ow = d.dims.width * scale, oh = d.dims.length * scale;
+    const rand = rng(Math.round(d.dw) * 31 + jar.ml + calibreIndex(d.cal.id) * 7);
+    const top = y0 + shoulder + 2, bot = y1 - 4;
+    const cellW = ow * .86, cellH = oh * .70;
+    const cols = Math.max(1, Math.round((bw - 4) / cellW));
+    const rows = Math.max(1, Math.ceil((bot - top) / cellH));
+    const spanW = (bw - 4) / cols;
+    const layer = (dim, shrink, jx) => {
+      let s = "";
+      for (let row = 0; row < rows; row++) {
+        const stagger = (row % 2 ? spanW * .5 : 0) + jx;
+        for (let col = 0; col <= cols; col++) {
+          const cx = x0 + 2 + col * spanW + spanW / 2 + stagger + (rand() - .5) * spanW * .16;
+          const cy = bot - oh / 2 - row * cellH + (rand() - .5) * cellH * .18;
+          if (cy - oh / 2 > bot || cx < x0 - ow || cx > x0 + bw + ow) continue;
+          s += `<g opacity="${dim}">${oliveShape(cx, cy, ow * shrink, oh * shrink, v, (rand() - .5) * 70, "Ol")}</g>`;
+        }
+      }
+      return s;
+    };
+    fruit = layer(.5, .88, spanW * .28) + layer(1, 1, 0);   // back layer, then front
+  }
+
+  return svgEl(W, H, `
+    <defs>
+      ${defs}
+      <clipPath id="jarClip"><path d="${body}" /></clipPath>
+      <linearGradient id="glassG" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#fff" stop-opacity=".34" />
+        <stop offset="26%" stop-color="#fff" stop-opacity=".05" />
+        <stop offset="72%" stop-color="#fff" stop-opacity=".05" />
+        <stop offset="100%" stop-color="#fff" stop-opacity=".22" />
+      </linearGradient>
+    </defs>
+    <ellipse cx="${W / 2}" cy="${y1 + 9}" rx="${bw * .56}" ry="7" fill="var(--ink)" opacity=".08" />
+    <path d="${body}" fill="${v ? v.brine : "#cfc7ae"}" opacity=".26" />
+    <g clip-path="url(#jarClip)">${fruit}</g>
+    <path d="${body}" fill="url(#glassG)" stroke="var(--glass-edge)" stroke-width="1.6" />
+    <rect x="${x0 + (bw - neck) / 2 - 4}" y="${y0 - lidH}" width="${neck + 8}" height="${lidH + 3}"
+          rx="3" fill="${v ? v.skin : "#7d8a80"}" opacity=".92" />
+    <rect x="${x0 + (bw - neck) / 2 - 4}" y="${y0 - lidH}" width="${neck + 8}" height="4"
+          rx="2" fill="#fff" opacity=".22" />
+    <rect x="${x0 + bw * .1}" y="${y0 + bh * .42}" width="${bw * .8}" height="${bh * .36}"
+          rx="4" fill="var(--surface)" opacity=".93" />
+    <text x="${W / 2}" y="${y0 + bh * .57}" text-anchor="middle" fill="${v ? v.skin : "#333"}"
+          font-family="Newsreader, serif" font-size="13" font-weight="500">${v ? v.name : ""}</text>
+    <text x="${W / 2}" y="${y0 + bh * .68}" text-anchor="middle" fill="var(--muted)"
+          font-family="Archivo, sans-serif" font-size="8" letter-spacing="1.6">
+      ${d.st ? d.st.name.toUpperCase() : ""}${d.cal ? " · " + d.cal.range : ""}</text>
+  `);
+}
+
+/* --- jar thumbnail. Size is compressed (not linear) so the smallest jar stays
+       legible while the ordering still reads; the true-scale comparison is the
+       stage drawing, not this chip. ---------------------------------------- */
+function jarThumb(jar, v) {
+  const sc = (Math.pow(jar.h / 220, 0.55) * 48) / jar.h;
+  const w = jar.d * sc, h = jar.h * sc;
+  const x = (54 - w) / 2, yB = 51, y = yB - h;
+  const neck = jar.lug * sc * .8, sh = h * .16, r = Math.min(3, w * .16);
+  const body = `M ${x} ${y + sh} Q ${x} ${y + sh * .25} ${x + (w - neck) / 2} ${y}
+    L ${x + (w + neck) / 2} ${y} Q ${x + w} ${y + sh * .25} ${x + w} ${y + sh}
+    L ${x + w} ${yB - r} Q ${x + w} ${yB} ${x + w - r} ${yB}
+    L ${x + r} ${yB} Q ${x} ${yB} ${x} ${yB - r} Z`;
+  const col = v ? v.skin : "#8a9440";
+  return svgEl(54, 54, `
+    <path d="${body}" fill="${col}" opacity=".28" />
+    <path d="${body}" fill="none" stroke="var(--glass-edge)" stroke-width="1.2" />
+    <rect x="${x + (w - neck) / 2 - 1.5}" y="${y - 4.5}" width="${neck + 3}" height="5.5"
+          rx="1.5" fill="${col}" opacity=".85" />`);
+}
+
+/* --- calibre comparison, every fruit drawn to true relative scale --------- */
+function drawCalibres(d) {
+  const list = d.v ? d.v.calibres.map((id) => CALIBRES[calibreIndex(id)]) : CALIBRES;
+  const W = 320, per = Math.min(5, list.length);
+  const rows = Math.ceil(list.length / per);
+  const cellW = W / per, cellH = 76, H = rows * cellH + 16;
+  const pxPerMm = Math.min(2.5, (cellW - 20) / 30);
+  const v = d.v || VARIETIES[1];
+  let out = oliveGradient("gCal", v);
+  list.forEach((cal, i) => {
+    const dm = oliveDims(cal);
+    const cx = (i % per) * cellW + cellW / 2;
+    const cy = Math.floor(i / per) * cellH + 34;
+    const sel = d.cal && d.cal.id === cal.id;
+    out += `<g opacity="${sel || !d.cal ? 1 : .38}">
+      ${sel ? `<circle cx="${cx}" cy="${cy}" r="${dm.length * pxPerMm * .62}" fill="var(--green-700)" opacity=".14" />` : ""}
+      ${oliveShape(cx, cy, dm.width * pxPerMm, dm.length * pxPerMm, v, -14, "Cal")}
+      <text x="${cx}" y="${cy + 32}" text-anchor="middle" fill="var(--ink-2)"
+            font-family="Archivo, sans-serif" font-size="9" font-weight="600">${cal.range}</text>
+      <text x="${cx}" y="${cy + 42}" text-anchor="middle" fill="var(--muted-2)"
+            font-family="Archivo, sans-serif" font-size="8">${dm.width.toFixed(0)}×${dm.length.toFixed(0)} mm</text>
+    </g>`;
+  });
+  return svgEl(W, H, out);
+}
+
+/* --- pallet elevation with the height limit drawn in --------------------- */
+function drawPallet(d) {
+  const W = 300, H = 340;
+  if (!d.pal) {
+    return svgEl(W, H, `<text x="${W / 2}" y="${H / 2}" text-anchor="middle" fill="var(--muted-2)"
+      font-family="var(--sans)" font-size="13">Choose a case size to build the pallet</text>`);
+  }
+  const pal = P(), lim = L(), cs = d.cs, sp = d.pal;
+  const mmH = Math.max(lim.max, sp.height) * 1.06;
+  const scale = Math.min(250 / mmH, 170 / pal.l);
+  const bw = pal.l * scale, baseH = pal.base * scale;
+  const x0 = (W - bw) / 2, yBase = H - 44;
+  const layerH = cs.h * scale;
+  const perRow = Math.max(1, Math.floor(pal.l / cs.l));
+
+  let boxes = "";
+  for (let ly = 0; ly < sp.layers; ly++) {
+    const y = yBase - baseH - (ly + 1) * layerH;
+    for (let bx = 0; bx < perRow; bx++) {
+      const w = bw / perRow;
+      boxes += `<rect x="${x0 + bx * w + .6}" y="${y + .6}" width="${w - 1.2}" height="${layerH - 1.2}"
+        rx="1.5" fill="var(--brine)" opacity="${.16 + (ly % 2) * .07}"
+        stroke="var(--brine)" stroke-width=".8" stroke-opacity=".55" />`;
+    }
+  }
+  const limY = yBase - lim.max * scale;
+  const topY = yBase - baseH - sp.layers * layerH;
+
+  return svgEl(W, H, `
+    ${boxes}
+    <rect x="${x0}" y="${yBase - baseH}" width="${bw}" height="${baseH}" rx="2"
+          fill="var(--muted)" opacity=".42" />
+    <line x1="${x0 - 26}" y1="${limY}" x2="${x0 + bw + 26}" y2="${limY}"
+          stroke="var(--red)" stroke-width="1.4" stroke-dasharray="5 4" />
+    <text x="${x0 + bw + 28}" y="${limY - 5}" fill="var(--red)"
+          font-family="Archivo, sans-serif" font-size="9" font-weight="600" text-anchor="end">
+      ${(lim.max / 10).toFixed(0)} cm limit</text>
+    <line x1="${x0 - 14}" y1="${topY}" x2="${x0 - 14}" y2="${yBase}"
+          stroke="var(--ink-2)" stroke-width="1" />
+    <text x="${x0 - 20}" y="${(topY + yBase) / 2}" fill="var(--ink-2)" text-anchor="middle"
+          font-family="Archivo, sans-serif" font-size="9.5" font-weight="600"
+          transform="rotate(-90 ${x0 - 20} ${(topY + yBase) / 2})">${(sp.height / 10).toFixed(0)} cm</text>
+    <text x="${W / 2}" y="${yBase + 24}" text-anchor="middle" fill="var(--muted)"
+          font-family="Archivo, sans-serif" font-size="10">
+      ${sp.layers} layers × ${sp.perLayer} cases · ${sp.gross.toFixed(0)} kg gross</text>
+    <text x="${W / 2}" y="${yBase + 37}" text-anchor="middle" fill="var(--brine)"
+          font-family="Archivo, sans-serif" font-size="9.5" font-weight="600">
+      limited by ${sp.boundBy}</text>
+  `);
+}
+
+/* --- container loading plan ---------------------------------------------- */
+function drawContainer(d) {
+  const W = 320, H = 210;
+  if (!d.con) {
+    return svgEl(W, H, `<text x="${W / 2}" y="${H / 2}" text-anchor="middle" fill="var(--muted-2)"
+      font-family="var(--sans)" font-size="13">Complete the pallet to plan the container</text>`);
+  }
+  const con = K(), pal = P(), n = d.con.pallets;
+  const cols = Math.ceil(n / 2), boxW = Math.min(30, (W - 40) / cols);
+  const x0 = 20, y0 = 54, rowH = 46;
+  let cells = "";
+  for (let i = 0; i < n; i++) {
+    const cx = x0 + (i % cols) * boxW + 3, cy = y0 + Math.floor(i / cols) * rowH;
+    cells += `<rect x="${cx}" y="${cy}" width="${boxW - 6}" height="${rowH - 10}" rx="2"
+      fill="var(--green-700)" opacity=".24" stroke="var(--green-800)" stroke-width=".9" stroke-opacity=".6" />`;
+  }
+  const pct = Math.round((d.con.pallets * d.pal.gross / con.maxKg) * 100);
+  return svgEl(W, H, `
+    <rect x="10" y="40" width="${W - 20}" height="${Math.ceil(n / cols) * rowH + 16}" rx="4"
+          fill="none" stroke="var(--line-strong)" stroke-width="1.6" />
+    ${cells}
+    <text x="10" y="26" fill="var(--ink)" font-family="Newsreader, serif" font-size="15">
+      ${n} × ${pal.name.split(" ")[0]} pallets</text>
+    <text x="${W - 10}" y="26" text-anchor="end" fill="var(--muted)"
+          font-family="Archivo, sans-serif" font-size="10">${con.name}</text>
+    <text x="10" y="${Math.ceil(n / cols) * rowH + 74}" fill="var(--muted)"
+          font-family="Archivo, sans-serif" font-size="10">
+      ${(d.con.pallets * d.pal.gross / 1000).toFixed(1)} t of ${(con.maxKg / 1000).toFixed(0)} t payload · ${pct}% ·
+      limited by ${d.con.limitedBy}</text>
+  `);
+}
+
+/* ===========================================================================
+   RENDER — steps
+   =========================================================================== */
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const nf = (n, dp = 0) => new Intl.NumberFormat("en-GB", { minimumFractionDigits: dp, maximumFractionDigits: dp }).format(n);
+
+function optCard(o) {
+  const dis = o.block ? " disabled" : "";
+  return `<button class="opt${o.cls ? " " + o.cls : ""}" data-set="${o.field}" data-val="${o.val}"
+      aria-pressed="${o.on ? "true" : "false"}"${dis}>
+    ${o.art ? `<span class="opt-art" aria-hidden="true">${o.art}</span>` : ""}
+    <span class="opt-body">
+      <span class="opt-title">${esc(o.title)}</span>
+      ${o.sub ? `<span class="opt-sub">${esc(o.sub)}</span>` : ""}
+      ${o.meta ? `<span class="opt-meta">${esc(o.meta)}</span>` : ""}
+      ${o.block ? `<span class="opt-why">${esc(o.block)}</span>` : ""}
+    </span>
+    ${o.right || ""}
+  </button>`;
+}
+
+function resolvedRow(num, key, val, field) {
+  return `<button class="resolved" data-reopen="${field}">
+    <span class="resolved-num">${num}</span>
+    <span class="resolved-key">${esc(key)}</span>
+    <span class="resolved-val">${esc(val)}</span>
+    <span class="resolved-edit">Change</span>
+  </button>`;
+}
+
+let openStep = "variety";
+
+function renderSteps(d) {
+  const out = [];
+  const N = (i) => String(i).padStart(2, "0");
+
+  /* 01 — variety */
+  if (S.variety && openStep !== "variety") {
+    out.push(resolvedRow(N(1), "Variety", d.v.name, "variety"));
+  } else {
+    out.push(`<div class="step"><div class="step-head"><span class="step-num">${N(1)}</span>
+      <h3>Which olive</h3></div>
+      <p class="step-note">Each variety carries its own calibre ladder and its own permitted styles.</p>
+      <div class="opts">${VARIETIES.map((v) => optCard({
+        field: "variety", val: v.id, on: S.variety === v.id, title: v.name, sub: v.blurb,
+        meta: `${v.calibres.length} calibres · ${v.styles.length} styles`,
+        art: svgEl(48, 48, `${oliveGradient("gv" + v.id, v)}${oliveShape(24, 24, 26, 34, v, -16, "v" + v.id)}`)
+          .replace(/id="gOl"/g, `id="gv${v.id}"`).replace(/url\(#gOl\)/g, `url(#gv${v.id})`),
+      })).join("")}</div></div>`);
+  }
+  if (!S.variety) return out.join("");
+
+  /* 02 — style */
+  if (S.style && openStep !== "style") {
+    out.push(resolvedRow(N(2), "Preparation", d.st.name, "style"));
+  } else {
+    out.push(`<div class="step"><div class="step-head"><span class="step-num">${N(2)}</span>
+      <h3>How it is prepared</h3></div>
+      <p class="step-note">Preparation changes how densely the fruit packs, so it moves the drained weight the jar can hold.</p>
+      <div class="opts cols-2">${STYLES.filter((s) => d.v.styles.includes(s.id)).map((s) => optCard({
+        field: "style", val: s.id, on: S.style === s.id, title: s.name, sub: s.sub,
+        meta: s.note, block: styleBlock(s, d.cal),
+      })).join("")}</div></div>`);
+  }
+  if (!S.style) return out.join("");
+
+  /* 03 — calibre */
+  if (S.calibre && openStep !== "calibre") {
+    out.push(resolvedRow(N(3), "Calibre", `${d.cal.name} ${d.cal.range}`, "calibre"));
+  } else {
+    out.push(`<div class="step"><div class="step-head"><span class="step-num">${N(3)}</span>
+      <h3>Fruit size</h3></div>
+      <p class="step-note">Pick a grade — the drawing on the left is to scale.</p>
+      <div class="explain"><span class="mk">?</span><span><b>A calibre is a count, not a measurement.</b>
+        “181/200” means it takes 181–200 olives to make one kilo — so a <b>lower number is a bigger olive</b>.
+        Every millimetre figure here is calculated from that count.</span></div>
+      <div class="opts calibres">${d.v.calibres.map((id) => {
+        const cal = CALIBRES[calibreIndex(id)], dm = oliveDims(cal);
+        const px = Math.min(1.15, 34 / dm.length);
+        return optCard({
+          field: "calibre", val: cal.id, on: S.calibre === cal.id, cls: "calibre",
+          title: `${cal.name} ${cal.range}`,
+          art: svgEl(44, 38, `${oliveGradient("gc" + cal.id, d.v)}${oliveShape(22, 19, dm.width * px, dm.length * px, d.v, -14, "c" + cal.id)}`)
+            .replace(/id="gOl"/g, `id="gc${cal.id}"`).replace(/url\(#gOl\)/g, `url(#gc${cal.id})`),
+          right: `<span class="cal-dims"><b>${dm.width.toFixed(0)} × ${dm.length.toFixed(0)} mm</b>${nf(dm.mass, 1)} g each</span>`,
+          block: styleBlock(d.st, cal),
+        });
+      }).join("")}</div></div>`);
+  }
+  if (!S.calibre) return out.join("");
+
+  /* 04 — jar */
+  if (S.jar && openStep !== "jar") {
+    out.push(resolvedRow(N(4), "Jar", d.jar.name, "jar"));
+  } else {
+    out.push(`<div class="step"><div class="step-head"><span class="step-num">${N(4)}</span>
+      <h3>Jar</h3></div>
+      <p class="step-note">Jars that cannot hold ${d.cal.name} ${d.cal.range} to a stable drained weight are shown, but disabled — with the reason.</p>
+      <div class="opts cols-2">${JARS.map((jar) => {
+        const block = jarBlock(jar, d.cal, d.st);
+        const win = fillWindow(jar, d.st, d.cal);
+        return optCard({
+          field: "jar", val: jar.id, on: S.jar === jar.id, title: jar.name, sub: jar.sub,
+          art: jarThumb(jar, d.v),
+          meta: block ? "" : `${nf(win.dwMin)}–${nf(win.dwMax)} g drained · ≈${nf(oliveCount(win.dwDefault, d.cal, d.st))} fruit`,
+          block,
+        });
+      }).join("")}</div></div>`);
+  }
+  if (!S.jar) return out.join("");
+
+  /* 05 — fill */
+  const w = d.win;
+  const atMax = d.dw >= w.dwMax - 0.5, atMin = d.dw <= w.dwMin + 0.5;
+  if (openStep !== "fill" && S.perCase) {
+    out.push(resolvedRow(N(5), "Fill", `${nf(d.dw)} g drained / ${nf(d.nw)} g net`, "fill"));
+  } else {
+    out.push(`<div class="step"><div class="step-head"><span class="step-num">${N(5)}</span>
+      <h3>Drained weight</h3></div>
+      <p class="step-note">You can move freely inside the window this jar and preparation allow. Both ends are hard limits, not preferences.</p>
+      <div class="fill-wrap">
+        <div class="fill-readout">
+          <span class="big">${nf(d.dw)}</span><span class="unit">g drained</span>
+          <span class="net">net weight<b>${nf(d.nw)} g</b></span>
+        </div>
+        <div class="slider-track">
+          <input type="range" id="dw" min="${w.dwMin}" max="${w.dwMax}" step="5" value="${d.dw}"
+            style="--pct:${((d.dw - w.dwMin) / Math.max(1, w.dwMax - w.dwMin)) * 100}%"
+            aria-label="Drained weight in grams" />
+          <div class="slider-bounds"><span>${nf(w.dwMin)} g minimum</span><span>${nf(w.dwMax)} g maximum</span></div>
+        </div>
+        <div class="bound-note"><span class="mk">${atMax ? "▲" : atMin ? "▼" : "·"}</span><span>
+          ${atMax
+            ? `<b>At the physical maximum.</b> ${nf(w.dwMax)} g is all the fruit that fits once headspace and brine coverage are taken out of a ${d.jar.ml} ml jar. More drained weight needs a larger jar.`
+            : atMin
+            ? `<b>At the commercial minimum.</b> Below ${nf(w.dwMin)} g the drained-to-net ratio falls under ${(MIN_DW_NW_RATIO * 100).toFixed(0)}% and the jar reads under-filled on shelf.`
+            : `Drained-to-net ratio <b>${((d.dw / d.nw) * 100).toFixed(0)}%</b> · roughly <b>${nf(d.count)} fruit</b> per jar at ${d.cal.range}.`}
+        </span></div>
+      </div></div>`);
+  }
+
+  /* 06 — case & pallet */
+  const grids = CASE_GRID[d.jar.id] || [];
+  out.push(`<div class="step"><div class="step-head"><span class="step-num">${N(6)}</span>
+    <h3>Case &amp; pallet</h3></div>
+    <p class="step-note">Cases per layer, layers, pallet height and pallets per container are all calculated — change any input and the numbers on the left follow.</p>
+    <div class="opts cols-2">${grids.map(([n]) => {
+      const cs = caseSpec(d.jar, n);
+      const perLayer = casesPerLayer(cs, P());
+      return optCard({
+        field: "perCase", val: n, on: S.perCase === n, title: `${n} jars per case`,
+        sub: `${cs.cols} × ${cs.rows} · ${nf(cs.l)} × ${nf(cs.w)} × ${nf(cs.h)} mm`,
+        meta: `${perLayer} cases per layer on ${P().name.split(" ")[0].toLowerCase()}`,
+      });
+    }).join("")}</div>
+    <div class="opts cols-2" style="margin-top:10px">${PALLETS.map((p) => optCard({
+      field: "pallet", val: p.id, on: S.pallet === p.id, title: p.name,
+      sub: `${p.per20} per 20 ft · ${p.per40} per 40 ft`,
+    })).join("")}</div>
+    <div class="opts cols-3" style="margin-top:10px">${HEIGHT_LIMITS.map((h) => optCard({
+      field: "limit", val: h.id, on: S.limit === h.id, title: h.name.split(" — ")[0],
+      sub: h.name.split(" — ")[1], meta: h.note,
+    })).join("")}</div>
+    <div class="opts cols-2" style="margin-top:10px">${CONTAINERS.map((c) => optCard({
+      field: "container", val: c.id, on: S.container === c.id, title: c.name,
+      sub: `${nf(c.maxKg / 1000)} t payload`,
+    })).join("")}</div>
+  </div>`);
+
+  return out.join("");
+}
+
+/* ===========================================================================
+   RENDER — summary / handoff
+   =========================================================================== */
+function renderSummary(d) {
+  if (!d.pal) return "";
+  const v = d.v, st = d.st, cal = d.cal, jar = d.jar;
+  const D = '<span class="derived-flag">derived</span>';
+  const row = (k, val, der) => `<tr><td>${k}</td><td>${val}${der ? D : ""}</td></tr>`;
+
+  return `<div class="summary">
+    <h3>Your specification</h3>
+    <p>Nine choices produced forty-one specification fields. Everything marked <b>derived</b> was
+       calculated from the rules above — it cannot be mistyped, and it cannot contradict itself.</p>
+
+    <table class="spec-table">
+      <caption>Product</caption><tbody>
+      ${row("Description", `${esc(v.name)} olives, ${st.name.toLowerCase()}, ${cal.range}`)}
+      ${row("Variety", esc(v.name))}
+      ${row("Preparation", esc(st.name))}
+      ${row("Calibre", `${cal.name} ${cal.range}`)}
+      ${row("Fruit size", `${d.dims.width.toFixed(0)} × ${d.dims.length.toFixed(0)} mm`, 1)}
+      ${row("HS code", v.hs, 1)}
+      ${row("Country of origin", "Greece", 1)}
+      </tbody></table>
+
+    <table class="spec-table">
+      <caption>Primary packaging</caption><tbody>
+      ${row("Packaging", `Glass jar ${jar.ml} ml, twist-off ${jar.lug}`, 1)}
+      ${row("Drained weight", `${nf(d.dw)} g`)}
+      ${row("Net weight", `${nf(d.nw)} g`, 1)}
+      ${row("Gross weight per jar", `${nf(d.grossJar)} g`, 1)}
+      ${row("Drained / net ratio", `${((d.dw / d.nw) * 100).toFixed(0)}%`, 1)}
+      ${row("Fruit per jar", `≈ ${nf(d.count)}`, 1)}
+      ${row("Lid diameter", `${jar.lug} mm`, 1)}
+      </tbody></table>
+
+    <table class="spec-table">
+      <caption>Sales packaging &amp; palletising</caption><tbody>
+      ${row("Items per case", nf(d.cs.perCase))}
+      ${row("Case dimensions", `${nf(d.cs.l)} × ${nf(d.cs.w)} × ${nf(d.cs.h)} mm`, 1)}
+      ${row("Pallet type", P().name)}
+      ${row("Cases per layer", nf(d.pal.perLayer), 1)}
+      ${row("Layers per pallet", `${nf(d.pal.layers)} (limited by ${d.pal.boundBy})`, 1)}
+      ${row("Cases per pallet", nf(d.pal.casesTotal), 1)}
+      ${row("Jars per pallet", nf(d.pal.jarsTotal), 1)}
+      ${row("Pallet height", `${(d.pal.height / 10).toFixed(0)} cm`, 1)}
+      ${row("Height type", L().name.split(" — ")[0], 1)}
+      ${row("Pallet gross weight", `${nf(d.pal.gross)} kg`, 1)}
+      </tbody></table>
+
+    <table class="spec-table">
+      <caption>Logistics</caption><tbody>
+      ${row("Container", K().name)}
+      ${row("Pallets per container", `${nf(d.con.pallets)} (limited by ${d.con.limitedBy})`, 1)}
+      ${row("Jars per container", nf(d.jarsPerContainer), 1)}
+      ${row("Payload used", `${nf(d.con.pallets * d.pal.gross / 1000, 1)} t`, 1)}
+      </tbody></table>
+
+    <div class="handoff">
+      <h4>Hand off to the Offer Builder</h4>
+      <p>This specification is already shaped like an <code>article</code> record — the same object
+         <code>newLine(article)</code> expects. Pricing, freight and the customer offersheet continue
+         in the existing tool, with no field retyped.</p>
+      <div class="handoff-actions">
+        <button class="btn-primary" id="req">Request a quotation</button>
+        <button class="ghost-btn" id="showjson">Show article record</button>
+      </div>
+      <pre class="json-out" id="json" hidden></pre>
+    </div>
+  </div>`;
+}
+
+/* The article object the Offer Builder already consumes. */
+function articleRecord(d) {
+  return {
+    description: `${d.v.name} olives, ${d.st.name.toLowerCase()}, ${d.cal.range}`,
+    size: `${d.cal.name} ${d.cal.range}`,
+    agriculture: "Conventional",
+    hsCode: d.v.hs,
+    originCountry: "Greece",
+    packaging: `Glass jar ${d.jar.ml} ml, twist-off ${d.jar.lug}`,
+    drainedKg: +(d.dw / 1000).toFixed(3),
+    netKg: +(d.nw / 1000).toFixed(3),
+    grossKg: +(d.grossJar / 1000).toFixed(3),
+    wholeFactor: +(1 / d.st.yield).toFixed(3),
+    lidDiameter: d.jar.lug,
+    itemsPerSp: d.cs.perCase,
+    spType: "Carton",
+    pallet: P().name,
+    heightType: L().id === "ccg1" ? "CCG1<105cm" : L().id === "ccg2" ? "CCG2<195cm" : ">195cm",
+    spPerLayer: d.pal.perLayer,
+    layersPerPallet: d.pal.layers,
+    spPerPallet: d.pal.casesTotal,
+    itemsPerPallet: d.pal.jarsTotal,
+    palletGrossWeight: +d.pal.gross.toFixed(1),
+    palletHeight: +(d.pal.height / 10).toFixed(1),
+  };
+}
+
+/* ===========================================================================
+   RENDER — stage & spec strip
+   =========================================================================== */
+function renderStage(d) {
+  const map = { jar: drawJar, calibre: drawCalibres, pallet: drawPallet, container: drawContainer };
+  document.getElementById("stage").innerHTML = map[S.view](d);
+
+  const cap = document.getElementById("stage-caption");
+  if (S.view === "calibre") {
+    cap.innerHTML = d.v ? `${esc(d.v.name)} calibre ladder<em>Drawn to scale from count per kilo</em>`
+                        : `Calibre ladder<em>Drawn to scale from count per kilo</em>`;
+  } else if (S.view === "pallet") {
+    cap.innerHTML = d.pal ? `${nf(d.pal.jarsTotal)} jars per pallet<em>${d.pal.layers} layers · ${(d.pal.height / 10).toFixed(0)} cm · ${nf(d.pal.gross)} kg</em>` : `Pallet<em>Choose a case size</em>`;
+  } else if (S.view === "container") {
+    cap.innerHTML = d.con ? `${nf(d.jarsPerContainer)} jars per container<em>${d.con.pallets} pallets · limited by ${d.con.limitedBy}</em>` : "Container";
+  } else {
+    cap.innerHTML = d.v
+      ? `${esc(d.v.name)}${d.st ? ", " + d.st.name.toLowerCase() : ""}<em>${d.jar ? d.jar.name + " glass jar" : esc(d.v.latin)}</em>`
+      : `Start by choosing a variety<em>The jar fills as you decide</em>`;
+  }
+
+  const cells = [
+    ["Drained", d.dw ? `${nf(d.dw)}<small> g</small>` : null],
+    ["Net", d.nw ? `${nf(d.nw)}<small> g</small>` : null],
+    ["Jars / pallet", d.pal ? nf(d.pal.jarsTotal) : null],
+    ["Jars / container", d.jarsPerContainer ? nf(d.jarsPerContainer) : null],
+  ];
+  document.getElementById("spec-strip").innerHTML = cells.map(([k, v]) =>
+    `<div class="spec-cell"><span class="k">${k}</span>
+     <span class="v${v ? "" : " pending"}">${v || "—"}</span></div>`).join("");
+}
+
+/* =========================================================================== */
+function render() {
+  /* The stage follows the step you are on until you pick a tab yourself. */
+  if (!S.pinned) S.view = S.jar ? "jar" : "calibre";
+  const d = derive();
+  document.getElementById("steps").innerHTML = renderSteps(d);
+  document.getElementById("summary").innerHTML = renderSummary(d);
+  renderStage(d);
+  document.querySelectorAll(".stage-tab").forEach((t) =>
+    t.setAttribute("aria-selected", t.dataset.view === S.view ? "true" : "false"));
+}
+
+/* Choosing upstream invalidates what depended on it. */
+function setField(field, raw) {
+  const val = field === "perCase" ? Number(raw) : raw;
+  if (field === "variety" && val !== S.variety) {
+    S.variety = val;
+    const v = V();
+    if (S.style && !v.styles.includes(S.style)) S.style = null;
+    if (S.calibre && !v.calibres.includes(S.calibre)) S.calibre = null;
+    openStep = S.style ? (S.calibre ? "jar" : "calibre") : "style";
+  } else if (field === "style") {
+    S.style = val; S.dw = null;
+    if (S.calibre && styleBlock(ST(), C())) S.calibre = null;
+    openStep = S.calibre ? "jar" : "calibre";
+  } else if (field === "calibre") {
+    S.calibre = val;
+    if (S.jar && jarBlock(J(), C(), ST())) { S.jar = null; S.perCase = null; }
+    openStep = "jar";
+  } else if (field === "jar") {
+    S.jar = val; S.dw = null;
+    const grids = CASE_GRID[val] || [];
+    if (!grids.some((g) => g[0] === S.perCase)) S.perCase = grids.length ? grids[0][0] : null;
+    openStep = "fill";
+    S.view = "jar";
+  } else {
+    S[field] = val;
+  }
+  render();
+}
+
+document.addEventListener("click", (e) => {
+  const tab = e.target.closest(".stage-tab");
+  if (tab) { S.view = tab.dataset.view; S.pinned = true; render(); return; }
+
+  const reopen = e.target.closest("[data-reopen]");
+  if (reopen) {
+    openStep = reopen.dataset.reopen;
+    S.pinned = false;
+    render(); return;
+  }
+
+  const opt = e.target.closest("[data-set]");
+  if (opt && !opt.disabled) {
+    const f = opt.dataset.set;
+    if (f === "perCase" || f === "pallet" || f === "limit") { S.view = "pallet"; S.pinned = true; }
+    if (f === "container") { S.view = "container"; S.pinned = true; }
+    setField(f, opt.dataset.val);
+    return;
+  }
+
+  if (e.target.id === "restart") {
+    Object.assign(S, { variety: null, style: null, calibre: null, jar: null, dw: null,
+                       perCase: null, pallet: "eur", limit: "ccg2", container: "c20",
+                       view: "calibre", pinned: false });
+    openStep = "variety"; render(); return;
+  }
+
+  if (e.target.id === "showjson") {
+    const box = document.getElementById("json");
+    if (box.hidden) {
+      const rec = articleRecord(derive());
+      box.innerHTML = JSON.stringify(rec, null, 2)
+        .replace(/"([^"]+)":/g, '"<span class="jk">$1</span>":')
+        .replace(/: (-?[\d.]+)(,?)$/gm, ': <span class="jn">$1</span>$2');
+      box.hidden = false;
+      e.target.textContent = "Hide article record";
+    } else { box.hidden = true; e.target.textContent = "Show article record"; }
+    return;
+  }
+
+  if (e.target.id === "req") {
+    e.target.textContent = "Specification sent — we'll price it";
+    e.target.disabled = true;
+  }
+});
+
+document.addEventListener("input", (e) => {
+  if (e.target.id !== "dw") return;
+  S.dw = Number(e.target.value);
+  const d = derive();
+  e.target.style.setProperty("--pct",
+    `${((d.dw - d.win.dwMin) / Math.max(1, d.win.dwMax - d.win.dwMin)) * 100}%`);
+  /* keep the slider under the thumb: patch in place, redraw the stage only */
+  const wrap = e.target.closest(".fill-wrap");
+  wrap.querySelector(".big").textContent = nf(d.dw);
+  const atMax = d.dw >= d.win.dwMax - .5, atMin = d.dw <= d.win.dwMin + .5;
+  wrap.querySelector(".bound-note").innerHTML =
+    `<span class="mk">${atMax ? "▲" : atMin ? "▼" : "·"}</span><span>${
+      atMax ? `<b>At the physical maximum.</b> ${nf(d.win.dwMax)} g is all the fruit that fits once headspace and brine coverage are taken out of a ${d.jar.ml} ml jar. More drained weight needs a larger jar.`
+      : atMin ? `<b>At the commercial minimum.</b> Below ${nf(d.win.dwMin)} g the drained-to-net ratio falls under ${(MIN_DW_NW_RATIO * 100).toFixed(0)}% and the jar reads under-filled on shelf.`
+      : `Drained-to-net ratio <b>${((d.dw / d.nw) * 100).toFixed(0)}%</b> · roughly <b>${nf(d.count)} fruit</b> per jar at ${d.cal.range}.`}</span>`;
+  renderStage(d);
+  document.getElementById("summary").innerHTML = renderSummary(d);
+});
+
+render();
+</script>
+</body>
+</html>
