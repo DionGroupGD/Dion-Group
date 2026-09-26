@@ -1152,6 +1152,8 @@ body {
   transform: translateY(-1px);
   box-shadow: 0 10px 28px rgba(20, 30, 60, 0.22);
 }
+.form-note { margin: 16px 0 0; color: #515154; font-size: 14px; line-height: 1.5; text-align: center; }
+.form-note a { color: #1d1d1f; text-underline-offset: 2px; font-weight: 600; }
 @media (max-width: 560px) {
   .contact { padding: 72px 14px 90px; }
   .contact-inner { padding: 34px 20px 28px; border-radius: 22px; }
