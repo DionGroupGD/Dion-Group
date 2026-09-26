@@ -10,6 +10,7 @@ DION GROUP WEBSITE/
 ├── styles.css              ← Homepage styles
 ├── home.js                 ← Homepage scripts (reveal-on-scroll, foundry sticky)
 ├── app.js                  ← Shared scripts (lang switcher, scroll reveal, tilt)
+├── form-guard.js           ← Anti-spam guard for the contact + Axon pricing forms
 ├── index.css               ← Legal-page styles (privacy / terms / cookies / thanks)
 │
 ├── privacy.html            ← Legal pages — share index.css and app.js
@@ -44,11 +45,17 @@ DION GROUP WEBSITE/
 
 ## What touches what
 
-- **Homepage** (`index.html`) → `styles.css` + `app.js` + `home.js` + `axon-truck.webp`
+- **Homepage** (`index.html`) → `styles.css` + `app.js` + `home.js` + `form-guard.js` + `axon-truck.webp`
 - **Legal pages** (`privacy.html`, `terms.html`, `cookies.html`, `thanks.html`) → `index.css` + `app.js`
-- **Sub-products** (`/aegis`, `/tms`) → self-contained, own assets
+- **Sub-products** (`/aegis`, `/tms`) → self-contained, own assets (the Axon pricing form also loads `../form-guard.js`)
 
 > ⚠️  **Do not delete `index.css`** — it is still loaded by the four legal pages even though the new homepage uses `styles.css`.
+
+## Contact forms (spam protection)
+
+Both forms (homepage `#contact` and the Axon `#pricing-form`) post to FormSubmit, but **their `<form>` tags have no `action` on purpose**. Bots read the action URL from the HTML and post to it directly, so `form-guard.js` adds the FormSubmit endpoint only at submit time, and only when the submission looks human: the `_honey` honeypot is empty, the visitor really typed/clicked in the form, and at least 3 seconds passed since they started. A blocked visitor sees a short "please submit again" note.
+
+To change where submissions go, edit `ENDPOINT` in `form-guard.js`. Do not put the URL back in the HTML.
 
 ## Running locally
 

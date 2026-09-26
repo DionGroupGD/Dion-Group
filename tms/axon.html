@@ -707,8 +707,9 @@
     </div>
   </div>
 
-  <form id="pricing-form" action="https://formsubmit.co/georgedion@dion-group.com" method="POST" data-rv="" style="max-width:840px;margin:clamp(2.4rem,4vw,3.4rem) auto 0;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.72);border-radius:28px;box-shadow:0 2px 6px rgba(20,22,40,.05),0 24px 64px rgba(28,30,68,.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:clamp(1.8rem,3.5vw,2.8rem);position:relative;scroll-margin-top:90px;">
-    <input type="hidden" id="pf-subject" name="_subject" value="New Axon TMS pricing request from dion-group.com" data-en="New Axon TMS pricing request from dion group.com" data-de="Neue Axon TMS Preisanfrage von dion-group.com" data-gr="Νέο αίτημα τιμολόγησης Axon TMS από το dion-group.com">
+  <!-- No action attribute on purpose: ../form-guard.js sets it on a genuine submit (anti-spam, see README). -->
+  <form id="pricing-form" method="POST" data-guard="" data-rv="" style="max-width:840px;margin:clamp(2.4rem,4vw,3.4rem) auto 0;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.72);border-radius:28px;box-shadow:0 2px 6px rgba(20,22,40,.05),0 24px 64px rgba(28,30,68,.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:clamp(1.8rem,3.5vw,2.8rem);position:relative;scroll-margin-top:90px;">
+    <input type="hidden" id="pf-subject" name="_subject" value="New Axon TMS pricing request from dion-group.com" data-en="New Axon TMS pricing request from dion-group.com" data-de="Neue Axon TMS Preisanfrage von dion-group.com" data-gr="Νέο αίτημα τιμολόγησης Axon TMS από το dion-group.com">
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_template" value="table">
     <input type="hidden" name="_autoresponse" value="Thanks for your interest in Axon TMS. We have your request and our team will email you a tailored plan within one business day. No sales call unless you ask. Dion Group">
@@ -730,6 +731,8 @@
       <button type="submit" data-magnetic="" style="display:inline-flex;align-items:center;justify-content:center;padding:.9rem 1.7rem;border-radius:999px;background:#1b1d27;color:#fff;font-weight:600;font-size:1rem;box-shadow:0 18px 44px rgba(28,30,68,.16);transition:transform .25s;" data-en="Request pricing" data-de="Preise anfragen" data-gr="Αίτηση τιμολόγησης">Request pricing</button>
       <span style="font-size:.84rem;color:#7c828f;max-width:340px;" data-en="No sales call unless you ask. We reply by email within one business day." data-de="Kein Verkaufsanruf, wenn Sie es nicht wünschen. Wir antworten innerhalb eines Werktags per E-Mail." data-gr="Καμία κλήση πώλησης χωρίς να το ζητήσετε. Απαντάμε με email εντός μίας εργάσιμης.">No sales call unless you ask. We reply by email within one business day.</span>
     </div>
+    <p data-guard-note="" role="alert" hidden style="margin-top:1rem;font-size:.9rem;font-weight:600;color:#3a3f4c;" data-en="That was fast! Please check your details and submit again." data-de="Das ging schnell! Bitte prüfen Sie Ihre Angaben und senden Sie das Formular erneut ab." data-gr="Αυτό ήταν γρήγορο! Ελέγξτε τα στοιχεία σας και υποβάλετε ξανά τη φόρμα.">That was fast! Please check your details and submit again.</p>
+    <noscript><p style="margin-top:1rem;font-size:.9rem;color:#3a3f4c;">JavaScript is required to send this form. You can also email us at <a href="mailto:georgedion@dion-group.com" style="font-weight:600;text-decoration:underline;">georgedion@dion-group.com</a>.</p></noscript>
   </form>
 </section>
 
@@ -781,6 +784,7 @@
 
 <script defer src="../cookie-consent.js?v=1"></script>
 <script defer src="../app.js?v=2"></script>
+<script defer src="../form-guard.js?v=1"></script>
 <script defer src="axon.js?v=20"></script>
 <script defer src="../analytics.js?v=3"></script>
 </body>

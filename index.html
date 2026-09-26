@@ -53,7 +53,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link id="gfont" rel="stylesheet" media="print" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap"></noscript>
-    <link rel="stylesheet" href="styles.css?v=47">
+    <link rel="stylesheet" href="styles.css?v=48">
     <link rel="stylesheet" href="cookie-consent.css?v=1">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
@@ -547,7 +547,8 @@
         </h2>
         <p class="contact-lead" data-en="Integration, partnership, or exploration. We'd love to hear from you." data-de="Integration, Partnerschaft oder Erkundung. Wir freuen uns, von Ihnen zu hören." data-gr="Ενοποίηση, συνεργασία ή εξερεύνηση. Θα χαρούμε να ακούσουμε από εσάς.">Integration, partnership, or exploration. We'd love to hear from you.</p>
 
-        <form class="contact-form" action="https://formsubmit.co/georgedion@dion-group.com" method="POST">
+        <!-- No action attribute on purpose: form-guard.js sets it on a genuine submit (anti-spam, see README). -->
+        <form class="contact-form" method="POST" data-guard>
           <input type="hidden" id="contact-subject" name="_subject" value="New inquiry from dion-group.com" data-en="New inquiry from dion-group.com" data-de="Neue Anfrage von dion-group.com" data-gr="Νέο μήνυμα από το dion-group.com">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="table">
@@ -568,6 +569,8 @@
             <span class="lang-block" data-lang-block="gr" hidden>Συμφωνώ με την <a href="privacy.html">Πολιτική Απορρήτου</a>, τους <a href="terms.html">Όρους Χρήσης</a> και την <a href="cookies.html">Πολιτική Cookies</a>.</span>
           </label>
           <button type="submit" class="contact-btn" data-en="Initiate Integration" data-de="Integration starten" data-gr="Έναρξη ενοποίησης">Initiate Integration</button>
+          <p class="form-note" data-guard-note role="alert" hidden data-en="That was fast! Please check your details and submit again." data-de="Das ging schnell! Bitte prüfen Sie Ihre Angaben und senden Sie das Formular erneut ab." data-gr="Αυτό ήταν γρήγορο! Ελέγξτε τα στοιχεία σας και υποβάλετε ξανά τη φόρμα.">That was fast! Please check your details and submit again.</p>
+          <noscript><p class="form-note">JavaScript is required to send this form. You can also email us at <a href="mailto:georgedion@dion-group.com">georgedion@dion-group.com</a>.</p></noscript>
         </form>
       </div>
     </section>
@@ -610,6 +613,7 @@
 
     <script defer src="cookie-consent.js?v=1"></script>
     <script defer src="app.js?v=2"></script>
+    <script defer src="form-guard.js?v=1"></script>
     <script defer src="analytics.js?v=3"></script>
     <script defer src="home.js?v=2"></script>
 </body>
