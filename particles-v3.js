@@ -8,6 +8,8 @@
    or a film's clock can scrub it forwards and back. */
 (() => {
   'use strict';
+  // images are found next to this script, so pages in other folders (/de/, /gr/) load them too
+  const HERE = (document.currentScript && document.currentScript.src) || window.location.href;
   const clamp = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
   const ease = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
 
@@ -383,7 +385,7 @@
   const marks = {};
   const product = (name, count) => marks[`${name}${count}`] || (marks[`${name}${count}`] = name.startsWith('aegis')
     ? Promise.resolve(AEGIS_MARKS[name.split('-')[1] || AEGIS_MARK](count))
-    : load('tms/assets/axon-mark-light.png').then((img) => new Mark(fromImage(img, count), [WHITE, BLUE])));
+    : load(new URL('tms/assets/axon-mark-light.png', HERE).href).then((img) => new Mark(fromImage(img, count), [WHITE, BLUE])));
 
   // older devices (4 cores or 4 GB and under) draw half the points everywhere
   const LITE = ((navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4);

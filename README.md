@@ -13,7 +13,8 @@ DION GROUP WEBSITE/
 ├── particles-v3.js         ← Product marks in particles (Axon, Aegis)
 ├── trailers.js             ← Product films rendered live in the page (Axon, Aegis)
 ├── films-cloud.js          ← The films' point-cloud look
-├── app.js                  ← Shared: language switching (EN/DE/GR, ?lang=), reveals
+├── app.js                  ← Shared: language switching (EN/DE/GR), reveals
+├── de/, gr/                ← German and Greek home and Axon pages: GENERATED, do not edit (see below)
 ├── index.css               ← Legal-page styles
 │
 ├── privacy.html            ← Legal pages: share index.css and app.js
@@ -38,6 +39,19 @@ DION GROUP WEBSITE/
 ```
 
 Working files (film recording pages, design explorations, staging pages, tools) are kept out of the repository by `.gitignore`.
+
+## Languages
+
+The home page and the Axon page exist as separate pages per language, so search engines index each one:
+`/`, `/de/`, `/gr/` and `/tms/axon.html`, `/de/tms/axon.html`, `/gr/tms/axon.html`.
+The German and Greek pages are generated from the English ones (their `data-de` / `data-gr` texts) by
+`archive/site-tools/lang_pages.cjs`. After every change to `index.html` or `tms/axon.html`, run:
+
+```bash
+node archive/site-tools/lang_pages.cjs
+```
+
+The other pages switch language in place (`?lang=de`, `?lang=gr`).
 
 ## Running locally
 

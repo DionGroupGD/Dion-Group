@@ -18,6 +18,8 @@ Dion Group makes and runs its own products (Axon TMS for truck yards and termina
 - [Home](https://dion-group.com/): Company, products, services, product films and contact.
 - [Axon TMS](https://dion-group.com/tms/axon.html): Product page, product film and pricing request.
 - [FAQ](https://dion-group.com/#faq): Common questions about projects, products, languages and working together.
+- [Startseite (Deutsch)](https://dion-group.com/de/) and [Axon TMS (Deutsch)](https://dion-group.com/de/tms/axon.html): The site in German.
+- [Αρχική (Ελληνικά)](https://dion-group.com/gr/) and [Axon TMS (Ελληνικά)](https://dion-group.com/gr/tms/axon.html): The site in Greek.
 - [Privacy Notice](https://dion-group.com/privacy.html): How Dion Group handles personal data.
 - [Cookie Policy](https://dion-group.com/cookies.html): Browser storage and analytics (Google Analytics only with consent).
 - [Terms of Use](https://dion-group.com/terms.html): Terms for using the website.

@@ -8,6 +8,26 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+  // An address with a #section (a link from another page, a language switch)
+  // opens at that section at once. With the page's smooth scrolling, the browser
+  // would otherwise glide there from the top once everything has loaded.
+  if (window.location.hash.length > 1) {
+    let target = null;
+    try {
+      target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+    } catch (error) {
+      // a malformed address: leave it to the browser
+    }
+    if (target) {
+      const root = document.documentElement;
+      root.style.scrollBehavior = 'auto';
+      target.scrollIntoView();
+      const restore = () => setTimeout(() => { root.style.scrollBehavior = ''; }, 400);
+      if (document.readyState === 'complete') restore();
+      else window.addEventListener('load', restore, { once: true });
+    }
+  }
+
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const supportsHoverTilt = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const languageButtons = document.querySelectorAll('.lang-btn');
@@ -18,6 +38,81 @@ document.addEventListener('DOMContentLoaded', () => {
   // === Language switcher (EN / DE / GR) ===
   const supportedLanguages = ['en', 'de', 'gr'];
   const htmlLangMap = { en: 'en', de: 'de', gr: 'el' };
+  const fromHtmlLang = { en: 'en', de: 'de', el: 'gr' };
+
+  // The home page and the Axon page also exist as static German and Greek pages
+  // (/de/…, /gr/…), generated from the English ones by archive/site-tools/
+  // lang_pages.cjs. They list each other as <link rel="alternate" hreflang>.
+  // There the page's own language wins and the buttons go to the other version;
+  // on every other page the language is switched in place, and links to those
+  // pages lead to the version in the language being read.
+  const versions = {};
+  document.querySelectorAll('link[rel="alternate"][hreflang]').forEach((link) => {
+    const lang = fromHtmlLang[link.getAttribute('hreflang')];
+    try {
+      if (lang) versions[lang] = new URL(link.getAttribute('href')).pathname;
+    } catch (error) {
+      // ignore a malformed link
+    }
+  });
+  const staticLang = Object.keys(versions).length > 1 ? (fromHtmlLang[document.documentElement.lang] || 'en') : null;
+  const staticPages = { '/': '', '/index.html': '', '/tms/axon.html': 'tms/axon.html' };
+  const otherParams = () => {
+    const params = new URLSearchParams(window.location.search);
+    params.delete('lang');
+    const query = params.toString();
+    return query ? `?${query}` : '';
+  };
+
+  const rememberLanguage = (lang) => {
+    try {
+      if (window.DionConsent?.allows('preferences')) {
+        localStorage.setItem('dion_lang', lang);
+      } else {
+        localStorage.removeItem('dion_lang');
+      }
+    } catch (error) {
+      // Ignore storage errors in private/incognito contexts.
+    }
+  };
+
+  // to the same page in another language, at the section being read
+  const goToVersion = (lang) => {
+    let hash = window.location.hash;
+    if (window.scrollY > 40) {
+      let best = null;
+      new Set([...document.querySelectorAll('a[href^="#"]')].map((a) => a.getAttribute('href').slice(1))).forEach((id) => {
+        const el = id && document.getElementById(id);
+        const top = el ? el.getBoundingClientRect().top : Infinity;
+        if (top <= window.innerHeight * 0.4 && (!best || top > best.top)) best = { id, top };
+      });
+      if (best) hash = `#${best.id}`;
+    }
+    window.location.href = `${versions[lang]}${otherParams()}${hash}`;
+  };
+
+  // pages switched in place: links to the static pages follow the language
+  const localiseLinks = (lang) => {
+    document.querySelectorAll('a[href]').forEach((a) => {
+      if (!a.hasAttribute('data-href')) a.setAttribute('data-href', a.getAttribute('href'));
+      const original = a.getAttribute('data-href');
+      let url;
+      try {
+        url = new URL(original, window.location.href);
+      } catch (error) {
+        return;
+      }
+      if (url.origin !== window.location.origin || url.pathname === window.location.pathname) return;
+      const rest = staticPages[url.pathname];
+      if (lang === 'en' || (rest === undefined && !url.pathname.endsWith('.html'))) {
+        a.setAttribute('href', original);
+        return;
+      }
+      if (rest !== undefined) url.pathname = `/${lang}/${rest}`;
+      else url.searchParams.set('lang', lang);
+      a.setAttribute('href', `${url.pathname}${url.search}${url.hash}`);
+    });
+  };
 
   const applyLanguage = (lang) => {
     const safeLang = supportedLanguages.includes(lang) ? lang : 'en';
@@ -123,16 +218,11 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
 
-    try {
-      if (window.DionConsent?.allows('preferences')) {
-        localStorage.setItem('dion_lang', safeLang);
-      } else {
-        localStorage.removeItem('dion_lang');
-      }
-    } catch (error) {
-      // Ignore storage errors in private/incognito contexts.
-    }
+    rememberLanguage(safeLang);
 
+    // a static language page keeps its own address
+    if (staticLang) return;
+    localiseLinks(safeLang);
     const currentUrl = new URL(window.location.href);
     if (safeLang === 'en') {
       currentUrl.searchParams.delete('lang');
@@ -151,7 +241,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let initialLang = 'en';
     const langParam = new URLSearchParams(window.location.search).get('lang');
 
-    if (langParam && supportedLanguages.includes(langParam)) {
+    if (staticLang) {
+      // an older ?lang= link to a page that now has its own language versions
+      if (langParam && langParam !== staticLang && versions[langParam]) {
+        window.location.replace(`${versions[langParam]}${otherParams()}${window.location.hash}`);
+        return;
+      }
+      if (langParam) {
+        window.history.replaceState({}, '', `${window.location.pathname}${otherParams()}${window.location.hash}`);
+      }
+      initialLang = staticLang;
+    } else if (langParam && supportedLanguages.includes(langParam)) {
       initialLang = langParam;
     } else {
       try {
@@ -168,7 +268,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     languageButtons.forEach((btn) => {
       btn.addEventListener('click', () => {
-        applyLanguage(btn.dataset.lang || 'en');
+        const lang = btn.dataset.lang || 'en';
+        if (staticLang) {
+          if (lang !== staticLang && versions[lang]) {
+            rememberLanguage(lang);
+            goToVersion(lang);
+          }
+          return;
+        }
+        applyLanguage(lang);
       });
     });
 
