@@ -34,3 +34,24 @@ GO-LIVE.md
 # Aegis is pre-launch (homepage points to coming-soon) — not for live deploy yet
 aegis/
 .indexnow-key
+
+# Not for the live site: staging pages, design explorations, film recording pages
+# and their source frames, voice/music working files, internal notes (2026-10-04)
+index-v2.html
+styles-v2.css
+home-v2.js
+design-directions.html
+aegis-mark-options.html
+aegis-mark-options.js
+axon-promo.html
+axon-promo.js
+axon-sample.html
+axon-sample.js
+film/axon/v2/
+film/axon/samples/
+film/axon/voiceover-*
+film/axon/axon-promo-audio-*
+film/axon/captions-*.vtt
+film/axon/VOICEOVER.md
+LAUNCH-V3.md
+docs/v2-search-and-launch.md

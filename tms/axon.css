@@ -32,7 +32,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
 
 /* ── Language switcher (shared across the site, driven by app.js) ── */
 .lang-switcher{display:inline-flex;gap:3px;background:rgba(255,255,255,0.6);border:1px solid rgba(28,30,45,0.12);border-radius:999px;padding:3px;}
-.lang-btn{font-size:0.78rem;font-weight:600;color:#7c828f;padding:5px 12px;border-radius:999px;transition:all .2s;line-height:1;}
+.lang-btn{font-size:0.78rem;font-weight:600;color:#5f6470;padding:5px 12px;border-radius:999px;transition:all .2s;line-height:1;}
 .lang-btn.is-active{background:#1b1d27;color:#fff;}
 
 /* ── Mobile nav: drop the secondary "| Dion Group" brand link so the
@@ -44,3 +44,33 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
 
 /* ── Focus visibility for keyboard users ── */
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #0a74f0;outline-offset:2px;}
+
+/* ── The product film: "Watch the film" under the hero buttons, a play
+   button on the hero screenshot, and the player that opens over the page ── */
+.ax-play{display:inline-flex;align-items:center;gap:.55rem;margin-top:1.3rem;font-size:1rem;font-weight:600;color:#0a74f0;}
+.ax-play svg{width:24px;height:24px;flex:none;}
+.ax-play svg circle{fill:none;stroke:currentColor;stroke-width:1.6;}
+.ax-play svg path{fill:currentColor;}
+.ax-play i{font-style:normal;font-weight:500;color:#5f6470;font-variant-numeric:tabular-nums;}
+.ax-play:hover span{text-decoration:underline;text-underline-offset:3px;}
+[data-hero-shot]{position:relative;}
+.ax-shot-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;background:linear-gradient(180deg,rgba(22,24,31,0) 30%,rgba(22,24,31,.18));transition:background .3s;}
+.ax-shot-disc{display:grid;place-items:center;width:clamp(64px,8vw,92px);height:clamp(64px,8vw,92px);border-radius:50%;background:rgba(255,255,255,.88);box-shadow:0 18px 50px rgba(28,30,68,.28);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:transform .3s cubic-bezier(.22,1,.36,1);}
+.ax-shot-disc svg{width:42%;height:42%;margin-left:6%;fill:#16181f;}
+.ax-shot-label{padding:.35rem .9rem;border-radius:999px;background:rgba(22,24,31,.62);color:#fff;font-size:.86rem;font-weight:600;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.ax-shot-play:hover{background:linear-gradient(180deg,rgba(22,24,31,.04) 30%,rgba(22,24,31,.26));}
+.ax-shot-play:hover .ax-shot-disc{transform:scale(1.08);}
+.ax-shot-play:focus-visible .ax-shot-disc,.ax-play:focus-visible,.ax-film-close:focus-visible{outline:3px solid #0a74f0;outline-offset:3px;}
+.ax-film{width:min(1280px,calc(100% - 32px),calc((100vh - 150px) * 16 / 9));max-width:none;max-height:none;margin:auto;padding:0;border:0;border-radius:24px;background:#000;color:#f5f5f7;box-shadow:0 40px 140px rgba(0,0,0,.55);overflow:hidden;}
+.ax-film::backdrop{background:rgba(20,22,32,.66);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
+.ax-film[open]{animation:axFilmIn .45s cubic-bezier(.22,1,.36,1);}
+@keyframes axFilmIn{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
+.ax-film video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#000;}
+.ax-film video::cue{font-size:clamp(14px,2.1vw,26px);line-height:1.35;background:rgba(0,0,0,.62);}
+.ax-film-close{position:absolute;right:16px;top:16px;z-index:2;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(40,40,44,.72);color:#fff;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.ax-film-close svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;}
+.ax-film-note{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem 1.5rem;padding:.95rem 1.4rem;font-size:.84rem;line-height:1.45;color:#a1a1a6;}
+.ax-film-note a{color:#5ac8fa;font-weight:600;font-size:.95rem;}
+html:has(.ax-film[open]){overflow:hidden;}
+@media (max-width:760px){.ax-film{width:calc(100% - 20px);border-radius:16px;}.ax-film-note{padding:.8rem 1rem;}.ax-shot-label{display:none;}}
+@media (prefers-reduced-motion: reduce){.ax-film[open]{animation:none;}}

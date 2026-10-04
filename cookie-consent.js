@@ -7,7 +7,8 @@
     en: {
       eyebrow: 'Privacy choices',
       title: 'Cookie and storage preferences',
-      body: 'We use necessary browser storage to remember your consent. Optional preferences can remember your language. Analytics are currently not active, but this choice keeps future tracking blocked unless you allow it.',
+      body: 'With your consent, we remember your language and count visits with Google Analytics.',
+      body2: 'Necessary storage only keeps your choice, which you can change anytime with the cookie button.',
       reject: 'Reject optional',
       manage: 'Manage choices',
       accept: 'Accept all',
@@ -18,13 +19,14 @@
       preferences: 'Preferences',
       preferencesText: 'Remembers your language choice on this device.',
       analytics: 'Analytics',
-      analyticsText: 'Allows privacy-respecting analytics if added later.',
+      analyticsText: 'Google Analytics counts visits and pages (cookies from Google, kept up to 2 years).',
       policy: 'Cookie Policy'
     },
     de: {
       eyebrow: 'Datenschutz-Auswahl',
       title: 'Cookie- und Speicher-Einstellungen',
-      body: 'Wir verwenden notwendigen Browser-Speicher, um Ihre Einwilligung zu merken. Optionale Präferenzen können Ihre Sprache speichern. Analytics sind aktuell nicht aktiv, bleiben aber blockiert, solange Sie sie nicht erlauben.',
+      body: 'Mit Ihrer Einwilligung merken wir uns Ihre Sprache und zählen Besuche mit Google Analytics.',
+      body2: 'Notwendiger Speicher sichert nur Ihre Auswahl, die Sie jederzeit über die Cookie-Schaltfläche ändern können.',
       reject: 'Optionale ablehnen',
       manage: 'Auswahl verwalten',
       accept: 'Alle akzeptieren',
@@ -35,13 +37,14 @@
       preferences: 'Präferenzen',
       preferencesText: 'Speichert Ihre Sprachauswahl auf diesem Gerät.',
       analytics: 'Analytics',
-      analyticsText: 'Erlaubt datenschutzfreundliche Analytics, falls sie später ergänzt werden.',
+      analyticsText: 'Google Analytics zählt Besuche und Seitenaufrufe (Cookies von Google, bis zu 2 Jahre gespeichert).',
       policy: 'Cookie-Richtlinie'
     },
     gr: {
       eyebrow: 'Επιλογές απορρήτου',
       title: 'Ρυθμίσεις cookies και αποθήκευσης',
-      body: 'Χρησιμοποιούμε απαραίτητη αποθήκευση στον browser για να θυμόμαστε τη συγκατάθεσή σας. Προαιρετικές προτιμήσεις μπορούν να θυμούνται τη γλώσσα σας. Analytics δεν είναι ενεργά τώρα, αλλά η επιλογή αυτή τα κρατά μπλοκαρισμένα εκτός αν τα επιτρέψετε.',
+      body: 'Με τη συγκατάθεσή σας θυμόμαστε τη γλώσσα σας και μετράμε τις επισκέψεις με το Google Analytics.',
+      body2: 'Η απαραίτητη αποθήκευση κρατά μόνο την επιλογή σας, που μπορείτε να αλλάξετε όποτε θέλετε από το κουμπί cookies.',
       reject: 'Απόρριψη προαιρετικών',
       manage: 'Διαχείριση επιλογών',
       accept: 'Αποδοχή όλων',
@@ -52,7 +55,7 @@
       preferences: 'Προτιμήσεις',
       preferencesText: 'Θυμάται την επιλογή γλώσσας σε αυτή τη συσκευή.',
       analytics: 'Analytics',
-      analyticsText: 'Επιτρέπει privacy-respecting analytics αν προστεθούν αργότερα.',
+      analyticsText: 'Το Google Analytics μετρά επισκέψεις και σελίδες (cookies της Google, διατηρούνται έως 2 χρόνια).',
       policy: 'Πολιτική Cookies'
     }
   };
@@ -134,18 +137,19 @@
     dialog.setAttribute('role', 'dialog');
     dialog.setAttribute('aria-modal', 'false');
     dialog.setAttribute('aria-labelledby', 'dion-cookie-title');
-    dialog.setAttribute('aria-describedby', 'dion-cookie-copy');
+    dialog.setAttribute('aria-describedby', 'dion-cookie-copy dion-cookie-copy2');
     dialog.innerHTML = `
       <span class="cookie-consent__eyebrow">${t.eyebrow}</span>
       <h2 id="dion-cookie-title">${t.title}</h2>
-      <p id="dion-cookie-copy">${t.body} <a href="/cookies.html">${t.policy}</a>.</p>
+      <p id="dion-cookie-copy">${t.body}</p>
+      <p id="dion-cookie-copy2" class="cookie-consent__more">${t.body2} <a href="/cookies.html">${t.policy}</a>.</p>
       <div class="cookie-consent__choices" hidden>
         ${optionMarkup('dion-cookie-necessary', t.necessary, t.necessaryText, true, true)}
         ${optionMarkup('dion-cookie-preferences', t.preferences, t.preferencesText, preferencesChecked, false)}
         ${optionMarkup('dion-cookie-analytics', t.analytics, t.analyticsText, analyticsChecked, false)}
       </div>
       <div class="cookie-consent__actions">
-        <button type="button" class="cookie-consent__btn cookie-consent__btn--text" data-cookie-action="reject">${t.reject}</button>
+        <button type="button" class="cookie-consent__btn cookie-consent__btn--primary" data-cookie-action="reject">${t.reject}</button>
         <button type="button" class="cookie-consent__btn" data-cookie-action="manage">${t.manage}</button>
         <button type="button" class="cookie-consent__btn cookie-consent__btn--primary" data-cookie-action="accept">${t.accept}</button>
       </div>`;
@@ -153,7 +157,9 @@
     const settingsButton = document.createElement('button');
     settingsButton.type = 'button';
     settingsButton.className = 'cookie-settings-trigger';
-    settingsButton.textContent = t.settings;
+    settingsButton.setAttribute('aria-label', t.settings);
+    settingsButton.title = t.settings;
+    settingsButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 3.2 3.2 0 0 1-3.7-3.2A3.2 3.2 0 0 1 14.4 5 3 3 0 0 1 12 3z"/><circle cx="8.6" cy="10" r="1.1"/><circle cx="10.4" cy="15.2" r="1.1"/><circle cx="15.4" cy="14.6" r="1.1"/></svg>';
     settingsButton.hidden = !saved;
 
     const choices = dialog.querySelector('.cookie-consent__choices');

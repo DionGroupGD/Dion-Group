@@ -149,12 +149,30 @@
   left: 14px;
   bottom: 14px;
   z-index: 9998;
-  padding: 8px 13px;
-  min-height: 38px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  min-height: 42px;
+  padding: 0;
   color: #f5f5f7;
   background: rgba(17, 17, 18, 0.82);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+}
+
+.cookie-settings-trigger svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+}
+
+.cookie-settings-trigger svg circle {
+  fill: currentColor;
+  stroke: none;
 }
 
 @media (max-width: 640px) {
@@ -173,4 +191,9 @@
     left: 10px;
     bottom: 10px;
   }
+}
+
+/* the second, shorter paragraph (two short paragraphs keep the banner from being the page's largest text) */
+.cookie-consent p.cookie-consent__more {
+  margin-top: 6px;
 }

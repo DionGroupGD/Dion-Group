@@ -1,24 +1,31 @@
 # Dion Group
 
-> Dion Group is a venture foundry and software studio that builds operational SaaS products and custom software for companies. Based in Greece, working internationally (English, German, Greek).
+> Dion Group builds its own software products and custom software for other companies: business software, AI solutions, websites and online shops. Based in Greece, working internationally in English, German and Greek.
 
-Dion Group builds and operates its own SaaS products, and designs and builds custom software for client companies: web applications, operational platforms, dashboards, internal tools, and end-to-end digital systems, from concept to deployment. Areas of expertise: logistics and transport operations, terminal and yard management, workflow and document automation, and AI-assisted tooling. Aegis, an AI product, is currently in development.
+Dion Group makes and runs its own products (Axon TMS for truck yards and terminals; Aegis, AI document processing, in development) and takes on client projects: custom web applications and internal systems, AI assistants and document automation, workflow automation and integrations, customer portals and booking systems, and company websites and online shops. One team handles a project from the first conversation to launch, then hosts, maintains and improves it. Areas of experience: logistics and transport operations, terminal and yard management, document-heavy workflows. Prices for products and projects are given on request.
 
 ## Products
-- [Axon TMS](https://dion-group.com/tms/axon.html): Terminal and Transport Management System. The single operational record for a truck yard, governing gate check-in, warehouse loading, documents (CMR), and release across one record per truck, in real time. Use cases: truck management, yard management, dock and gate scheduling, fleet and logistics operations, freight document automation. Pricing from 500 euro per month per yard.
+- [Axon TMS](https://dion-group.com/tms/axon.html): Terminal and yard management system for truck operations. One live record per truck from plan to exit: loads planned from the ERP, driver self check-in by QR code without an app, approval in one click, plate and container matched at the gate, dock calls and loading timers, document checklist (CMR) and automatic release slips. Light and dark mode; desk, wallboard and phone. Pricing on request.
+- [Aegis](https://dion-group.com/#work): AI document processing for logistics, in development. Reads invoices, CMRs and delivery notes and turns them into checked, structured data (supplier, dates, route, VAT, totals).
 
 ## Services
-- [Custom software development](https://dion-group.com/#contact): Dion Group partners with businesses that want a custom program, app, internal system, or website built. Typical engagements: custom web apps, logistics and operations software, automation tools, and tailored SaaS.
+- [Custom software](https://dion-group.com/#services): Web applications, operational platforms, dashboards and internal tools built around how a company already works.
+- [AI solutions](https://dion-group.com/#services): AI assistants that read documents and email, automations that remove retyping between systems, AI features inside existing software.
+- [Websites and online shops](https://dion-group.com/#services): Company websites, online shops, booking systems and customer portals in English, German and Greek.
+- [How a project runs](https://dion-group.com/#how): From the first call to launch, then hosting, maintenance and improvements.
 
 ## Primary pages
-- [Home](https://dion-group.com/): Company overview, products, and contact.
-- [Axon TMS](https://dion-group.com/tms/axon.html): Terminal and yard management software for trucks.
-- [Privacy Policy](https://dion-group.com/privacy.html): How Dion Group handles data.
-- [Terms](https://dion-group.com/terms.html): Terms of use.
-- [Cookies](https://dion-group.com/cookies.html): Cookie policy.
+- [Home](https://dion-group.com/): Company, products, services, product films and contact.
+- [Axon TMS](https://dion-group.com/tms/axon.html): Product page, product film and pricing request.
+- [FAQ](https://dion-group.com/#faq): Common questions about projects, products, languages and working together.
+- [Privacy Notice](https://dion-group.com/privacy.html): How Dion Group handles personal data.
+- [Cookie Policy](https://dion-group.com/cookies.html): Browser storage and analytics (Google Analytics only with consent).
+- [Terms of Use](https://dion-group.com/terms.html): Terms for using the website.
+- [Legal Notice](https://dion-group.com/legal-notice.html): Company information.
+- [Accessibility](https://dion-group.com/accessibility.html): Accessibility statement.
 
 ## Contact
-- [Contact form](https://dion-group.com/#contact): Discuss a custom build or Axon TMS.
-- [Email](mailto:georgedion@dion-group.com): Reach Dion Group directly.
+- [Contact form](https://dion-group.com/#contact): Start a project or book an Axon demo.
+- [Email](mailto:georgedion@dion-group.com): georgedion@dion-group.com
 - [LinkedIn](https://www.linkedin.com/company/diongroup/): Company page.
 - [Instagram](https://www.instagram.com/dion_group/): Company profile.

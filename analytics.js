@@ -28,6 +28,29 @@
     gtag('config', ID, { anonymize_ip: true });
   }
 
-  start();                                            // consent may already be granted
-  window.addEventListener('dionConsentChange', start); // or granted later via the banner
+  // Consent withdrawn: stop Google Analytics on this page at once and remove
+  // its cookies (_ga, _ga_<id>) from every domain level they may sit on.
+  function stop() {
+    window['ga-disable-' + ID] = true;
+    var names = document.cookie.split(';').map(function (c) { return c.split('=')[0].trim(); })
+      .filter(function (n) { return n === '_ga' || n.indexOf('_ga_') === 0 || n === '_gid'; });
+    var parts = location.hostname.split('.');
+    var domains = [''];
+    for (var i = 0; i < parts.length - 1; i++) domains.push('; domain=.' + parts.slice(i).join('.'));
+    names.forEach(function (n) {
+      domains.forEach(function (d) { document.cookie = n + '=; Max-Age=0; path=/' + d; });
+    });
+  }
+  function update() {
+    var allowed = window.DionConsent && window.DionConsent.allows && window.DionConsent.allows('analytics');
+    if (allowed) {
+      window['ga-disable-' + ID] = false;
+      start();
+    } else {
+      stop();
+    }
+  }
+
+  update();                                             // consent may already be granted (or withdrawn earlier: clean up)
+  window.addEventListener('dionConsentChange', update); // granted or withdrawn via the banner
 })();

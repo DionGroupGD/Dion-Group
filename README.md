@@ -1,68 +1,48 @@
 # Dion Group Website
 
-Production source for [dion-group.com](https://dion-group.com). Static HTML + CSS + JS, no build step.
+Production source for [dion-group.com](https://dion-group.com). Static HTML, CSS and JavaScript, no build step, hosted on GitHub Pages.
 
 ## Project structure
 
 ```
 DION GROUP WEBSITE/
-├── index.html              ← Homepage (current design)
-├── styles.css              ← Homepage styles
-├── home.js                 ← Homepage scripts (reveal-on-scroll, foundry sticky)
-├── app.js                  ← Shared scripts (lang switcher, scroll reveal, tilt)
-├── index.css               ← Legal-page styles (privacy / terms / cookies / thanks)
+├── index.html              ← Homepage
+├── styles-v3.css           ← Homepage styles
+├── home-v3.js              ← Homepage: story, gallery, forms, sticky mobile button
+├── intro-v3.js             ← The opening (the DG mark in particles), from dg-mark-1200.png
+├── particles-v3.js         ← Product marks in particles (Axon, Aegis)
+├── trailers.js             ← Product films rendered live in the page (Axon, Aegis)
+├── films-cloud.js          ← The films' point-cloud look
+├── app.js                  ← Shared: language switching (EN/DE/GR, ?lang=), reveals
+├── index.css               ← Legal-page styles
 │
-├── privacy.html            ← Legal pages — share index.css and app.js
-├── terms.html
+├── privacy.html            ← Legal pages: share index.css and app.js
 ├── cookies.html
-├── thanks.html             ← Form submission landing
+├── terms.html
+├── legal-notice.html
+├── accessibility.html
+├── thanks.html             ← Contact form landing (noindex)
+├── 404.html                ← Not-found page (absolute paths: GitHub Pages serves it at any address)
 │
-├── aegis/                  ← Aegis sub-product page (own HTML/CSS/JS)
-├── tms/                    ← Axon TMS sub-product page (own HTML/CSS/JS)
-├── axon-truck.webp         ← Homepage truck illustration (used by Axon TMS section)
+├── tms/                    ← Axon TMS product page (own HTML/CSS/JS)
+├── film/axon/              ← The Axon product film and its poster
+├── fonts/                  ← Self-hosted Inter and Cinzel (no requests to Google), with their licences
 │
-├── favicon*.png/.ico       ← Favicons (browsers expect at root)
-├── apple-touch-icon.png
-├── og-preview.png          ← OpenGraph card preview
-├── site.webmanifest        ← PWA manifest
-├── robots.txt              ← Search-engine crawl rules
-├── sitemap.xml             ← Sitemap for SEO
-├── llms.txt                ← LLM-readable site summary
-├── _headers                ← Hosting (Netlify/Vercel) security headers
-├── .well-known/            ← Web standards (e.g. assetlinks)
+├── cookie-consent.js/.css  ← Consent banner (Google Analytics only after consent)
+├── analytics.js            ← Google Analytics 4 loader, consent-gated
 │
-├── docs/                   ← Project documentation (developer-facing)
-│   └── SECURITY_HEADERS_SETUP.md
-│
-├── versions/               ← Historical homepage snapshots (NOT served)
-│   ├── README.md
-│   └── index.old.html      ← Pre-2026-04-25 design
-│
-└── archive/                ← Stale workspace artifacts (NOT served, safe to delete)
-    └── README.md
+├── favicon*.png/.ico, apple-touch-icon.png, site.webmanifest
+├── og-preview.png          ← Social sharing card (1200×630)
+├── robots.txt, sitemap.xml, llms.txt
+└── _headers                ← Security headers for hosts that read it (GitHub Pages does not)
 ```
 
-## What touches what
-
-- **Homepage** (`index.html`) → `styles.css` + `app.js` + `home.js` + `axon-truck.webp`
-- **Legal pages** (`privacy.html`, `terms.html`, `cookies.html`, `thanks.html`) → `index.css` + `app.js`
-- **Sub-products** (`/aegis`, `/tms`) → self-contained, own assets
-
-> ⚠️  **Do not delete `index.css`** — it is still loaded by the four legal pages even though the new homepage uses `styles.css`.
+Working files (film recording pages, design explorations, staging pages, tools) are kept out of the repository by `.gitignore`.
 
 ## Running locally
 
 ```bash
 python3 -m http.server 8090
-# open http://localhost:8090/
 ```
 
-A pre-configured launch is also available via `.claude/launch.json`.
-
-## Deploy
-
-Static files only — push to any static host. The `_headers` file applies on Netlify / Cloudflare Pages.
-
-## Languages
-
-The homepage and legal pages support EN / DE / GR via `data-{lang}` attributes on text nodes; `app.js` swaps text on language-button click and persists choice to `localStorage`. URL `?lang=de|gr` also works.
+Then open http://localhost:8090/.

@@ -144,6 +144,44 @@
       }
     }
 
+    /* ── The product film: "Watch the film" opens it in a player over the
+       page. The voice is English, so German and Greek visitors get
+       subtitles in their own language. ── */
+    var film = D.querySelector('.ax-film');
+    var filmOpeners = D.querySelectorAll('[data-play-film]');
+    if (film && filmOpeners.length){
+      var video = film.querySelector('video');
+      var opener = null;
+      var track = function(name){ if (typeof window.gtag === 'function') window.gtag('event', name, {film: 'axon_product'}); };
+      var closeFilm = function(){
+        video.pause();
+        if (typeof film.close === 'function' && film.open) film.close();
+        else film.removeAttribute('open');
+      };
+      [].slice.call(filmOpeners).forEach(function(btn){
+        btn.addEventListener('click', function(){
+          opener = btn;
+          var lang = D.documentElement.lang || 'en';
+          [].slice.call(video.textTracks).forEach(function(t){ t.mode = lang !== 'en' && t.language === lang ? 'showing' : 'disabled'; });
+          if (typeof film.showModal === 'function') film.showModal();
+          else film.setAttribute('open', '');
+          var p = video.play();
+          if (p && p.catch) p.catch(function(){});
+          track('film_play');
+        });
+      });
+      film.querySelector('.ax-film-close').addEventListener('click', closeFilm);
+      film.addEventListener('click', function(e){
+        // a click on the backdrop, or on "Book a demo", closes the player
+        if (e.target === film || (e.target.closest && e.target.closest('a[href^="#"]'))) closeFilm();
+      });
+      film.addEventListener('close', function(){
+        video.pause();
+        if (opener) opener.focus({preventScroll: true});
+      });
+      video.addEventListener('ended', function(){ track('film_complete'); });
+    }
+
     /* ── Pricing form: native POST to formsubmit.co (redirects via _next).
        No preventDefault — only a brief sending state on the button. ── */
     var form = D.getElementById('pricing-form');
@@ -152,9 +190,21 @@
         var btn = form.querySelector('button[type=submit]');
         if (btn){
           var lang = D.documentElement.lang || 'en';
+          btn.dataset.label = btn.dataset.label || btn.textContent;
           btn.textContent = lang === 'de' ? 'Wird gesendet…' : lang === 'el' ? 'Αποστολή…' : 'Sending…';
           btn.style.opacity = '0.7';
-          setTimeout(function(){ btn.style.opacity = ''; }, 6000);
+          btn.setAttribute('aria-busy', 'true');
+          btn.disabled = true;                        // no double sends
+        }
+      });
+      // back from FormSubmit with the Back button: restore the button
+      window.addEventListener('pageshow', function(e){
+        var btn = form.querySelector('button[type=submit]');
+        if (e.persisted && btn && btn.disabled){
+          btn.disabled = false;
+          btn.removeAttribute('aria-busy');
+          btn.style.opacity = '';
+          if (btn.dataset.label) btn.textContent = btn.dataset.label;
         }
       });
     }

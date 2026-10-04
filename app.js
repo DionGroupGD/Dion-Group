@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
           el.value = translated;
         } else if (el instanceof HTMLTextAreaElement) {
           el.value = translated;
-        } else {
+        } else if (el.textContent !== translated) {
+          // only when it changes: rewriting identical text repaints it (and delays the page's first big paint)
           el.textContent = translated;
         }
       }
@@ -104,6 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.documentElement.lang = htmlLangMap[safeLang] || 'en';
 
+    // forms send the visitor on to a thank-you page in the same language
+    document.querySelectorAll('input[name="_next"]').forEach((input) => {
+      try {
+        const next = new URL(input.value);
+        if (safeLang === 'en') next.searchParams.delete('lang');
+        else next.searchParams.set('lang', safeLang);
+        input.value = next.toString();
+      } catch (error) {
+        // leave an unusual value as it is
+      }
+    });
+
     languageButtons.forEach((btn) => {
       const isActive = btn.dataset.lang === safeLang;
       btn.classList.toggle('is-active', isActive);
@@ -133,7 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  if (languageButtons.length > 0 && translatableElements.length > 0) {
+  // pages without a switcher (the thank-you pages) still follow ?lang= and the saved choice
+  if (translatableElements.length > 0) {
     let initialLang = 'en';
     const langParam = new URLSearchParams(window.location.search).get('lang');
 
