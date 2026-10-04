@@ -82,13 +82,13 @@ button,input,select,textarea{font:inherit}
 .st-pin::before{content:"";position:absolute;left:50%;top:-24%;width:1400px;height:820px;transform:translateX(-50%);z-index:-1;
   background:radial-gradient(ellipse at center,rgba(41,151,255,.26),rgba(48,209,88,.09) 45%,transparent 70%);filter:blur(44px);opacity:calc(.72 + var(--live,0)*.28)}
 
-.st-hero{position:absolute;left:0;right:0;top:calc(50% + 30px);text-align:center;padding:0 24px;z-index:3;
+.st-hero{position:absolute;left:0;right:0;top:calc(50% + 30px);top:calc(50svh + 30px);text-align:center;padding:0 24px;z-index:3;
   opacity:var(--heroO,1);transform:translateY(calc(-50% + var(--heroY,0) * 1px))}
 .st-hero h1{font-size:clamp(46px,7vw,112px);line-height:.96;letter-spacing:-.055em;font-weight:600;text-wrap:balance}
 .st-hero h1 .and{display:block;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.06em}
 .st-hero .sub{max-width:640px;margin:30px auto 0;font-size:clamp(17px,1.45vw,20px);line-height:1.5;color:var(--dim)}
 .st-hero .ctas{display:flex;gap:24px;justify-content:center;align-items:center;margin-top:36px;flex-wrap:wrap}
-.st-hint{position:absolute;left:50%;bottom:6vh;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);opacity:var(--heroO,1)}
+.st-hint{position:absolute;left:50%;bottom:6vh;bottom:calc(100% - 94svh);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);opacity:var(--heroO,1)}
 .st-hint i{width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 18px var(--sky),0 0 40px rgba(90,200,250,.6);animation:penPulse 1.8s ease-in-out infinite}
 @keyframes penPulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.5);opacity:.5}}
 
@@ -97,7 +97,7 @@ button,input,select,textarea{font:inherit}
 .st-logo{position:absolute;left:0;right:0;top:60%;z-index:3;text-align:center;pointer-events:none;opacity:0}
 .st-logo p{font-size:clamp(34px,4vw,58px);font-weight:600;letter-spacing:-.045em;line-height:1}
 .st-logo p span{color:var(--mute)}
-.st-caps{position:absolute;left:0;right:0;top:calc(var(--header) + 3vh);z-index:3;pointer-events:none}
+.st-caps{position:absolute;left:0;right:0;top:calc(var(--header) + 3vh);top:calc(var(--header) + 3svh);z-index:3;pointer-events:none}
 .st-cap{position:absolute;left:0;right:0;top:0;text-align:center;padding:0 24px;opacity:0}
 .st-cap .n{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--sky);margin-bottom:14px;font-weight:600}
 .st-cap h2{font-size:clamp(30px,4.2vw,60px);letter-spacing:-.045em;line-height:1.03;font-weight:600;text-wrap:balance}
@@ -156,7 +156,7 @@ button,input,select,textarea{font:inherit}
 .st-wire path{fill:none;stroke:url(#gLine);stroke-width:1.8;stroke-dasharray:100;stroke-dashoffset:100;filter:drop-shadow(0 0 5px rgba(90,200,250,.7))}
 .st-sk{position:absolute;background:rgba(255,255,255,.07);border-radius:10px;opacity:var(--skel,0)}
 .st-real{position:absolute;inset:0;opacity:var(--real,0);transform:translateY(calc((1 - var(--real,0))*8px))}
-.st-phone{position:absolute;right:-5%;bottom:-9%;width:196px;height:392px;border-radius:36px;border:7px solid #25272d;background:#0b0c10;padding:28px 14px 14px;
+.st-phone{position:absolute;right:-5%;bottom:-9%;width:196px;width:min(196px,max(112px,calc(var(--stH,460px) * .426)));height:392px;border-radius:36px;border:7px solid #25272d;background:#0b0c10;padding:28px 14px 14px;
   opacity:var(--dev,0);transform:translateZ(150px) translateX(calc((1 - var(--dev,0))*140px)) rotateY(-10deg);box-shadow:0 50px 100px rgba(0,0,0,.8)}
 
 @media (max-width:760px){
@@ -234,10 +234,7 @@ button,input,select,textarea{font:inherit}
 .mock .stp-k b{display:block;font-size:16px;margin-top:3px;letter-spacing:-.02em}
 .mock .stp-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:11px}
 .mock .stp-row i{width:7px;height:7px;border-radius:50%}.mock .stp-row .m{margin-left:auto}
-@media (max-width:760px){
-  .mock .st-real .b-side,.mock .st-real .b-list{display:none}
-  .mock .st-phone h5{font-size:12px}.mock .stp-k b{font-size:12px}.mock .stp-row{font-size:9px;padding:6px 0}
-}
+@media (max-width:760px){.mock .st-phone h5{font-size:12px}}
 
 /* Aegis invoice + extracted record */
 .mock .ae-paper{position:absolute;inset:0;border-radius:10px;background:#fbfbfd;color:#1d1d1f;padding:18px 18px 16px;font-size:11px;box-shadow:0 34px 70px rgba(0,0,0,.65);overflow:hidden}
@@ -350,12 +347,12 @@ body:has(.intro:not(.out)) .cookie-settings-trigger{opacity:0;pointer-events:non
 .gk-principles b{display:block;font-size:17px;letter-spacing:-.01em;margin-bottom:6px}
 .gk-principles p{font-size:15px;line-height:1.55;color:var(--text-dim)}
 /* the sheet (Apple's "+" modal) */
-.gk-modal{width:min(860px,calc(100% - 32px));max-height:calc(100vh - 48px);margin:auto;padding:0;border:0;border-radius:28px;background:#fff;color:var(--text);box-shadow:0 40px 120px rgba(0,0,0,.35);overflow:hidden}
+.gk-modal{width:min(860px,calc(100% - 32px));max-height:calc(100vh - 48px);max-height:calc(100dvh - 48px);margin:auto;padding:0;border:0;border-radius:28px;background:#fff;color:var(--text);box-shadow:0 40px 120px rgba(0,0,0,.35);overflow:hidden}
 .gk-modal::backdrop{background:rgba(0,0,0,.5);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .gk-modal[open]{animation:gkIn .45s cubic-bezier(.2,.8,.2,1)}
 @keyframes gkIn{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
 .gk-close{position:absolute;right:18px;top:18px;z-index:2;width:36px;height:36px;border-radius:50%;border:0;display:grid;place-items:center;background:#1d1d1f;color:#fff;cursor:pointer}
-.gk-sheet{max-height:calc(100vh - 48px);overflow:auto;padding:58px 64px 50px}
+.gk-sheet{max-height:calc(100vh - 48px);max-height:calc(100dvh - 48px);overflow:auto;padding:58px 64px 50px}
 .gk-sheet h3{margin-top:8px;font-size:clamp(30px,4vw,46px);line-height:1.06;letter-spacing:-.04em;font-weight:600;text-wrap:balance}
 .gk-block{margin-top:22px;padding:26px 30px;border-radius:20px;background:var(--wash);font-size:18px;line-height:1.55;color:var(--text-dim)}
 .gk-block b{color:var(--text)}
@@ -1254,13 +1251,13 @@ body:has(.intro:not(.gone)) .cookie-settings-trigger{opacity:0!important;visibil
 @media (prefers-reduced-motion:reduce){.m-cta{transition:none}}
 
 /* ── The turn: "And yours." as a statement, centred and large (home-v3.js drives --stO/--stS/--stB/--stSub) ── */
-.st-cap.st-statement{top:calc(50vh - var(--header) - 3vh);transform:translateY(-50%) scale(var(--stS,1));opacity:var(--stO,0);
+.st-cap.st-statement{top:calc(50vh - var(--header) - 3vh);top:calc(50svh - var(--header) - 3svh);transform:translateY(-50%) scale(var(--stS,1));opacity:var(--stO,0);
   filter:blur(calc(var(--stB,0) * 1px));transform-origin:50% 55%;will-change:transform,opacity,filter}
 .st-cap.st-statement h2.and{font-size:clamp(76px,12.5vw,200px);line-height:.98;letter-spacing:-.06em;padding-bottom:.08em}
 .st-cap.st-statement .n,.st-cap.st-statement p{opacity:var(--stSub,0)}
 .st-cap.st-statement .n{margin-bottom:18px;font-size:13px}
 .st-cap.st-statement p{margin-top:22px;font-size:clamp(17px,1.5vw,21px)}
-@media (max-width:760px){.st-cap.st-statement{top:calc(50vh - var(--header) - 2.4vh)}.st-cap.st-statement h2.and{font-size:clamp(58px,17vw,84px)}}
+@media (max-width:760px){.st-cap.st-statement{top:calc(50vh - var(--header) - 2.4vh);top:calc(50svh - var(--header) - 2.4svh)}.st-cap.st-statement h2.and{font-size:clamp(58px,17vw,84px)}}
 @media (prefers-reduced-motion:reduce){.st-cap.st-statement{filter:none}}
 
 /* ── The booking card: a real booking app on the phone (sized in the phone's own width, cqw) ── */
@@ -1348,3 +1345,34 @@ body:has(.intro:not(.gone)) .cookie-settings-trigger{opacity:0!important;visibil
 .gk-card.on .an-bar{opacity:1}
 .gk-card.on .an-bar i{animation:anThumb 14s cubic-bezier(.65,0,.35,1) 1.2s infinite both}
 @media (prefers-reduced-motion:reduce){.gk-card.on .an-page,.gk-card.on .an-bar i{animation:none}}
+/* the business app (Meridian) sized like the other Live slides: in cqw of the
+   window body (880 units = 100cqw) and of the phone (196 units = 100cqw), so the
+   picture keeps its proportions on every screen instead of overflowing on phones */
+.mock .st-real .db{font-size:1.25cqw}
+.mock .st-real .db .m{font-size:1.14cqw}
+.mock .st-real .db .b-side{padding:1.6cqw 1.14cqw;gap:.34cqw}
+.mock .st-real .db .logo{gap:.9cqw;margin:0 0 1.6cqw .45cqw;font-size:1.36cqw}
+.mock .st-real .db .logo i{width:2.05cqw;height:2.05cqw;border-radius:.68cqw}
+.mock .st-real .db .nav{padding:.8cqw .9cqw;border-radius:.8cqw;font-size:1.25cqw}
+.mock .st-real .db .b-head .t{font-size:1.93cqw}
+.mock .st-real .db .b-acts{gap:.9cqw}
+.mock .st-real .db .ghost,.mock .st-real .db .b-pub{height:3.2cqw;border-radius:.9cqw}
+.mock .st-real .db .ghost{padding:0 1.48cqw}
+.mock .st-real .db .b-pub{padding:0 1.7cqw}
+.mock .st-real .db .b-card{padding:1.25cqw 1.36cqw;border-radius:1.14cqw}
+.mock .st-real .db .b-card .kv{margin:.45cqw 0 .23cqw;font-size:2.16cqw}
+.mock .st-real .db .kd{font-size:1.14cqw}
+.mock .st-real .db .b-chart{padding:1.36cqw 1.6cqw .9cqw;gap:.68cqw;border-radius:1.14cqw}
+.mock .st-real .db .b-list{padding:1.36cqw;gap:1cqw;border-radius:1.14cqw}
+.mock .st-real .db .act{gap:1cqw}
+.mock .st-real .db .act i{width:.8cqw;height:.8cqw;margin-top:.45cqw}
+.st-phone .el-m h5.el-mh{font-size:8.2cqw}
+.st-phone .db-m .m{font-size:5.1cqw}
+.st-phone .db-m h5{margin:1.5cqw 0 6.1cqw;font-size:8.2cqw}
+.st-phone .db-m .stp-k{gap:3.6cqw;margin-bottom:6.1cqw}
+.st-phone .db-m .stp-k div{padding:4.6cqw;border-radius:5.1cqw}
+.st-phone .db-m .stp-k b{margin-top:1.5cqw;font-size:8.2cqw}
+.st-phone .db-m .stp-row{gap:4.1cqw;padding:4.6cqw 0;font-size:5.6cqw}
+.st-phone .db-m .stp-row i{width:3.6cqw;height:3.6cqw}
+/* measures the height that stays visible on phones whatever the toolbars do (home-v3.js) */
+.vh-probe{position:fixed;left:0;top:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none}

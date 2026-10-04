@@ -9,6 +9,14 @@
   // the wordmark face loads like Inter: non-blocking, switched on here (CSP-safe)
   const wordmarkFont = document.getElementById('gfont2');
   if (wordmarkFont) wordmarkFont.media = 'all';
+  // The height that stays visible on a phone whatever its browser's toolbar is
+  // doing (100svh). The pinned layouts use it, so the toolbar sliding in and out
+  // as you change scroll direction moves nothing.
+  const probe = document.createElement('div');
+  probe.className = 'vh-probe';
+  probe.setAttribute('aria-hidden', 'true');
+  document.body.append(probe);
+  const screenHeight = () => probe.offsetHeight || window.innerHeight;
 
   // ── The story's screenshots load after the page (or at the first scroll) ──
   // They sit, invisible, in the first screen, so the browser would fetch them
@@ -34,6 +42,7 @@
   // form itself, while the menu or the cookie choices are open.
   const stickyCta = document.querySelector('.m-cta');
   const contactSection = document.getElementById('contact');
+  let refreshCta = () => {};   // the story calls it when the Live scene's own button comes and goes
   if (stickyCta && contactSection) {
     let contactSeen = false, queued = false;
     const updateCta = () => {
@@ -62,6 +71,7 @@
         queueCta();
       }, {threshold: 0.12}).observe(contactSection);
     }
+    refreshCta = queueCta;
     window.addEventListener('scroll', queueCta, {passive: true});
     window.addEventListener('resize', queueCta);
     window.addEventListener('dionConsentChange', queueCta);
@@ -227,28 +237,40 @@
     }
 
     let frame = 0;
-    // A fast flick must not skip the scenes: the story's clock follows the
-    // scroll with a short glide and a speed limit (in screens of story per
-    // second, slower while a mark forms and streams), so every transition
-    // still plays. Jumps via a link, or with the story out of view, snap.
-    let shownP = null, lastT = 0, snapNext = false;
-    const GLIDE = 0.12, FAST = 3.0, SLOW = 0.75;
-    document.addEventListener('click', (event) => { if (event.target.closest('a[href^="#"]')) snapNext = true; });
+    // The story's clock follows the scroll, but never more than about half a
+    // second behind it. A short glide smooths the steps of a mouse wheel. After
+    // a flick the clock speeds up the further it trails, then plays the last
+    // stretch at a pace you can watch (slower while a mark forms), so the scene
+    // you land on always makes its entrance and nothing runs on after you stop.
+    // A jump (the scrollbar dragged, the End key, find in page) moves further in
+    // one frame than any flick: the clock lands just short of it and plays only
+    // the arrival. An in-page link follows the browser's smooth scroll exactly,
+    // and outside the pinned stretch the story simply shows its start or its end.
+    let shownP = null, lastT = 0, target = 0, followUntil = 0, liveWasOn = false;
+    const GLIDE = 0.1, PACE = 4, PACE_BEAT = 2, CATCH = 0.45, JUMP = 1.5, LAND = 0.8;
+    const pin = story.querySelector('.st-pin');
+    document.addEventListener('click', (event) => {
+      if (event.target.closest('a[href^="#"]')) followUntil = performance.now() + 2000;
+    });
     const update = (now = performance.now()) => {
       frame = 0;
-      const total = story.offsetHeight - window.innerHeight;
+      const pinH = pin.offsetHeight;
+      const total = story.offsetHeight - pinH;      // the stretch where the stage stays pinned
       const rect = story.getBoundingClientRect();
-      const target = (total > 0 ? clamp(-rect.top / total) : 0) * RUN;
+      const before = target;
+      target = (total > 0 ? clamp(-rect.top / total) : 0) * RUN;
       const dt = lastT ? Math.min(0.1, (now - lastT) / 1000) : 0;
       lastT = now;
-      const outOfView = rect.bottom < 0 || rect.top > window.innerHeight;
-      if (shownP === null || reducedMotion || snapNext || outOfView || !dt) {
+      const pinned = rect.top <= 0 && rect.bottom >= pinH - 1;
+      if (shownP === null || reducedMotion || !dt || !pinned || now < followUntil) {
         shownP = target;
-        snapNext = false;
       } else {
+        if (Math.abs(target - before) > JUMP && Math.abs(target - shownP) > LAND) {
+          shownP = target - Math.sign(target - shownP) * LAND;
+        }
         const inBeat = beats.some((beat) => beat.u > 0.02 && beat.u < 0.98);
-        const cap = (inBeat ? SLOW : FAST) * dt;
         const gap = target - shownP;
+        const cap = Math.max(inBeat ? PACE_BEAT : PACE, Math.abs(gap) / CATCH) * dt;
         const step = Math.max(-cap, Math.min(cap, gap * (1 - Math.exp(-dt / GLIDE))));
         shownP = Math.abs(gap) < 0.0005 ? target : shownP + step;
       }
@@ -336,6 +358,12 @@
         // hidden captions leave the accessibility tree and the tab order
         cap.style.visibility = o > 0.01 ? 'visible' : 'hidden';
       });
+      // the sticky "Start a project" steps aside while the Live caption shows its own button
+      const liveOn = +caps[caps.length - 1].style.opacity > 0.4;
+      if (liveOn !== liveWasOn) {
+        liveWasOn = liveOn;
+        refreshCta();
+      }
       if (shownP !== target && !frame) frame = requestAnimationFrame(update);
     };
     // Captions and stage share the pinned screen. Their text length depends on
@@ -344,7 +372,7 @@
     const stageEl = story.querySelector('.st-stage');
     const capsEl = story.querySelector('.st-caps');
     const layout = () => {
-      const vh = window.innerHeight, vw = window.innerWidth, phone = vw <= 760;
+      const vh = screenHeight(), vw = window.innerWidth, phone = vw <= 760;
       // the statement ("And yours.") centres itself on the screen, so only the top captions count
       const tallest = Math.max(...caps.filter((cap) => !cap.classList.contains('st-statement')).map((cap) => cap.offsetHeight));
       const top = Math.max(vh * (phone ? 0.43 : 0.38), capsEl.offsetTop + tallest + (phone ? 18 : 28));
@@ -352,6 +380,7 @@
       const height = Math.max(phone ? 200 : 240, Math.min(phone ? vh * 0.42 : Math.min(500, vh * 0.54), (vh - top - (phone ? 16 : 24)) / (phone ? 1 : 1.16)));
       stageEl.style.top = `${top}px`;
       stageEl.style.height = `${height}px`;
+      stageEl.style.setProperty('--stH', `${height}px`);   // the Live phone scales with the stage
       stageEl.style.width = phone ? '' : `${Math.min(880, vw * 0.84, height * 1.76)}px`;
       // the entrances: a canvas the size of the screen, names under the marks
       if (fx) {
@@ -370,15 +399,24 @@
       if (!frame) frame = requestAnimationFrame(update);
     };
     window.addEventListener('scroll', request, {passive: true});
+    // the smooth scroll of an in-page link has ended: back to the glide
+    window.addEventListener('scrollend', () => { followUntil = 0; });
+    // a phone's toolbar changes only the window's height, not the visible one: no new layout
+    let laidW = window.innerWidth, laidH = screenHeight();
     window.addEventListener('resize', () => {
-      layout();
+      const w = window.innerWidth, h = screenHeight();
+      if (w !== laidW || h !== laidH) {
+        laidW = w;
+        laidH = h;
+        layout();
+      }
       request();
     });
     new MutationObserver(layout).observe(html, {attributes: true, attributeFilter: ['lang']});
     if (document.fonts) document.fonts.ready.then(layout);   // web font metrics change caption heights
     layout();
     update();
-    window.DionStory = {update, layout, beats};
+    window.DionStory = {update, layout, beats, state: () => ({shown: shownP, target, run: RUN})};
   }
 
   // ── Services: the "get to know" gallery ───────────────────────────
@@ -414,7 +452,7 @@
     const place = () => {
       gallery.classList.add('pinned');
       gallery.style.setProperty('--gkCut', '0px');
-      const vh = window.innerHeight;
+      const vh = screenHeight();
       const head = parseFloat(getComputedStyle(html).getPropertyValue('--header')) || 72;
       const room = vh - (head - 6) - COOKIE;       // the track's 6px top padding may pass under the header's margin
       let h = pin.offsetHeight;
@@ -448,7 +486,13 @@
     next.addEventListener('click', () => go(1));
     track.addEventListener('scroll', () => requestAnimationFrame(edges), {passive: true});
     window.addEventListener('scroll', () => { if (pinned) requestAnimationFrame(edges); }, {passive: true});
-    window.addEventListener('resize', place);
+    let placedW = window.innerWidth, placedH = screenHeight();
+    window.addEventListener('resize', () => {
+      if (window.innerWidth === placedW && screenHeight() === placedH) return;   // only a phone's toolbar
+      placedW = window.innerWidth;
+      placedH = screenHeight();
+      place();
+    });
     // keyboard: a focused card is brought into view
     track.addEventListener('focusin', (event) => {
       const card = event.target.closest('.gk-card');
