@@ -2,16 +2,19 @@
 
 > Dion Group builds its own software products and custom software for other companies: business software, AI solutions, websites and online shops. Based in Greece, working internationally in English, German and Greek.
 
-Dion Group makes and runs its own products (Axon TMS for truck yards and terminals; Aegis, AI document processing, in development) and takes on client projects: custom web applications and internal systems, AI assistants and document automation, workflow automation and integrations, customer portals and booking systems, and company websites and online shops. One team handles a project from the first conversation to launch, then hosts, maintains and improves it. Areas of experience: logistics and transport operations, terminal and yard management, document-heavy workflows. Prices for products and projects are given on request.
+Dion Group makes and runs its own products (Axon TMS for truck yards and terminals; Aegis, AI document processing, in development) and takes on client projects: AI agents and chatbots, AI automation and document processing, product configurators and quote calculators, custom web applications, SaaS products and internal tools, integrations, customer portals and booking systems, and company websites and online shops. One team handles a project from the first conversation to launch, then hosts, maintains and improves it. Areas of experience: logistics and transport operations, terminal and yard management, document-heavy workflows. Prices for products and projects are given on request.
 
 ## Products
 - [Axon TMS](https://dion-group.com/tms/axon.html): Terminal and yard management system for truck operations. One live record per truck from plan to exit: loads planned from the ERP, driver self check-in by QR code without an app, approval in one click, plate and container matched at the gate, dock calls and loading timers, document checklist (CMR) and automatic release slips. Light and dark mode; desk, wallboard and phone. Pricing on request.
 - [Aegis](https://dion-group.com/#work): AI document processing for logistics, in development. Reads invoices, CMRs and delivery notes and turns them into checked, structured data (supplier, dates, route, VAT, totals).
 
 ## Services
-- [Custom software](https://dion-group.com/#services): Web applications, operational platforms, dashboards and internal tools built around how a company already works.
-- [AI solutions](https://dion-group.com/#services): AI assistants that read documents and email, automations that remove retyping between systems, AI features inside existing software.
-- [Websites and online shops](https://dion-group.com/#services): Company websites, online shops, booking systems and customer portals in English, German and Greek.
+- [AI agents and chatbots](https://dion-group.com/#services): AI agents and chatbots for businesses that answer customers, handle requests, read documents and carry out tasks in a company's own systems, with clear limits on what they may do.
+- [AI automation and document processing](https://dion-group.com/#services): Automations that remove retyping between systems; AI that reads invoices, delivery notes, CMRs, orders and emails and turns them into checked data.
+- [Product configurators](https://dion-group.com/#services): Online product configurators and quote calculators (2D or 3D) that let customers design a product and get a price straight away, connected to pricing, ERP and orders.
+- [Custom software](https://dion-group.com/#services): Web applications, SaaS products and MVPs, dashboards, internal tools, operational platforms and integrations (APIs, ERP, CRM), built around how a company already works.
+- [Booking systems and customer portals](https://dion-group.com/#services): Online booking, appointment and customer portals.
+- [Websites and online shops](https://dion-group.com/#services): Company websites, landing pages and online shops in English, German and Greek.
 - [How a project runs](https://dion-group.com/#how): From the first call to launch, then hosting, maintenance and improvements.
 
 ## Primary pages
