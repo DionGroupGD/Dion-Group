@@ -18,23 +18,7 @@
 
   ready(function(){
 
-    /* ── Responsive layout toggles (the design's grids are set inline) ── */
-    function applyResponsive(){
-      var w = window.innerWidth;
-      var nl = D.querySelector('[data-navlinks]');
-      if (nl) nl.style.display = w >= 900 ? 'flex' : 'none';
-      var lg = D.querySelector('[data-lifegrid]');
-      if (lg){ var c = w >= 860 ? 6 : w >= 600 ? 3 : 2; lg.style.gridTemplateColumns = 'repeat(' + c + ',1fr)'; }
-      var dg = D.querySelector('[data-deploygrid]');
-      if (dg){ var dc = w >= 820 ? 5 : w >= 540 ? 3 : 2; dg.style.gridTemplateColumns = 'repeat(' + dc + ',1fr)'; }
-      [].slice.call(D.querySelectorAll('[data-howrow]')).forEach(function(el){
-        el.style.gridTemplateColumns = w >= 820 ? '0.92fr 1.08fr' : '1fr';
-        el.style.direction = 'ltr';
-      });
-    }
-    applyResponsive();
-    var rRaf = null;
-    window.addEventListener('resize', function(){ if (!rRaf) rRaf = requestAnimationFrame(function(){ rRaf = null; applyResponsive(); }); });
+    /* Responsive layout lives in axon.css (media queries), so it is right from the first paint. */
 
     /* ── Scroll reveal ── */
     (function(){

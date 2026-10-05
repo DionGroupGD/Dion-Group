@@ -8,6 +8,23 @@
    #section; with reduced motion it shows the finished mark briefly. */
 (() => {
   'use strict';
+  // A reload starts the page over: at the top, with the opening, whatever
+  // section the visitor was reading (browsers would put them back there, or
+  // jump to the #section still in the address). Back and Forward still
+  // return to the same place: the browser's own restoring is switched back
+  // on once the page has loaded.
+  let reload = false;
+  try { reload = (performance.getEntriesByType('navigation')[0] || {}).type === 'reload'; } catch (e) { /* older browsers */ }
+  if (reload) {
+    const auto = 'scrollRestoration' in history;
+    if (auto) history.scrollRestoration = 'manual';
+    if (location.hash) history.replaceState(history.state, '', location.pathname + location.search);
+    window.scrollTo(0, 0);
+    window.addEventListener('load', () => setTimeout(() => {
+      window.scrollTo(0, 0);
+      if (auto) history.scrollRestoration = 'auto';
+    }, 0), {once: true});
+  }
   const intro = document.querySelector('.intro');
   if (!intro) return;
   const canvas = intro.querySelector('.intro-canvas');
@@ -24,8 +41,6 @@
   } catch (e) { /* no referrer */ }
   let seen = false;
   try { seen = !!(window.DionConsent && window.DionConsent.allows('preferences')) && sessionStorage.getItem('dion_intro') === '1'; } catch (e) { /* storage blocked */ }
-  let reload = false;
-  try { reload = (performance.getEntriesByType('navigation')[0] || {}).type === 'reload'; } catch (e) { /* older browsers */ }
   const skipAtOnce = location.hash.length > 1 || (!reload && (fromOtherPage || seen));
 
   let done = false, running = false, raf = 0;

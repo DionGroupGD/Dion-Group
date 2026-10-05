@@ -42,6 +42,20 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;}
   .nav-sec{ display:none !important; }
 }
 
+/* ── Responsive layout from the first paint. The design sets these grids and
+   the nav links inline; these rules (they win over the inline styles) fit
+   them to the screen before anything is drawn, so nothing jumps while the
+   page loads. The "how it works" rows stay left to right at every width. ── */
+@media (max-width:899px){[data-navlinks]{display:none!important}}
+[data-lifegrid]{grid-template-columns:repeat(2,1fr)!important}
+@media (min-width:600px){[data-lifegrid]{grid-template-columns:repeat(3,1fr)!important}}
+@media (min-width:860px){[data-lifegrid]{grid-template-columns:repeat(6,1fr)!important}}
+[data-deploygrid]{grid-template-columns:repeat(2,1fr)!important}
+@media (min-width:540px){[data-deploygrid]{grid-template-columns:repeat(3,1fr)!important}}
+@media (min-width:820px){[data-deploygrid]{grid-template-columns:repeat(5,1fr)!important}}
+[data-howrow]{grid-template-columns:1fr!important;direction:ltr!important}
+@media (min-width:820px){[data-howrow]{grid-template-columns:.92fr 1.08fr!important}}
+
 /* ── Focus visibility for keyboard users ── */
 a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #0a74f0;outline-offset:2px;}
 

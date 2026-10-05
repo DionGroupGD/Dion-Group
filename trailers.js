@@ -1063,52 +1063,67 @@
   }
 
   // ── The section: tabs, autoplay while in view ───────────────────────
+  // The films are far below the first screen: they are built when the
+  // section comes within a screen and a half, so setting them up doesn't
+  // slow down the page's first moments.
   const films = {};
-  section.querySelectorAll('.film').forEach((root) => {
-    const spec = SPECS[root.dataset.film];
-    if (spec) films[root.dataset.film] = new Film(root, spec);
-  });
-  // without motion, each film rests on its end card until someone presses play
-  if (reducedMotion) Object.values(films).forEach((film) => film.seek(film.duration));
-
-  let current = Object.keys(films)[0];
-  let inView = false;
-  const tabs = [...section.querySelectorAll('.film-tab')];
-  const links = [...section.querySelectorAll('[data-film-link]')];
-  const autoplay = () => {
-    const film = films[current];
-    if (film && inView && !reducedMotion && !film.userPaused && !film.ended) film.play();
-  };
-  tabs.forEach((tab) => tab.addEventListener('click', () => {
-    const name = tab.dataset.film;
-    if (name === current || !films[name]) return;
-    films[current].pause();
-    films[current].root.hidden = true;
-    current = name;
-    const film = films[name];
-    film.root.hidden = false;
-    film.fit();
-    tabs.forEach((other) => {
-      other.classList.toggle('on', other === tab);
-      other.setAttribute('aria-pressed', other === tab ? 'true' : 'false');
+  const start = () => {
+    section.querySelectorAll('.film').forEach((root) => {
+      const spec = SPECS[root.dataset.film];
+      if (spec) films[root.dataset.film] = new Film(root, spec);
     });
-    links.forEach((link) => { link.hidden = link.dataset.filmLink !== name; });
-    film.userPaused = false;
-    if (reducedMotion) film.seek(film.duration);
-    else {
-      film.seek(0);
-      autoplay();
-    }
-  }));
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(([entry]) => {
-      inView = entry.isIntersecting;
-      if (inView) autoplay();
-      else if (films[current]) films[current].pause();
-    }, {threshold: 0.45}).observe(section.querySelector('.films-player'));
-  }
-  new MutationObserver(() => Object.values(films).forEach((film) => film.state()))
-    .observe(html, {attributes: true, attributeFilter: ['lang']});
+    // without motion, each film rests on its end card until someone presses play
+    if (reducedMotion) Object.values(films).forEach((film) => film.seek(film.duration));
 
-  window.DionFilms = films; // test hook: DionFilms.axon.seek(12)
+    let current = Object.keys(films)[0];
+    let inView = false;
+    const tabs = [...section.querySelectorAll('.film-tab')];
+    const links = [...section.querySelectorAll('[data-film-link]')];
+    const autoplay = () => {
+      const film = films[current];
+      if (film && inView && !reducedMotion && !film.userPaused && !film.ended) film.play();
+    };
+    tabs.forEach((tab) => tab.addEventListener('click', () => {
+      const name = tab.dataset.film;
+      if (name === current || !films[name]) return;
+      films[current].pause();
+      films[current].root.hidden = true;
+      current = name;
+      const film = films[name];
+      film.root.hidden = false;
+      film.fit();
+      tabs.forEach((other) => {
+        other.classList.toggle('on', other === tab);
+        other.setAttribute('aria-pressed', other === tab ? 'true' : 'false');
+      });
+      links.forEach((link) => { link.hidden = link.dataset.filmLink !== name; });
+      film.userPaused = false;
+      if (reducedMotion) film.seek(film.duration);
+      else {
+        film.seek(0);
+        autoplay();
+      }
+    }));
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        inView = entry.isIntersecting;
+        if (inView) autoplay();
+        else if (films[current]) films[current].pause();
+      }, {threshold: 0.45}).observe(section.querySelector('.films-player'));
+    }
+    new MutationObserver(() => Object.values(films).forEach((film) => film.state()))
+      .observe(html, {attributes: true, attributeFilter: ['lang']});
+
+    window.DionFilms = films; // test hook: DionFilms.axon.seek(12)
+  };
+  if ('IntersectionObserver' in window) {
+    const near = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      near.disconnect();
+      start();
+    }, {rootMargin: '150% 0px'});
+    near.observe(section);
+  } else {
+    start();
+  }
 })();

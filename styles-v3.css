@@ -1374,5 +1374,13 @@ body:has(.intro:not(.gone)) .cookie-settings-trigger{opacity:0!important;visibil
 .st-phone .db-m .stp-k b{margin-top:1.5cqw;font-size:8.2cqw}
 .st-phone .db-m .stp-row{gap:4.1cqw;padding:4.6cqw 0;font-size:5.6cqw}
 .st-phone .db-m .stp-row i{width:3.6cqw;height:3.6cqw}
+/* services: the kinds of work we take on, under the section's introduction */
+.gk-tags{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0;padding:0;list-style:none;max-width:700px}
+.gk-tags li{padding:7px 14px;border-radius:99px;background:rgba(0,0,0,.05);color:var(--text);font-size:14px;font-weight:500;letter-spacing:-.005em;line-height:1.3}
+@media (max-width:760px){.gk-tags{gap:6px;margin-top:18px}.gk-tags li{padding:6px 12px;font-size:13px}}
+/* the films are far below the first screen: the browser skips laying them out until they come
+   near (they already clip and isolate their content, so nothing changes visually) */
+.films{content-visibility:auto;contain-intrinsic-size:auto 900px;contain-intrinsic-size:auto 100svh}
+@media (min-width:1024px){.films{contain-intrinsic-size:auto 1250px}}
 /* measures the height that stays visible on phones whatever the toolbars do (home-v3.js) */
 .vh-probe{position:fixed;left:0;top:0;width:0;height:100vh;height:100svh;visibility:hidden;pointer-events:none}
