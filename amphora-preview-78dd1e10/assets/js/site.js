@@ -307,21 +307,17 @@
   const top = $('top'), story = $('story');
   const isDark = el => { for (let n = el; n && n !== document.body; n = n.parentElement) { if (n.classList && (n.classList.contains('dk') || n.classList.contains('film-pin') || n.classList.contains('foot') || n.classList.contains('cost-card'))) return true; if (n === story) return document.body.dataset.storyDark === '1'; } return false; };
   /* on a phone the browser's bars above and below the page take the colour of the page at that edge, so the
-     screen reads as one surface while it scrolls or rests. Browsers read it from different places, so all of them
-     follow it: theme-color (Safari up to iOS 18, Chrome), the page background (Safari from iOS 26, and the rubber
-     band past either end; every section paints its own ground, so this never shows), and a thin band fixed at
-     each edge (Safari from iOS 26 samples fixed elements at the edges) */
+     screen reads as one surface. Browsers read it from different places: theme-color for the top bar (Chrome,
+     Safari up to iOS 18) and the page background for the bottom bar (Safari from iOS 26), which is also what the
+     rubber band shows past either end. Every section paints its own ground, so the page background never shows. */
   const css = getComputedStyle(document.documentElement), PAPER = css.getPropertyValue('--bg').trim(), DARK = css.getPropertyValue('--dark').trim();
   const themeMeta = document.querySelector('meta[name="theme-color"]');
-  const edgeAt = side => { const e = document.createElement('i'); e.className = 'edge ' + side; e.setAttribute('aria-hidden', 'true'); document.body.append(e); return e; };
-  let edgeT = edgeAt('t'), edgeB = edgeAt('b');
-  // a fresh band for each new colour, so a browser that keeps the colour it sampled from a fixed element samples again
-  const paint = (e, c) => { const n = e.cloneNode(); n.style.background = c; e.replaceWith(n); return n; };
   const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)), hex = c => '#' + c.map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
   const mix = (a, b, k) => a.map((v, i) => v + (b[i] - v) * clamp(k));
-  // in the opening the screen can be a photo seen through the pack: the bar takes the photo's colour,
+  const far = (a, b) => !b || rgb(a).reduce((s, v, i) => s + Math.abs(v - rgb(b)[i]), 0) > 6;   // photos cross-fade every frame: only a visible change repaints
+  // in the opening the screen can be a photo seen through the pack: the edge takes the photo's colour,
   // cross-faded and darkened exactly as the photos are, wherever the window covers that edge
-  const win = $('win'), winShade = $('winShade'), avg = new WeakMap();
+  const view = $('view'), win = $('win'), winShade = $('winShade'), avg = new WeakMap();
   const avgOf = img => {   // the median of a 24 px copy: the photo's own tone, not washed out by its highlights
     if (!avg.has(img) && img.complete && img.naturalWidth) { const c = document.createElement('canvas'); c.width = c.height = 24; const x = c.getContext('2d'); x.drawImage(img, 0, 0, 24, 24);
       const d = x.getImageData(0, 0, 24, 24).data, ch = [[], [], []]; for (let i = 0; i < d.length; i += 4) for (let k = 0; k < 3; k++) ch[k].push(d[i + k]);
@@ -330,38 +326,35 @@
   const inPoly = (x, y, s) => { const p = (s.match(/-?[\d.]+/g) || []).map(Number); let inside = false;
     for (let i = 0, j = p.length - 2; i < p.length; j = i, i += 2) if ((p[i + 1] > y) !== (p[j + 1] > y) && x < (p[j] - p[i]) * (y - p[i + 1]) / (p[j + 1] - p[i + 1]) + p[i]) inside = !inside;
     return inside; };
-  function storyTone(y) {
-    if (!win || win.style.visibility !== 'visible') return PAPER;
-    const r = win.getBoundingClientRect();
-    if (!inPoly(innerWidth / 2 - r.left, y - r.top, win.style.clipPath || '')) return PAPER;
+  // when a phone's toolbar shrinks, the screen grows below the opening's scene (which paints its own paper): that
+  // strip shows the opening's ground, which takes the photo's colour while the photo fills the scene's foot, and
+  // the photo fades into it, so the photo runs on to the bottom bar
+  let ground = PAPER;
+  const fade = document.createElement('i'); fade.className = 'vfade'; fade.setAttribute('aria-hidden', 'true'); view && view.append(fade);
+  // is the photo window over this row of the screen: across all of it, or over most of it
+  const inside = (y, fx) => { const r = win.getBoundingClientRect(); return y >= r.top && y <= r.bottom && inPoly(innerWidth * fx - r.left, y - r.top, win.style.clipPath || ''); };
+  const photoAt = (y, all) => { if (!win || win.style.visibility !== 'visible') return false; const n = [.06, .5, .94].filter(fx => inside(y, fx)).length; return all ? n === 3 : n >= 2; };
+  function photoTone() {
     let c = [21, 17, 14];   // the window's own ground, #15110e
     win.querySelectorAll('img.mac').forEach(img => { const o = +img.style.opacity || 0, a = o > 0 && avgOf(img); if (a) c = mix(c, a, o); });
     c = mix(c, [18, 14, 11], +winShade.style.opacity || 0);
     return hex(mix(rgb(PAPER), c, +(win.style.opacity || 1)));
   }
-  const toneAt = y => { const n = document.elementsFromPoint(innerWidth / 2, y).find(n => !top.contains(n) && !demo.contains(n) && n !== edgeT && n !== edgeB);
+  const sceneTone = (y, all) => photoAt(y, all) ? photoTone() : PAPER;
+  const storyTone = y => view && y >= view.getBoundingClientRect().bottom ? ground : sceneTone(y, false);
+  const toneAt = y => { const n = document.elementsFromPoint(innerWidth / 2, y).find(n => !top.contains(n) && !demo.contains(n));
     if (n && story.contains(n)) return storyTone(y);
     return n && isDark(n) ? DARK : PAPER; };
   const dim = h => hex(mix(rgb(h), [18, 14, 11], .55));   // under the open demo sheet
-  const tint = {}, far = (a, b) => !b || rgb(a).reduce((s, v, i) => s + Math.abs(v - rgb(b)[i]), 0) > 6;   // photos cross-fade every frame: only a visible change repaints
-  // #bartest: each source gets its own colour, so one screenshot shows which one a phone's bars follow
-  if (location.hash === '#bartest') {
-    const note = document.createElement('div');
-    note.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:80;width:min(320px,86vw);padding:18px 20px;border-radius:18px;background:#fff;color:#111;font:500 15px/1.45 system-ui,sans-serif;box-shadow:0 10px 40px rgba(0,0,0,.25)';
-    note.innerHTML = 'Bar test. Please take one screenshot and send it.<br><br>Red: band at the top<br>Blue: band at the bottom<br>Green: page background<br>Yellow: theme colour';
-    document.body.append(note);
-  }
+  const tint = {};
   function bars() {
-    if (location.hash === '#bartest') {
-      if (!tint.test) { tint.test = 1; if (themeMeta) themeMeta.content = '#ffd400'; edgeT = paint(edgeT, '#ff2d2d'); edgeB = paint(edgeB, '#2d6bff'); document.documentElement.style.backgroundColor = document.body.style.backgroundColor = '#16c60c'; }
-      return;
-    }
+    if (view) { const vr = view.getBoundingClientRect();
+      if (vr.bottom > 0 && vr.top < innerHeight) { const g = sceneTone(vr.bottom - 2, true);
+        if (far(g, ground)) { ground = g; story.style.backgroundColor = g; view.style.setProperty('--fade', g); fade.classList.toggle('on', g !== PAPER); } } }
     let t = toneAt(1), b = toneAt(innerHeight - 2);
     if (demo.classList.contains('open')) { t = dim(t); b = dim(b); }
-    if (far(t, tint.t)) { tint.t = t; if (themeMeta) themeMeta.content = t; edgeT = paint(edgeT, t); }
-    if (far(b, tint.b)) { tint.b = b; edgeB = paint(edgeB, b); }
-    const h = scrollY + innerHeight / 2 < document.documentElement.scrollHeight / 2 ? t : b;
-    if (far(h, tint.h)) { tint.h = h; document.documentElement.style.backgroundColor = document.body.style.backgroundColor = h; }
+    if (far(t, tint.t)) { tint.t = t; if (themeMeta) themeMeta.content = t; }
+    if (far(b, tint.b)) { tint.b = b; document.documentElement.style.backgroundColor = document.body.style.backgroundColor = b; }
   }
   function frame() {
     requestAnimationFrame(frame);
