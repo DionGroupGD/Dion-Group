@@ -15,7 +15,7 @@
   function show() { document.body.classList.remove('checking'); input.focus(); }
   form.addEventListener('submit', async e => {
     e.preventDefault(); err.hidden = true; btn.disabled = true; btn.textContent = form.dataset.busy;
-    try { await unlock(input.value.trim()); }
+    try { await unlock(input.value.trim().toLowerCase()); }
     catch (x) { btn.disabled = false; btn.textContent = label; err.hidden = false; input.select(); }
   });
   let saved = null; try { saved = sessionStorage.getItem(STORE); } catch (e) {}
