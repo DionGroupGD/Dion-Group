@@ -1,0 +1,83 @@
+{
+ "duration": 100,
+ "chapters": [
+  {
+   "id": "intro",
+   "title": "Amphora",
+   "start": 0,
+   "line": "Amphora. The private label configurator."
+  },
+  {
+   "id": "product",
+   "title": "Product",
+   "start": 4.8,
+   "line": "Your customer starts with your range: olives or fruit, the variety and the product."
+  },
+  {
+   "id": "calibre",
+   "title": "Calibre",
+   "start": 12,
+   "line": "They pick the calibre, drawn to true scale."
+  },
+  {
+   "id": "pack",
+   "title": "Pack",
+   "start": 16.8,
+   "line": "Only the packs your lines can fill appear, each with its real closure."
+  },
+  {
+   "id": "fill",
+   "title": "Fill",
+   "start": 24,
+   "line": "Weights follow every choice, inside your approved limits."
+  },
+  {
+   "id": "label",
+   "title": "Label",
+   "start": 31.2,
+   "line": "Their own artwork goes on the real jar, with the lid colour they choose."
+  },
+  {
+   "id": "case",
+   "title": "Case",
+   "start": 40.8,
+   "line": "Then the case: trays, cartons and film."
+  },
+  {
+   "id": "pallet",
+   "title": "Pallet",
+   "start": 48,
+   "line": "The pallet and the container are worked out for them."
+  },
+  {
+   "id": "barcodes",
+   "title": "Barcodes",
+   "start": 57.6,
+   "line": "Barcodes, lot and best before are checked before any proof."
+  },
+  {
+   "id": "spec",
+   "title": "Spec",
+   "start": 67.2,
+   "line": "The full specification is ready, with every drawing and every line."
+  },
+  {
+   "id": "rules",
+   "title": "Your rules",
+   "start": 76.8,
+   "line": "It all runs on your own catalogue and your own rules."
+  },
+  {
+   "id": "fruit",
+   "title": "Fruit too",
+   "start": 84,
+   "line": "Olives, fruit and anything else you pack."
+  },
+  {
+   "id": "outro",
+   "title": "Book a demo",
+   "start": 91.2,
+   "line": "Amphora. Private label requests in minutes, not weeks."
+  }
+ ]
+}
