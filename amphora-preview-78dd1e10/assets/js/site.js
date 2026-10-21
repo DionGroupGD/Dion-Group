@@ -306,6 +306,22 @@
   /* the header follows the tone of whatever is under it */
   const top = $('top'), story = $('story');
   const isDark = el => { for (let n = el; n && n !== document.body; n = n.parentElement) { if (n.classList && (n.classList.contains('dk') || n.classList.contains('film-pin') || n.classList.contains('foot') || n.classList.contains('cost-card'))) return true; if (n === story) return document.body.dataset.storyDark === '1'; } return false; };
+  /* phones: nothing pinned at the top of the screen takes taps (see the CSS), so taps on the header's links and on
+     the opening's skip button are recognised here by where they land, and passed on */
+  const phoneEdge = matchMedia('(hover:none) and (max-width:820px)'), skipBtn = $('skip');
+  let tapStart = null;
+  addEventListener('pointerdown', e => { tapStart = phoneEdge.matches && e.isPrimary ? { x: e.clientX, y: e.clientY, t: e.timeStamp } : null; }, true);
+  addEventListener('pointerup', e => {
+    const s = tapStart; tapStart = null;
+    if (!s || Math.hypot(e.clientX - s.x, e.clientY - s.y) > 12 || e.timeStamp - s.t > 700) return;
+    const shown = el => !!el && el.getClientRects().length > 0 && +getComputedStyle(el).opacity > .3;
+    const hit = [...top.querySelectorAll('a')].filter(a => shown(top) && shown(a)).concat(shown(skipBtn) ? [skipBtn] : [])
+      .find(el => { const r = el.getBoundingClientRect(); return e.clientX >= r.left - 6 && e.clientX <= r.right + 6 && e.clientY >= r.top - 6 && e.clientY <= r.bottom + 6; });
+    if (!hit) return;
+    hit.click();
+    const drop = ev => { ev.preventDefault(); ev.stopPropagation(); };   // the tap's own click would reach whatever lies underneath
+    addEventListener('click', drop, true); setTimeout(() => removeEventListener('click', drop, true), 450);
+  }, true);
   /* on a phone the browser's bars above and below the page take the colour of the page at that edge, so the
      screen reads as one surface. Browsers read it from different places: theme-color for the top bar (Chrome,
      Safari up to iOS 18) and the page background for the bottom bar (Safari from iOS 26), which is also what the
