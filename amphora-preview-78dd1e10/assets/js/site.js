@@ -306,9 +306,56 @@
   /* the header follows the tone of whatever is under it */
   const top = $('top'), story = $('story');
   const isDark = el => { for (let n = el; n && n !== document.body; n = n.parentElement) { if (n.classList && (n.classList.contains('dk') || n.classList.contains('film-pin') || n.classList.contains('foot') || n.classList.contains('cost-card'))) return true; if (n === story) return document.body.dataset.storyDark === '1'; } return false; };
+  /* on a phone the browser's bars above and below the page take the colour of the page at that edge, so the
+     screen reads as one surface while it scrolls or rests. Browsers read it from different places, so all of them
+     follow it: theme-color (Safari up to iOS 18, Chrome), the page background (Safari from iOS 26, and the rubber
+     band past either end; every section paints its own ground, so this never shows), and a thin band fixed at
+     each edge (Safari from iOS 26 samples fixed elements at the edges) */
+  const css = getComputedStyle(document.documentElement), PAPER = css.getPropertyValue('--bg').trim(), DARK = css.getPropertyValue('--dark').trim();
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const edgeAt = side => { const e = document.createElement('i'); e.className = 'edge ' + side; e.setAttribute('aria-hidden', 'true'); document.body.append(e); return e; };
+  let edgeT = edgeAt('t'), edgeB = edgeAt('b');
+  // a fresh band for each new colour, so a browser that keeps the colour it sampled from a fixed element samples again
+  const paint = (e, c) => { const n = e.cloneNode(); n.style.background = c; e.replaceWith(n); return n; };
+  const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)), hex = c => '#' + c.map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
+  const mix = (a, b, k) => a.map((v, i) => v + (b[i] - v) * clamp(k));
+  // in the opening the screen can be a photo seen through the pack: the bar takes the photo's colour,
+  // cross-faded and darkened exactly as the photos are, wherever the window covers that edge
+  const win = $('win'), winShade = $('winShade'), avg = new WeakMap();
+  const avgOf = img => {   // the median of a 24 px copy: the photo's own tone, not washed out by its highlights
+    if (!avg.has(img) && img.complete && img.naturalWidth) { const c = document.createElement('canvas'); c.width = c.height = 24; const x = c.getContext('2d'); x.drawImage(img, 0, 0, 24, 24);
+      const d = x.getImageData(0, 0, 24, 24).data, ch = [[], [], []]; for (let i = 0; i < d.length; i += 4) for (let k = 0; k < 3; k++) ch[k].push(d[i + k]);
+      avg.set(img, ch.map(v => v.sort((p, q) => p - q)[v.length >> 1])); }
+    return avg.get(img); };
+  const inPoly = (x, y, s) => { const p = (s.match(/-?[\d.]+/g) || []).map(Number); let inside = false;
+    for (let i = 0, j = p.length - 2; i < p.length; j = i, i += 2) if ((p[i + 1] > y) !== (p[j + 1] > y) && x < (p[j] - p[i]) * (y - p[i + 1]) / (p[j + 1] - p[i + 1]) + p[i]) inside = !inside;
+    return inside; };
+  function storyTone(y) {
+    if (!win || win.style.visibility !== 'visible') return PAPER;
+    const r = win.getBoundingClientRect();
+    if (!inPoly(innerWidth / 2 - r.left, y - r.top, win.style.clipPath || '')) return PAPER;
+    let c = [21, 17, 14];   // the window's own ground, #15110e
+    win.querySelectorAll('img.mac').forEach(img => { const o = +img.style.opacity || 0, a = o > 0 && avgOf(img); if (a) c = mix(c, a, o); });
+    c = mix(c, [18, 14, 11], +winShade.style.opacity || 0);
+    return hex(mix(rgb(PAPER), c, +(win.style.opacity || 1)));
+  }
+  const toneAt = y => { const n = document.elementsFromPoint(innerWidth / 2, y).find(n => !top.contains(n) && !demo.contains(n) && n !== edgeT && n !== edgeB);
+    if (n && story.contains(n)) return storyTone(y);
+    return n && isDark(n) ? DARK : PAPER; };
+  const dim = h => hex(mix(rgb(h), [18, 14, 11], .55));   // under the open demo sheet
+  const tint = {}, far = (a, b) => !b || rgb(a).reduce((s, v, i) => s + Math.abs(v - rgb(b)[i]), 0) > 6;   // photos cross-fade every frame: only a visible change repaints
+  function bars() {
+    let t = toneAt(1), b = toneAt(innerHeight - 2);
+    if (demo.classList.contains('open')) { t = dim(t); b = dim(b); }
+    if (far(t, tint.t)) { tint.t = t; if (themeMeta) themeMeta.content = t; edgeT = paint(edgeT, t); }
+    if (far(b, tint.b)) { tint.b = b; edgeB = paint(edgeB, b); }
+    const h = scrollY + innerHeight / 2 < document.documentElement.scrollHeight / 2 ? t : b;
+    if (far(h, tint.h)) { tint.h = h; document.documentElement.style.backgroundColor = document.body.style.backgroundColor = h; }
+  }
   function frame() {
     requestAnimationFrame(frame);
     const under = document.elementsFromPoint(innerWidth / 2, 36).find(n => !top.contains(n)); top.classList.toggle('on-dark', !!under && isDark(under));
+    bars();
     scrubs.forEach(({ el, bs }) => { const r = el.getBoundingClientRect(), p = phase(innerHeight - r.top, innerHeight * .1, innerHeight * .1 + r.height + innerHeight * .45); const n = bs.length;
       bs.forEach((b, i) => b.style.opacity = (.16 + .84 * clamp(p * n - i)).toFixed(3)); });
     const near = el => { const r = el.getBoundingClientRect(); return r.bottom > -innerHeight && r.top < innerHeight * 2; };

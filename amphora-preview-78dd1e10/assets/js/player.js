@@ -11,11 +11,14 @@
   const clamp01 = x => Math.min(1, Math.max(0, x));
   let chapters = [], cues = [], dur = 100, dots = [], shownCh = -1;
 
-  fetch(FILM + 'chapters.json').then(r => r.json()).then(j => { chapters = j.chapters; dur = j.duration; drawDots(); update(); }).catch(() => {});
-  // the film has no voice yet, so its lines show as captions, drawn by the page to match the design
-  fetch(FILM + (EL ? 'amphora-promo.el.vtt' : 'amphora-promo.en.vtt')).then(r => r.text()).then(t => {
-    const sec = s => { const p = s.split(':').map(Number); return p.length === 3 ? p[0] * 3600 + p[1] * 60 + p[2] : p[0] * 60 + p[1]; };
-    t.split(/\n\n+/).forEach(b => { const m = b.match(/([\d:.]+)\s*-->\s*([\d:.]+)\s*\n([\s\S]+)/); if (m) cues.push({ a: sec(m[1]), b: sec(m[2]), text: m[3].trim() }); });
+  fetch(FILM + 'chapters.json', { cache: 'no-cache' }).then(r => r.json()).then(j => {
+    chapters = j.chapters; dur = j.duration; drawDots(); update();
+    // a film with a voice-over speaks its lines; a film with music only shows them as captions, drawn by the page to match the design
+    if (j.voice) return;
+    return fetch(FILM + (EL ? 'amphora-promo.el.vtt' : 'amphora-promo.en.vtt')).then(r => r.text()).then(t => {
+      const sec = s => { const p = s.split(':').map(Number); return p.length === 3 ? p[0] * 3600 + p[1] * 60 + p[2] : p[0] * 60 + p[1]; };
+      t.split(/\n\n+/).forEach(b => { const m = b.match(/([\d:.]+)\s*-->\s*([\d:.]+)\s*\n([\s\S]+)/); if (m) cues.push({ a: sec(m[1]), b: sec(m[2]), text: m[3].trim() }); });
+    });
   }).catch(() => {});
 
   const chapterAt = t => { let i = 0; chapters.forEach((c, k) => { if (t >= c.start - .05) i = k; }); return i; };

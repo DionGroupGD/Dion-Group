@@ -1,41 +1,42 @@
 {
  "duration": 100,
+ "voice": true,
  "chapters": [
   {
    "id": "intro",
    "title": "Amphora",
    "start": 0,
-   "line": "Amphora. The private label configurator."
+   "line": "Private label used to mean weeks of emails."
   },
   {
    "id": "product",
    "title": "Product",
    "start": 4.8,
-   "line": "Your customer starts with your range: olives or fruit, the variety and the product."
+   "line": "With Amphora, your customer builds the product themselves, from your own range."
   },
   {
    "id": "calibre",
    "title": "Calibre",
    "start": 12,
-   "line": "They pick the calibre, drawn to true scale."
+   "line": "Every size and grade is drawn to true scale."
   },
   {
    "id": "pack",
    "title": "Pack",
    "start": 16.8,
-   "line": "Only the packs your lines can fill appear, each with its real closure."
+   "line": "They only see the packs your lines can actually fill."
   },
   {
    "id": "fill",
    "title": "Fill",
    "start": 24,
-   "line": "Weights follow every choice, inside your approved limits."
+   "line": "Weights and fill update with every choice, always inside your limits."
   },
   {
    "id": "label",
    "title": "Label",
    "start": 31.2,
-   "line": "Their own artwork goes on the real jar, with the lid colour they choose."
+   "line": "Their artwork goes straight onto the real pack, with the closure they choose."
   },
   {
    "id": "case",
@@ -47,37 +48,37 @@
    "id": "pallet",
    "title": "Pallet",
    "start": 48,
-   "line": "The pallet and the container are worked out for them."
+   "line": "Amphora works out the pallet and the container load."
   },
   {
    "id": "barcodes",
    "title": "Barcodes",
    "start": 57.6,
-   "line": "Barcodes, lot and best before are checked before any proof."
+   "line": "Barcodes, lot codes and best before are checked before any proof."
   },
   {
    "id": "spec",
    "title": "Spec",
    "start": 67.2,
-   "line": "The full specification is ready, with every drawing and every line."
+   "line": "The full specification lands with your sales team, ready to quote."
   },
   {
    "id": "rules",
    "title": "Your rules",
    "start": 76.8,
-   "line": "It all runs on your own catalogue and your own rules."
+   "line": "We set Amphora up around your products, your packs and your rules."
   },
   {
    "id": "fruit",
-   "title": "Fruit too",
+   "title": "Any product",
    "start": 84,
-   "line": "Olives, fruit and anything else you pack."
+   "line": "Here, olives and fruit. For you, gherkins, tuna, olive oil or anything you pack."
   },
   {
    "id": "outro",
    "title": "Book a demo",
    "start": 91.2,
-   "line": "Amphora. Private label requests in minutes, not weeks."
+   "line": "Amphora. Private label requests in minutes, not weeks. Book a demo."
   }
  ]
 }
