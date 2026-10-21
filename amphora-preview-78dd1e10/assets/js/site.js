@@ -344,7 +344,18 @@
     return n && isDark(n) ? DARK : PAPER; };
   const dim = h => hex(mix(rgb(h), [18, 14, 11], .55));   // under the open demo sheet
   const tint = {}, far = (a, b) => !b || rgb(a).reduce((s, v, i) => s + Math.abs(v - rgb(b)[i]), 0) > 6;   // photos cross-fade every frame: only a visible change repaints
+  // #bartest: each source gets its own colour, so one screenshot shows which one a phone's bars follow
+  if (location.hash === '#bartest') {
+    const note = document.createElement('div');
+    note.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:80;width:min(320px,86vw);padding:18px 20px;border-radius:18px;background:#fff;color:#111;font:500 15px/1.45 system-ui,sans-serif;box-shadow:0 10px 40px rgba(0,0,0,.25)';
+    note.innerHTML = 'Bar test. Please take one screenshot and send it.<br><br>Red: band at the top<br>Blue: band at the bottom<br>Green: page background<br>Yellow: theme colour';
+    document.body.append(note);
+  }
   function bars() {
+    if (location.hash === '#bartest') {
+      if (!tint.test) { tint.test = 1; if (themeMeta) themeMeta.content = '#ffd400'; edgeT = paint(edgeT, '#ff2d2d'); edgeB = paint(edgeB, '#2d6bff'); document.documentElement.style.backgroundColor = document.body.style.backgroundColor = '#16c60c'; }
+      return;
+    }
     let t = toneAt(1), b = toneAt(innerHeight - 2);
     if (demo.classList.contains('open')) { t = dim(t); b = dim(b); }
     if (far(t, tint.t)) { tint.t = t; if (themeMeta) themeMeta.content = t; edgeT = paint(edgeT, t); }
