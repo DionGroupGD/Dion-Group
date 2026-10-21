@@ -237,6 +237,7 @@
     { el: $('specSec'), unit: 1, beats: spBeats },
   ].filter(s => s.el);
   let stepping = false, lastWheel = 0, stepEnd = 0, touchY = null, touchStep = null;
+  const FREE = /[?&]free\b/.test(location.search);   // ?free: a phone scrolls natively everywhere (test: does Safari's bar colour follow then?)
   const span = s => { const top = s.el.getBoundingClientRect().top + scrollY; return { a: top, b: top + s.el.offsetHeight - innerHeight }; };
   function where() { for (const s of STEPS) { const { a, b } = span(s); if (scrollY >= a - 4 && scrollY <= b + 4) return { s, a, b, p: (scrollY - a) / Math.max(1, b - a) * s.unit }; } return null; }
   function target(w, dir) { const bs = w.s.beats; return dir > 0 ? bs.find(x => x > w.p + w.s.unit * .004) : [...bs].reverse().find(x => x < w.p - w.s.unit * .004); }
@@ -261,13 +262,13 @@
   }, { passive: false });
   addEventListener('touchstart', e => { touchY = e.touches[0].clientY; touchStep = where() ? true : null; }, { passive: true });
   addEventListener('touchmove', e => {
-    if (REDUCE || touchY === null || !touchStep || demoOpen()) return;
+    if (FREE || REDUCE || touchY === null || !touchStep || demoOpen()) return;
     const w = where(); if (!w) return;
     const dir = Math.sign(touchY - e.touches[0].clientY);
     if (stepping || (dir && target(w, dir) !== undefined)) e.preventDefault();
   }, { passive: false });
   addEventListener('touchend', e => {
-    if (touchY === null || !touchStep || stepping || demoOpen()) { touchY = null; return; }
+    if (FREE || touchY === null || !touchStep || stepping || demoOpen()) { touchY = null; return; }
     const dy = touchY - e.changedTouches[0].clientY; touchY = null;
     if (Math.abs(dy) > 30) step(Math.sign(dy));
   }, { passive: true });
