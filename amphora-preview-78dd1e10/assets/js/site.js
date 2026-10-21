@@ -1,6 +1,17 @@
 /* Amphora site: the sections after the opening. Headlines rise word by word, key copy lights up as you
    scroll, the hidden-cost card opens (weeks of email, then the ten real steps of the app), the four steps
    play on an iPad Pro, the film grows, and one jar zooms out to a full container. */
+/* ?still: the page's animation loops pause once nothing has moved for a moment, so the page goes quiet (test: does
+   Safari on iPhone then give its bars the colour of the page?). This file runs before the other page scripts. */
+if (/[?&]still\b/.test(location.search)) {
+  const raf = window.requestAnimationFrame.bind(window);
+  let woke = performance.now(), parked = [];
+  const wake = () => { woke = performance.now(); if (parked.length) { const q = parked; parked = []; q.forEach(cb => raf(cb)); } };
+  ['scroll', 'wheel', 'touchstart', 'touchmove', 'touchend', 'pointerdown', 'keydown', 'resize'].forEach(t => addEventListener(t, wake, { capture: true, passive: true }));
+  document.addEventListener('play', wake, true);
+  const busy = () => performance.now() - woke < 1200 || performance.now() < 9000 || [...document.querySelectorAll('video')].some(v => !v.paused);
+  window.requestAnimationFrame = cb => busy() ? raf(cb) : (parked.push(cb), 0);
+}
 (() => {
   const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = id => document.getElementById(id);
