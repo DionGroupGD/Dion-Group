@@ -1,17 +1,19 @@
 /* Amphora site: the sections after the opening. Headlines rise word by word, key copy lights up as you
    scroll, the hidden-cost card opens (weeks of email, then the ten real steps of the app), the four steps
    play on an iPad Pro, the film grows, and one jar zooms out to a full container. */
-/* ?still: the page's animation loops pause once nothing has moved for a moment, so the page goes quiet (test: does
-   Safari on iPhone then give its bars the colour of the page?). This file runs before the other page scripts. */
-if (/[?&]still\b/.test(location.search)) {
+/* The page goes quiet when nothing moves: its animation loops (this file, the opening, the film player) pause a
+   moment after the last scroll, touch or key, once the opening has settled and no film plays, and wake on the next
+   one. It saves battery, and Safari on iPhone keeps its bars' colour while a page redraws without pause.
+   This file runs before the other page scripts, so their loops go through this. */
+(() => {
   const raf = window.requestAnimationFrame.bind(window);
   let woke = performance.now(), parked = [];
   const wake = () => { woke = performance.now(); if (parked.length) { const q = parked; parked = []; q.forEach(cb => raf(cb)); } };
   ['scroll', 'wheel', 'touchstart', 'touchmove', 'touchend', 'pointerdown', 'keydown', 'resize'].forEach(t => addEventListener(t, wake, { capture: true, passive: true }));
   document.addEventListener('play', wake, true);
-  const busy = () => performance.now() - woke < 1200 || performance.now() < 9000 || [...document.querySelectorAll('video')].some(v => !v.paused);
+  const busy = () => performance.now() - woke < 1200 || !(window.__creation && window.__creation.settled) || [...document.querySelectorAll('video')].some(v => !v.paused);
   window.requestAnimationFrame = cb => busy() ? raf(cb) : (parked.push(cb), 0);
-}
+})();
 (() => {
   const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = id => document.getElementById(id);
@@ -248,7 +250,6 @@ if (/[?&]still\b/.test(location.search)) {
     { el: $('specSec'), unit: 1, beats: spBeats },
   ].filter(s => s.el);
   let stepping = false, lastWheel = 0, stepEnd = 0, touchY = null, touchStep = null;
-  const FREE = /[?&]free\b/.test(location.search);   // ?free: a phone scrolls natively everywhere (test: does Safari's bar colour follow then?)
   const span = s => { const top = s.el.getBoundingClientRect().top + scrollY; return { a: top, b: top + s.el.offsetHeight - innerHeight }; };
   function where() { for (const s of STEPS) { const { a, b } = span(s); if (scrollY >= a - 4 && scrollY <= b + 4) return { s, a, b, p: (scrollY - a) / Math.max(1, b - a) * s.unit }; } return null; }
   function target(w, dir) { const bs = w.s.beats; return dir > 0 ? bs.find(x => x > w.p + w.s.unit * .004) : [...bs].reverse().find(x => x < w.p - w.s.unit * .004); }
@@ -273,13 +274,13 @@ if (/[?&]still\b/.test(location.search)) {
   }, { passive: false });
   addEventListener('touchstart', e => { touchY = e.touches[0].clientY; touchStep = where() ? true : null; }, { passive: true });
   addEventListener('touchmove', e => {
-    if (FREE || REDUCE || touchY === null || !touchStep || demoOpen()) return;
+    if (REDUCE || touchY === null || !touchStep || demoOpen()) return;
     const w = where(); if (!w) return;
     const dir = Math.sign(touchY - e.touches[0].clientY);
     if (stepping || (dir && target(w, dir) !== undefined)) e.preventDefault();
   }, { passive: false });
   addEventListener('touchend', e => {
-    if (FREE || touchY === null || !touchStep || stepping || demoOpen()) { touchY = null; return; }
+    if (touchY === null || !touchStep || stepping || demoOpen()) { touchY = null; return; }
     const dy = touchY - e.changedTouches[0].clientY; touchY = null;
     if (Math.abs(dy) > 30) step(Math.sign(dy));
   }, { passive: true });
