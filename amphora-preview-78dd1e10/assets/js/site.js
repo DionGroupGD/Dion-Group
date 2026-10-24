@@ -1,19 +1,6 @@
 /* Amphora site: the sections after the opening. Headlines rise word by word, key copy lights up as you
    scroll, the hidden-cost card opens (weeks of email, then the ten real steps of the app), the four steps
    play on an iPad Pro, the film grows, and one jar zooms out to a full container. */
-/* The page goes quiet when nothing moves: its animation loops (this file, the opening, the film player) pause a
-   moment after the last scroll, touch or key, once the opening has settled and no film plays, and wake on the next
-   one. It saves battery, and Safari on iPhone keeps its bars' colour while a page redraws without pause.
-   This file runs before the other page scripts, so their loops go through this. */
-(() => {
-  const raf = window.requestAnimationFrame.bind(window);
-  let woke = performance.now(), parked = [];
-  const wake = () => { woke = performance.now(); if (parked.length) { const q = parked; parked = []; q.forEach(cb => raf(cb)); } };
-  ['scroll', 'wheel', 'touchstart', 'touchmove', 'touchend', 'pointerdown', 'keydown', 'resize'].forEach(t => addEventListener(t, wake, { capture: true, passive: true }));
-  document.addEventListener('play', wake, true);
-  const busy = () => performance.now() - woke < 1200 || !(window.__creation && window.__creation.settled) || [...document.querySelectorAll('video')].some(v => !v.paused);
-  window.requestAnimationFrame = cb => busy() ? raf(cb) : (parked.push(cb), 0);
-})();
 (() => {
   const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = id => document.getElementById(id);
@@ -319,76 +306,9 @@
   /* the header follows the tone of whatever is under it */
   const top = $('top'), story = $('story');
   const isDark = el => { for (let n = el; n && n !== document.body; n = n.parentElement) { if (n.classList && (n.classList.contains('dk') || n.classList.contains('film-pin') || n.classList.contains('foot') || n.classList.contains('cost-card'))) return true; if (n === story) return document.body.dataset.storyDark === '1'; } return false; };
-  /* phones: nothing pinned at the top of the screen takes taps (see the CSS), so taps on the header's links and on
-     the opening's skip button are recognised here by where they land, and passed on */
-  const phoneEdge = matchMedia('(hover:none) and (max-width:820px)'), skipBtn = $('skip');
-  let tapStart = null;
-  addEventListener('pointerdown', e => { tapStart = phoneEdge.matches && e.isPrimary ? { x: e.clientX, y: e.clientY, t: e.timeStamp } : null; }, true);
-  addEventListener('pointerup', e => {
-    const s = tapStart; tapStart = null;
-    if (!s || Math.hypot(e.clientX - s.x, e.clientY - s.y) > 12 || e.timeStamp - s.t > 700) return;
-    const shown = el => !!el && el.getClientRects().length > 0 && +getComputedStyle(el).opacity > .3;
-    const hit = [...top.querySelectorAll('a')].filter(a => shown(top) && shown(a)).concat(shown(skipBtn) ? [skipBtn] : [])
-      .find(el => { const r = el.getBoundingClientRect(); return e.clientX >= r.left - 6 && e.clientX <= r.right + 6 && e.clientY >= r.top - 6 && e.clientY <= r.bottom + 6; });
-    if (!hit) return;
-    hit.click();
-    const drop = ev => { ev.preventDefault(); ev.stopPropagation(); };   // the tap's own click would reach whatever lies underneath
-    addEventListener('click', drop, true); setTimeout(() => removeEventListener('click', drop, true), 450);
-  }, true);
-  /* on a phone the browser's bars above and below the page take the colour of the page at that edge, so the
-     screen reads as one surface. Browsers read it from different places: theme-color for the top bar (Chrome,
-     Safari up to iOS 18) and the page background for the bottom bar (Safari from iOS 26), which is also what the
-     rubber band shows past either end. Every section paints its own ground, so the page background never shows. */
-  const css = getComputedStyle(document.documentElement), PAPER = css.getPropertyValue('--bg').trim(), DARK = css.getPropertyValue('--dark').trim();
-  const themeMeta = document.querySelector('meta[name="theme-color"]');
-  const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)), hex = c => '#' + c.map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
-  const mix = (a, b, k) => a.map((v, i) => v + (b[i] - v) * clamp(k));
-  const far = (a, b) => !b || rgb(a).reduce((s, v, i) => s + Math.abs(v - rgb(b)[i]), 0) > 6;   // photos cross-fade every frame: only a visible change repaints
-  // in the opening the screen can be a photo seen through the pack: the edge takes the photo's colour,
-  // cross-faded and darkened exactly as the photos are, wherever the window covers that edge
-  const view = $('view'), win = $('win'), winShade = $('winShade'), avg = new WeakMap();
-  const avgOf = img => {   // the median of a 24 px copy: the photo's own tone, not washed out by its highlights
-    if (!avg.has(img) && img.complete && img.naturalWidth) { const c = document.createElement('canvas'); c.width = c.height = 24; const x = c.getContext('2d'); x.drawImage(img, 0, 0, 24, 24);
-      const d = x.getImageData(0, 0, 24, 24).data, ch = [[], [], []]; for (let i = 0; i < d.length; i += 4) for (let k = 0; k < 3; k++) ch[k].push(d[i + k]);
-      avg.set(img, ch.map(v => v.sort((p, q) => p - q)[v.length >> 1])); }
-    return avg.get(img); };
-  const inPoly = (x, y, s) => { const p = (s.match(/-?[\d.]+/g) || []).map(Number); let inside = false;
-    for (let i = 0, j = p.length - 2; i < p.length; j = i, i += 2) if ((p[i + 1] > y) !== (p[j + 1] > y) && x < (p[j] - p[i]) * (y - p[i + 1]) / (p[j + 1] - p[i + 1]) + p[i]) inside = !inside;
-    return inside; };
-  // when a phone's toolbar shrinks, the screen grows below the opening's scene (which paints its own paper): that
-  // strip shows the opening's ground, which takes the photo's colour while the photo fills the scene's foot, and
-  // the photo fades into it, so the photo runs on to the bottom bar
-  let ground = PAPER;
-  const fade = document.createElement('i'); fade.className = 'vfade'; fade.setAttribute('aria-hidden', 'true'); view && view.append(fade);
-  // is the photo window over this row of the screen: across all of it, or over most of it
-  const inside = (y, fx) => { const r = win.getBoundingClientRect(); return y >= r.top && y <= r.bottom && inPoly(innerWidth * fx - r.left, y - r.top, win.style.clipPath || ''); };
-  const photoAt = (y, all) => { if (!win || win.style.visibility !== 'visible') return false; const n = [.06, .5, .94].filter(fx => inside(y, fx)).length; return all ? n === 3 : n >= 2; };
-  function photoTone() {
-    let c = [21, 17, 14];   // the window's own ground, #15110e
-    win.querySelectorAll('img.mac').forEach(img => { const o = +img.style.opacity || 0, a = o > 0 && avgOf(img); if (a) c = mix(c, a, o); });
-    c = mix(c, [18, 14, 11], +winShade.style.opacity || 0);
-    return hex(mix(rgb(PAPER), c, +(win.style.opacity || 1)));
-  }
-  const sceneTone = (y, all) => photoAt(y, all) ? photoTone() : PAPER;
-  const storyTone = y => view && y >= view.getBoundingClientRect().bottom ? ground : sceneTone(y, false);
-  const toneAt = y => { const n = document.elementsFromPoint(innerWidth / 2, y).find(n => !top.contains(n) && !demo.contains(n));
-    if (n && story.contains(n)) return storyTone(y);
-    return n && isDark(n) ? DARK : PAPER; };
-  const dim = h => hex(mix(rgb(h), [18, 14, 11], .55));   // under the open demo sheet
-  const tint = {};
-  function bars() {
-    if (view) { const vr = view.getBoundingClientRect();
-      if (vr.bottom > 0 && vr.top < innerHeight) { const g = sceneTone(vr.bottom - 2, true);
-        if (far(g, ground)) { ground = g; story.style.backgroundColor = g; view.style.setProperty('--fade', g); fade.classList.toggle('on', g !== PAPER); } } }
-    let t = toneAt(1), b = toneAt(innerHeight - 2);
-    if (demo.classList.contains('open')) { t = dim(t); b = dim(b); }
-    if (far(t, tint.t)) { tint.t = t; if (themeMeta) themeMeta.content = t; }
-    if (far(b, tint.b)) { tint.b = b; document.documentElement.style.backgroundColor = document.body.style.backgroundColor = b; }
-  }
   function frame() {
     requestAnimationFrame(frame);
     const under = document.elementsFromPoint(innerWidth / 2, 36).find(n => !top.contains(n)); top.classList.toggle('on-dark', !!under && isDark(under));
-    bars();
     scrubs.forEach(({ el, bs }) => { const r = el.getBoundingClientRect(), p = phase(innerHeight - r.top, innerHeight * .1, innerHeight * .1 + r.height + innerHeight * .45); const n = bs.length;
       bs.forEach((b, i) => b.style.opacity = (.16 + .84 * clamp(p * n - i)).toFixed(3)); });
     const near = el => { const r = el.getBoundingClientRect(); return r.bottom > -innerHeight && r.top < innerHeight * 2; };

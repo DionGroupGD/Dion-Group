@@ -289,5 +289,5 @@
     const imgs = [adam.querySelector('img'), god.querySelector('img'), INSIDE[0].el];
     return Promise.race([Promise.all(imgs.map(im => im.decode ? im.decode().catch(() => {}) : 0)), new Promise(r => setTimeout(r, 3500))]);
   }).then(() => { introStart = introStart || performance.now() + 150; if (document.fonts) document.fonts.ready.then(layout); });
-  window.__creation = { seekIntro: (v, hold) => { introT = v; introHold = !!hold; introStart = introStart || performance.now(); }, go: v => { scrollTo(0, v / 100 * (storyEl.offsetHeight - innerHeight)); u = v; }, get u() { return u; }, get t() { return introT; }, get settled() { return !!introStart && introT >= INTRO_END && Math.abs(target() - u) < .01; } };
+  window.__creation = { seekIntro: (v, hold) => { introT = v; introHold = !!hold; introStart = introStart || performance.now(); }, go: v => { scrollTo(0, v / 100 * (storyEl.offsetHeight - innerHeight)); u = v; }, get u() { return u; }, get t() { return introT; } };
 })();
