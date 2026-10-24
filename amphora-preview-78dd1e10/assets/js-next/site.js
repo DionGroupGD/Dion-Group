@@ -231,21 +231,25 @@
   }
   spStops.forEach((li, k) => li.addEventListener('click', () => { const top = spPin.getBoundingClientRect().top + scrollY; glide(top + spBeats[k] * (spPin.offsetHeight - innerHeight)); }));
 
-  /* one flick, one step: in the opening and in "from one jar to a container" the scroll moves from one
-     composed moment to the next at a steady pace, however hard you flick. Outside them the page scrolls freely. */
+  /* one flick, one step: in the opening, in "from one jar to a container" and in the spec sheet the scroll moves from
+     one composed moment to the next at a steady pace, however hard you flick. A whole gesture counts once, the
+     trackpad's momentum included: its tail is swallowed, so it never takes a second step nor creeps off the moment.
+     A flick that starts outside and carries in is left to run, then settles on the nearest moment. Outside them the
+     page scrolls freely. */
   const STEPS = [
     { el: $('story'), unit: 100, beats: [0, 28.6, 39.6, 51.4, 67, 74.9, 82.2, 96] },
     { el: $('lvPin'), unit: 1, beats: [.043, .258, .473, .688, .93] },
     { el: $('specSec'), unit: 1, beats: spBeats },
   ].filter(s => s.el);
-  let stepping = false, lastWheel = 0, stepEnd = 0, touchY = null, touchStep = null;
+  let stepping = false, queued = 0, touchY = null, touchStep = null, settleTimer = 0, lastMove = 0;
+  const gest = { last: 0, start: 0, abs: 0, peak: 0, dir: 0, mode: '', fromZone: false };   // the wheel gesture in progress: 'step' (ours) or 'free' (the page's own)
   const span = s => { const top = s.el.getBoundingClientRect().top + scrollY; return { a: top, b: top + s.el.offsetHeight - innerHeight }; };
   function where() { for (const s of STEPS) { const { a, b } = span(s); if (scrollY >= a - 4 && scrollY <= b + 4) return { s, a, b, p: (scrollY - a) / Math.max(1, b - a) * s.unit }; } return null; }
   function target(w, dir) { const bs = w.s.beats; return dir > 0 ? bs.find(x => x > w.p + w.s.unit * .004) : [...bs].reverse().find(x => x < w.p - w.s.unit * .004); }
   function glide(y) {
     const y0 = scrollY, t0 = performance.now(), D = Math.min(1500, Math.max(420, 120 + Math.abs(y - y0) * .85));   // a steady pace, about 1.2 px per ms
-    stepping = true;
-    (function f(now) { const k = Math.min(1, (now - t0) / D); scrollTo(0, y0 + (y - y0) * ease(k)); if (k < 1) requestAnimationFrame(f); else { stepping = false; stepEnd = performance.now(); } })(t0);
+    stepping = true; clearTimeout(settleTimer);
+    (function f(now) { const k = Math.min(1, (now - t0) / D); scrollTo(0, y0 + (y - y0) * ease(k)); if (k < 1) requestAnimationFrame(f); else { stepping = false; if (queued) { const d = queued; queued = 0; step(d); } } })(t0);
   }
   const demoOpen = () => document.documentElement.classList.contains('demo-lock');
   function step(dir) {
@@ -253,15 +257,35 @@
     const to = target(w, dir); if (to === undefined) return false;   // past the last moment: let the page go on
     glide(w.a + to / w.s.unit * (w.b - w.a)); return true;
   }
+  // after a free scroll comes to rest inside a stepped scene, it glides to the nearest moment
+  addEventListener('scroll', () => { lastMove = performance.now(); }, { passive: true });
+  function settleLater() {
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(function check() {
+      if (stepping || touchY !== null) return;
+      const now = performance.now(); if (now - lastMove < 120 || now - gest.last < 120) { settleTimer = setTimeout(check, 80); return; }
+      const w = where(); if (!w) return;
+      const near = w.s.beats.reduce((a, b) => Math.abs(b - w.p) < Math.abs(a - w.p) ? b : a), y = w.a + near / w.s.unit * (w.b - w.a);
+      if (Math.abs(y - scrollY) > 2) glide(y);
+    }, 160);
+  }
   addEventListener('wheel', e => {
     if (REDUCE || demoOpen()) return;
-    const now = performance.now(), gap = now - lastWheel; lastWheel = now;
-    const w = where(); if (!w) return;
-    if (stepping || (now - stepEnd < 450 && gap < 160)) { e.preventDefault(); return; }   // swallow the tail of the same flick
-    if (Math.abs(e.deltaY) < 4) return;
-    if (step(Math.sign(e.deltaY))) e.preventDefault();
+    const now = performance.now(), a = Math.abs(e.deltaY), dir = Math.sign(e.deltaY);
+    // a new gesture: after a pause, on a change of direction, or a fresh push once the last one's momentum has faded
+    const fresh = now - gest.last > 180 || (dir && gest.dir && dir !== gest.dir) || (now - gest.start > 300 && gest.abs < gest.peak * .45 && a > gest.abs * 1.8 && a >= 10);
+    gest.last = now;
+    if (fresh) { gest.start = now; gest.dir = dir; gest.mode = ''; gest.peak = 0; clearTimeout(settleTimer); }
+    if (a) { gest.abs = a; gest.peak = Math.max(gest.peak, a); if (!gest.dir) gest.dir = dir; }
+    if (gest.mode === 'step') { e.preventDefault(); return; }   // the rest of a gesture that already took its step, momentum included
+    const w = where();
+    if (gest.mode === 'free') { if (w && !gest.fromZone) settleLater(); return; }
+    if (stepping) { gest.mode = 'step'; if (dir) queued = dir; e.preventDefault(); return; }   // a new flick during a glide: its step follows
+    if (w && a < 3) { e.preventDefault(); return; }   // too small to decide yet
+    if (w && step(dir)) { gest.mode = 'step'; e.preventDefault(); return; }
+    gest.mode = 'free'; gest.fromZone = !!w;   // outside, or leaving a scene past its last moment
   }, { passive: false });
-  addEventListener('touchstart', e => { touchY = e.touches[0].clientY; touchStep = where() ? true : null; }, { passive: true });
+  addEventListener('touchstart', e => { touchY = e.touches[0].clientY; touchStep = where() ? true : null; clearTimeout(settleTimer); }, { passive: true });
   addEventListener('touchmove', e => {
     if (REDUCE || touchY === null || !touchStep || demoOpen()) return;
     const w = where(); if (!w) return;
@@ -269,9 +293,10 @@
     if (stepping || (dir && target(w, dir) !== undefined)) e.preventDefault();
   }, { passive: false });
   addEventListener('touchend', e => {
-    if (touchY === null || !touchStep || stepping || demoOpen()) { touchY = null; return; }
+    if (touchY === null || demoOpen()) { touchY = null; return; }
     const dy = touchY - e.changedTouches[0].clientY; touchY = null;
-    if (Math.abs(dy) > 30) step(Math.sign(dy));
+    if (!touchStep) { if (!REDUCE) settleLater(); return; }   // a swipe from outside: its momentum runs, then settles
+    if (!stepping && Math.abs(dy) > 30) step(Math.sign(dy));
   }, { passive: true });
   addEventListener('keydown', e => {
     if (demoOpen() || /input|textarea|select/i.test(document.activeElement.tagName) || stepping && /Arrow|Page| /.test(e.key)) { if (stepping) e.preventDefault(); return; }

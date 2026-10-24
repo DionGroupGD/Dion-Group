@@ -18,8 +18,8 @@
   /* ───────── what the story is made of ───────── */
   const JAR = { k: 'olive', f: 'jar', cap: EL ? 'Γυάλινο βάζο · για ελιές' : 'Glass jar · for olives', v: 1 };
   const INSIDE = [   // seen from inside the pack
-    { img: 'green-pitted', word: EL ? 'Ελιές' : 'Olives', say: EL ? 'Κάθε συσκευασία περιέχει ένα προϊόν.' : 'Every pack holds a product.' },
-    { img: 'peach-halves-syrup', word: EL ? 'Φρούτα' : 'Fruit', say: EL ? 'Το Amphora διαμορφώνει τη συσκευασία γύρω του.' : 'Amphora configures the pack around it.' },
+    { img: 'green-pitted-hd', word: EL ? 'Ελιές' : 'Olives', say: EL ? 'Κάθε συσκευασία περιέχει ένα προϊόν.' : 'Every pack holds a product.' },
+    { img: 'peach-halves-syrup-hd', word: EL ? 'Φρούτα' : 'Fruit', say: EL ? 'Το Amphora διαμορφώνει τη συσκευασία γύρω του.' : 'Amphora configures the pack around it.' },
     { orbit: true, word: EL ? 'Οτιδήποτε' : 'Anything', say: EL ? 'συσκευάζετε.' : 'you pack.' },
   ];
   // what circles the word Anything: things a configurator could be built for
@@ -70,7 +70,7 @@
   let W = 1, H = 1, portrait = false, armW = 600, ctaBottom = 0;
   function layout() {
     W = view.clientWidth; H = view.clientHeight; portrait = W / H < .85;
-    armW = clamp(W * (portrait ? .62 : .44), 240, 760);
+    armW = portrait ? clamp(W * .62, 240, 760) : clamp(W * .66, 240, 1700);   // on landscape screens the arms reach in from the edges
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     fname.style.top = (H * .905) + 'px';
     mcta.style.top = (mline.offsetTop + mline.offsetHeight + (portrait ? 18 : 26)) + 'px';
@@ -291,6 +291,16 @@
     requestAnimationFrame(frame);
     const imgs = [adam.querySelector('img'), god.querySelector('img'), INSIDE[0].el];
     return Promise.race([Promise.all(imgs.map(im => im.decode ? im.decode().catch(() => {}) : 0)), new Promise(r => setTimeout(r, 3500))]);
-  }).then(() => { introStart = introStart || performance.now() + 150; if (document.fonts) document.fonts.ready.then(layout); });
+  }).then(() => { introStart = introStart || performance.now() + 150; if (document.fonts) document.fonts.ready.then(layout); setTimeout(warm, 1200); });
+
+  // the photos inside are large: each is painted once, unseen, while the hands play, so the first one never costs a frame when it appears
+  function warm() {
+    const box = document.createElement('div');
+    box.style.cssText = 'position:fixed;left:0;top:0;width:1000px;height:1500px;opacity:.003;pointer-events:none;z-index:-1;overflow:hidden';
+    box.setAttribute('aria-hidden', 'true');
+    INSIDE.forEach(c => { if (c.el) box.appendChild(Object.assign(document.createElement('img'), { src: c.el.src, alt: '', style: 'position:absolute;left:0;top:0;width:1000px;height:1500px' })); });
+    document.body.appendChild(box);
+    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(() => box.remove(), 600)));
+  }
   window.__creation = { seekIntro: (v, hold) => { introT = v; introHold = !!hold; introStart = introStart || performance.now(); }, go: v => { scrollTo(0, v / 100 * (storyEl.offsetHeight - innerHeight)); u = v; }, get u() { return u; }, get t() { return introT; } };
 })();
