@@ -70,7 +70,7 @@
   let W = 1, H = 1, portrait = false, armW = 600, ctaBottom = 0;
   function layout() {
     W = view.clientWidth; H = view.clientHeight; portrait = W / H < .85;
-    armW = portrait ? clamp(W * .62, 240, 760) : clamp(W * .66, 240, 1700);   // on landscape screens the arms reach in from the edges
+    armW = clamp(W * (portrait ? .62 : .44), 240, 760);
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     fname.style.top = (H * .905) + 'px';
     mcta.style.top = (mline.offsetTop + mline.offsetHeight + (portrait ? 18 : 26)) + 'px';
